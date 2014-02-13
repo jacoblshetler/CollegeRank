@@ -22,6 +22,7 @@
 		844E771D18AD289100A6FC91 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844E76FC18AD289100A6FC91 /* UIKit.framework */; };
 		844E772518AD289100A6FC91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 844E772318AD289100A6FC91 /* InfoPlist.strings */; };
 		844E772718AD289100A6FC91 /* College_RankTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 844E772618AD289100A6FC91 /* College_RankTests.m */; };
+		E3698A9818AD2ED800A54627 /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3698A9718AD2ED800A54627 /* ThirdViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,8 @@
 		844E772218AD289100A6FC91 /* College RankTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "College RankTests-Info.plist"; sourceTree = "<group>"; };
 		844E772418AD289100A6FC91 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		844E772618AD289100A6FC91 /* College_RankTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = College_RankTests.m; sourceTree = "<group>"; };
+		E3698A9618AD2ED800A54627 /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
+		E3698A9718AD2ED800A54627 /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +125,8 @@
 				844E770E18AD289100A6FC91 /* FirstViewController.m */,
 				844E771018AD289100A6FC91 /* SecondViewController.h */,
 				844E771118AD289100A6FC91 /* SecondViewController.m */,
+				E3698A9618AD2ED800A54627 /* ThirdViewController.h */,
+				E3698A9718AD2ED800A54627 /* ThirdViewController.m */,
 				844E771318AD289100A6FC91 /* Images.xcassets */,
 				844E76FF18AD289100A6FC91 /* Supporting Files */,
 			);
@@ -255,6 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				844E771218AD289100A6FC91 /* SecondViewController.m in Sources */,
+				E3698A9818AD2ED800A54627 /* ThirdViewController.m in Sources */,
 				844E770918AD289100A6FC91 /* AppDelegate.m in Sources */,
 				844E770F18AD289100A6FC91 /* FirstViewController.m in Sources */,
 				844E770518AD289100A6FC91 /* main.m in Sources */,
@@ -466,6 +472,7 @@
 				844E772C18AD289100A6FC91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		844E772D18AD289100A6FC91 /* Build configuration list for PBXNativeTarget "College RankTests" */ = {
 			isa = XCConfigurationList;
@@ -474,6 +481,7 @@
 				844E772F18AD289100A6FC91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
