@@ -10,4 +10,26 @@
 
 @implementation PreferenceManager
 
++ (id)sharedInstance
+{
+        static PreferenceManager* instance = nil;
+        if (instance == nil)
+        {
+            instance = [[self alloc] init];
+        }
+        return instance;
+}
+
+
+
+/*
+-(id)init
+{
+    if (self = [super init])
+    {
+        NSLog(@"I'm the only one!");
+    }
+    return self;
+}
+ */
 @end

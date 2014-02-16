@@ -10,17 +10,18 @@
 
 @interface PreferenceManager : NSObject
 
-@property NSArray* allPreferenceCategories;
-@property NSMutableArray* userPreferenceCategories;
-@property NSArray* userWeights;
-@property NSMutableArray* lockedWeights;
+@property (nonatomic, copy) NSArray* allPreferenceCategories;
+@property (nonatomic, copy) NSMutableArray* userPreferenceCategories;
+@property (nonatomic, copy) NSArray* userWeights;
+@property (nonatomic, copy) NSMutableArray* lockedWeights;
+//@property (nonatomic, copy) institutions
 
-//userData
+//userData   //User Preference Data
 //dataDictionary
-
-//init
 //getter methods for the six properties
++ (id)sharedInstance;
 - (NSArray*) getAllPreferenceCategories:(NSString *) query;
 - (void) addUserPreference: (NSString *) preference withData: (NSArray *) data;
+//-
 
 @end
