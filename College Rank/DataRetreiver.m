@@ -10,20 +10,48 @@
 
 NSMutableArray* GetInstitutions()
 {
+    NSString *url_string = @"http://199.8.232.152/college_rank/getData.php?";
+    NSString *post =[[NSString alloc] initWithFormat:@"function=%@", @"getInstitutions"];
+
+    url_string = [url_string stringByAppendingString:post];
+    NSLog(@"%@", url_string);
+    NSMutableURLRequest *request =[NSMutableURLRequest requestWithURL:[NSURL URLWithString:url_string]];
     
-    NSMutableURLRequest *request =[NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://199.8.232.152/college_rank/getData.php?function=getInstitutions"]];
-    [request setHTTPMethod:@"POST"];
     NSURLResponse *response;
     NSError *err;
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
-    //NSString *str = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-    NSMutableArray *college_list = [[NSMutableArray init] alloc];
+    NSMutableArray *college_list = [[NSMutableArray alloc] init];
     NSError* localError;
     id colleges = [NSJSONSerialization JSONObjectWithData:responseData
                                                             options:0
                                                               error:&localError];
-    //for(NSDictionary* dict in colleges)
+    for(NSDictionary* dict in colleges){
+        [college_list addObject:[dict objectForKey:@"name"]];
+    }
+    return college_list;
+}
+
+NSMutableArray* GetPreferences(NSArray* colleges)
+{
+    NSArray *keys = [NSArray arrayWithObjects:@"name",nil];
+    NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjects:colleges forKeys:keys];
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary
+                                                       options:0
+                                                         error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData: jsonData encoding:NSUTF8StringEncoding];
+    NSString *url_string = @"http://199.8.232.152/college_rank/getData.php?";
     
-    NSLog(@"%@", colleges);
-    return [[NSMutableArray init] alloc];
+    
+    url_string = [url_string stringByAppendingString:[NSString stringWithFormat:@"function=%@&institutions=%@", @"getPreferences", jsonString]];
+    NSMutableURLRequest *request =[NSMutableURLRequest requestWithURL:[NSURL URLWithString:url_string]];
+    
+    NSURLResponse *response;
+    NSError *err;
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
+    NSMutableArray *college_list = [[NSMutableArray alloc] init];
+    NSError* localError;
+
+    return college_list;
+
 }

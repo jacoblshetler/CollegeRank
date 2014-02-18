@@ -8,7 +8,7 @@
 
 #import "FirstViewController.h"
 #import "DataRetreiver.h"
-
+#import "Calculations.h"
 @interface FirstViewController ()
 
 @end
@@ -31,7 +31,11 @@
     
     //Philip crap
     NSLog(@"I made a change");
-    GetInstitutions();
+    
+    //test data retriever
+    NSLog(@"%@",GetInstitutions());
+    NSArray *colleges = [[NSArray alloc] initWithObjects: @"Goshen College", nil];
+    GetPreferences(colleges);
 }
 
 - (void)didReceiveMemoryWarning
