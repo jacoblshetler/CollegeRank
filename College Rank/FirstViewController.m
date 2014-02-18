@@ -7,6 +7,7 @@
 //
 
 #import "FirstViewController.h"
+#import "DataRetreiver.h"
 
 @interface FirstViewController ()
 
@@ -19,6 +20,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     NSLog(@"I made a change");
+    GetInstitutions();
 }
 
 - (void)didReceiveMemoryWarning
