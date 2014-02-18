@@ -19,6 +19,17 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    //quick testing normalize
+    NSMutableArray* ns = [[NSMutableArray alloc] init];
+    [ns addObject:[NSDecimalNumber decimalNumberWithString:@"5.0"]];
+    [ns addObject:[NSDecimalNumber decimalNumberWithString:@"6.0"]];
+    [ns addObject:[NSDecimalNumber decimalNumberWithString:@"1.3"]];
+    [ns addObject:[NSDecimalNumber decimalNumberWithString:@"20.0"]];
+    NSLog(@"%@",[Calculations normalize:ns]);
+    
+    
+    //Philip crap
     NSLog(@"I made a change");
     GetInstitutions();
 }
