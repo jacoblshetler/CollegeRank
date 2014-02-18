@@ -34,8 +34,8 @@
     
     //test data retriever
     NSLog(@"%@",GetInstitutions());
-    NSArray *colleges = [[NSArray alloc] initWithObjects: @"Goshen College", nil];
-    GetPreferences(colleges);
+    NSArray *colleges = [[NSArray alloc] initWithObjects: @"Goshen College", @"Shiloh University", nil];
+    NSLog(@"%@", GetPreferences(colleges));
 }
 
 - (void)didReceiveMemoryWarning
