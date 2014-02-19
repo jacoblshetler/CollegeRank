@@ -46,27 +46,32 @@ NSMutableArray* GetPreferences(NSArray* colleges)
                                                        options:0
                                                          error:&error];
     NSString *jsonString = [[NSString alloc] initWithData: jsonData encoding:NSUTF8StringEncoding];
+    jsonString = [jsonString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *url_string = @"http://199.8.232.152/college_rank/getData.php?";
     
     url_string = [url_string stringByAppendingString:[NSString stringWithFormat:@"function=%@&institutions=%@", @"getPreferences", jsonString]];
     NSMutableURLRequest *request =[NSMutableURLRequest requestWithURL:[NSURL URLWithString:url_string]];
-    NSLog(url_string);
     NSURLResponse *response;
     NSError *err;
+    
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
     NSMutableArray *college_list = [[NSMutableArray alloc] init];
-    if(responseData != nil){
-        
+    NSLog(@"%@", [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding]);
+    if(responseData != nil && !err){
         NSError* localError;
         id collegeObj = [NSJSONSerialization JSONObjectWithData:responseData
                                                   options:0
                                                     error:&localError];
+        if(localError)
+        {
+            NSLog(@"%@", localError);
+        }
         for(NSDictionary* dict in collegeObj){
             [college_list addObject:dict];
         }
     }
     else{
-        NSLog(@"No data!");
+        NSLog(@"%@", err);
     }
     return college_list;
 

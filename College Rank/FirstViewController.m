@@ -34,7 +34,7 @@
     
     //test data retriever
     NSLog(@"%@",GetInstitutions());
-    NSArray *colleges = [[NSArray alloc] initWithObjects: @"Goshen College", @"Shiloh University", nil];
+    NSArray *colleges = [[NSArray alloc] initWithObjects: @"Goshen College", nil];
     NSLog(@"%@", GetPreferences(colleges));
 }
 
