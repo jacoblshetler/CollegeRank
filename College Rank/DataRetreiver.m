@@ -56,7 +56,6 @@ NSMutableArray* GetPreferences(NSArray* colleges)
     
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
     NSMutableArray *college_list = [[NSMutableArray alloc] init];
-    NSLog(@"%@", [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding]);
     if(responseData != nil && !err){
         NSError* localError;
         id collegeObj = [NSJSONSerialization JSONObjectWithData:responseData
