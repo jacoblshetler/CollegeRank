@@ -7,7 +7,8 @@
 //
 
 #import "FirstViewController.h"
-
+#import "DataRetreiver.h"
+#import "Calculations.h"
 @interface FirstViewController ()
 
 @end
