@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Calculations : NSObject
-
 //TODO: We need to rethink how the methods that generate preference data are going to work
 //for the different preference types, as Philip pointed out
 
@@ -19,11 +17,7 @@
  The NSMutableArray of floating point preference values
  @return NSMutableArray of normalized NSDecimalNumbers representing preference values
  */
-+ (NSMutableArray *) normalize: (NSMutableArray *) prefValues;
-
-+ (float) geoDistance: (NSString *)zip1 : (NSString *) zip2;
-+ (NSDictionary *) generateRankings: (NSMutableArray *) usedInstitutions;
-- (NSMutableArray *) calculatePreferences: (NSMutableArray *) incomingInstitutions;
-
-
-@end
+NSMutableArray * normalize(NSMutableArray * prefValues);
+float geoDistance(NSString * zip1, NSString * zip2);
+NSDictionary * generateRankings(NSMutableArray * usedInstitutions);
+NSMutableArray * calculatePreferences(NSMutableArray * incomingInstitutions);

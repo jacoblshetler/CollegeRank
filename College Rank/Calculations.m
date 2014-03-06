@@ -8,10 +8,8 @@
 
 #import "Calculations.h"
 
-@implementation Calculations
 
-
-+ (NSMutableArray *) normalize: (NSMutableArray *) prefValues{
+NSMutableArray * normalize(NSMutableArray * prefValues){
     //create the sum values
     NSDecimalNumber* sum = [NSDecimalNumber decimalNumberWithString:@"0.0"];
     for (NSDecimalNumber * cur in prefValues){
@@ -28,21 +26,20 @@
 }
 
 
-+ (float) geoDistance: (NSString *)zip1 : (NSString *) zip2{
+float geoDistance(NSString * zip1, NSString * zip2){
     
     return 0.0f;
 }
 
 
-+ (NSMutableDictionary *) generateRankings: (NSMutableArray *) usedInstitutions{
+NSMutableDictionary * generateRankings(NSMutableArray * usedInstitutions){
     
     return [[NSMutableDictionary alloc] init];
 }
 
 
-- (NSMutableArray *) calculatePreferences: (NSMutableArray *) incomingInstitutions{
+NSMutableArray * calculatePreferences(NSMutableArray * incomingInstitutions){
     
     return [[NSMutableArray alloc] init];
 }
 
-@end
