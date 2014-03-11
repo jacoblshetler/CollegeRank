@@ -7,12 +7,29 @@
 //
 
 #import "DataRetreiver.h"
+#import "Reachability.h"
+#import <SystemConfiguration/SystemConfiguration.h>
+
+BOOL connected(){
+    Reachability * reach = [Reachability reachabilityForInternetConnection];
+    NetworkStatus netStatus = [reach currentReachabilityStatus];
+    return netStatus != NotReachable;
+}
 
 NSMutableArray* GetInstitutions()
 {
+    NSLog(@"Here");
+    if (!connected()){
+        NSLog(@"Here1");
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Network Failure" message:@"You are not connected to the Internet. \r\nPlease check your connection." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert setAlertViewStyle:UIAlertViewStyleDefault];
+        [alert show];
+        return nil;
+    }
+    
     NSString *url_string = @"http://199.8.232.152/college_rank/getData.php?";
     NSString *post =[[NSString alloc] initWithFormat:@"function=%@", @"getInstitutions"];
-
+    
     url_string = [url_string stringByAppendingString:post];
     NSLog(@"%@", url_string);
     NSMutableURLRequest *request =[NSMutableURLRequest requestWithURL:[NSURL URLWithString:url_string]];
@@ -23,8 +40,8 @@ NSMutableArray* GetInstitutions()
     NSMutableArray *college_list = [[NSMutableArray alloc] init];
     NSError* localError;
     id colleges = [NSJSONSerialization JSONObjectWithData:responseData
-                                                            options:0
-                                                              error:&localError];
+                                                  options:0
+                                                    error:&localError];
     for(NSDictionary* dict in colleges){
         [college_list addObject:[dict objectForKey:@"name"]];
     }
@@ -33,6 +50,13 @@ NSMutableArray* GetInstitutions()
 
 NSMutableArray* GetPreferences(NSArray* colleges)
 {
+    if (!connected()){
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Network Failure" message:@"You are not connected to the Internet. \r\nPlease check your connection." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert setAlertViewStyle:UIAlertViewStyleDefault];
+        [alert show];
+        return nil;
+    }
+    
     NSMutableArray *college_array = [[NSMutableArray alloc] init];
     for(NSString* college_name in colleges)
     {
@@ -59,8 +83,8 @@ NSMutableArray* GetPreferences(NSArray* colleges)
     if(responseData != nil && !err){
         NSError* localError;
         id collegeObj = [NSJSONSerialization JSONObjectWithData:responseData
-                                                  options:0
-                                                    error:&localError];
+                                                        options:0
+                                                          error:&localError];
         if(localError)
         {
             NSLog(@"%@", localError);
@@ -73,5 +97,4 @@ NSMutableArray* GetPreferences(NSArray* colleges)
         NSLog(@"%@", err);
     }
     return college_list;
-
 }

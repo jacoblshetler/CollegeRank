@@ -7,12 +7,14 @@
 //
 
 #import "AppDelegate.h"
+#import "DataRetreiver.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    NSMutableArray *myArr = GetInstitutions();
     return YES;
 }
 							
