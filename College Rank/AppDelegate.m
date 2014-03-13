@@ -16,11 +16,12 @@
 {
     // Override point for customization after application launch.
     NSMutableArray *myArrI = GetInstitutions();
-    NSMutableArray *myArr = GetPreferences([[NSArray alloc] initWithObjects:@"Goshen College", nil]);
+    NSMutableArray *myArr = GetPreferences([[NSArray alloc] initWithObjects:@"Criswell College", nil]);
     NSLog(@"%@", myArr);
     
-    Institution * newInt = [[Institution alloc] initWithName:@"Goshen College"];
-    NSLog(@"%i",[newInt location]);
+    Institution * newInt = [[Institution alloc] initWithName:@"Criswell College"];
+    NSLog(@"%@",[newInt location]);
+    NSLog(@"%@",[newInt studentFacultyRatio]);
     
     return YES;
 }

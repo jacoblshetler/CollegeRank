@@ -32,7 +32,7 @@
 - (int) selectivity;
 - (float) sat;
 - (NSArray*) demographics;
-- (int) studentFacultyRatio;
+- (NSNumber*) studentFacultyRatio;
 
 @end
 
