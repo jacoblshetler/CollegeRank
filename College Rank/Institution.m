@@ -37,13 +37,7 @@
 
 
  - (NSString *) location{
-     NSLog(@"%@",[self.data valueForKey:@"zip_code"][0]);
-     
-     NSString *className = NSStringFromClass([[self.data valueForKey:@"zip_code"][0] class]);
-     NSLog(@"%@",className);
-     
      return [self.data valueForKey:@"zip_code"][0];
-//     return [[self.data valueForKey:@"zip_code"] componentsJoinedByString:@""];
  }
 /*
  - (NSString*) type{
@@ -91,10 +85,11 @@
  - (NSArray*) demographics{
  
  }
- - (int) studentFacultyRatio{
- return 0;
- }
  */
+ - (NSNumber *) studentFacultyRatio{
+     return [self.data valueForKey:@"stud_to_fac"][0];
+ }
+
 
 @end
 
