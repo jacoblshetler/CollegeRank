@@ -17,13 +17,17 @@ BOOL connected(){
     return netStatus != NotReachable;
 }
 
+void giveError(){
+    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Network Failure" message:@"No internet connection: \r\nplease check your connection." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert setAlertViewStyle:UIAlertViewStyleDefault];
+    [alert show];
+}
+
 NSMutableArray* GetInstitutions()
 {
     //THIS ONLY WORKS IF THE SYSTEMCONFIGURATION FRAMEWORK HAS BEEN ADDED TO THE PROJECT.
     if (!connected()){
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Network Failure" message:@"No internet connection: \r\nplease check your connection." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert setAlertViewStyle:UIAlertViewStyleDefault];
-        [alert show];
+        giveError();
         return nil;
     }
     
@@ -55,9 +59,7 @@ NSMutableArray* GetInstitutions()
 NSMutableArray* GetPreferences(NSArray* colleges)
 {
     if (!connected()){
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Network Failure" message:@"You are not connected to the Internet. \r\nPlease check your connection." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert setAlertViewStyle:UIAlertViewStyleDefault];
-        [alert show];
+        giveError();
         return nil;
     }
     
@@ -93,6 +95,7 @@ NSMutableArray* GetPreferences(NSArray* colleges)
         id collegeObj = [NSJSONSerialization JSONObjectWithData:responseData
                                                         options:0
                                                           error:&localError];
+        
         if(localError)
         {
             NSLog(@"%@", localError);

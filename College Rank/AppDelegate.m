@@ -8,13 +8,20 @@
 
 #import "AppDelegate.h"
 #import "DataRetreiver.h"
+#import "Institution.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    NSMutableArray *myArr = GetInstitutions();
+    NSMutableArray *myArrI = GetInstitutions();
+    NSMutableArray *myArr = GetPreferences([[NSArray alloc] initWithObjects:@"Goshen College", nil]);
+    NSLog(@"%@", myArr);
+    
+    Institution * newInt = [[Institution alloc] initWithName:@"Goshen College"];
+    NSLog(@"%i",[newInt location]);
+    
     return YES;
 }
 							

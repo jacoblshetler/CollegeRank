@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3697488618B2DBCA001EE530 /* DataRetreiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 3697488518B2DBCA001EE530 /* DataRetreiver.m */; };
 		8445148318D1F7D3000472DA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8445148218D1F7D3000472DA /* SystemConfiguration.framework */; };
+		8445148618D1FBB4000472DA /* InstitutionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445148518D1FBB4000472DA /* InstitutionManager.m */; };
 		844E76F918AD289100A6FC91 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844E76F818AD289100A6FC91 /* Foundation.framework */; };
 		844E76FB18AD289100A6FC91 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844E76FA18AD289100A6FC91 /* CoreGraphics.framework */; };
 		844E76FD18AD289100A6FC91 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844E76FC18AD289100A6FC91 /* UIKit.framework */; };
@@ -45,6 +46,8 @@
 		3697488418B2DBCA001EE530 /* DataRetreiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataRetreiver.h; sourceTree = "<group>"; };
 		3697488518B2DBCA001EE530 /* DataRetreiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataRetreiver.m; sourceTree = "<group>"; };
 		8445148218D1F7D3000472DA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		8445148418D1FBB4000472DA /* InstitutionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstitutionManager.h; sourceTree = "<group>"; };
+		8445148518D1FBB4000472DA /* InstitutionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstitutionManager.m; sourceTree = "<group>"; };
 		844E76F518AD289100A6FC91 /* College Rank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "College Rank.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		844E76F818AD289100A6FC91 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		844E76FA18AD289100A6FC91 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -153,6 +156,10 @@
 				E3698A9618AD2ED800A54627 /* ThirdViewController.h */,
 				E3698A9718AD2ED800A54627 /* ThirdViewController.m */,
 				844E771318AD289100A6FC91 /* Images.xcassets */,
+				E3C5CD6B18CF68B800C5DBA2 /* Institution.h */,
+				E3C5CD6C18CF68B800C5DBA2 /* Institution.m */,
+				8445148418D1FBB4000472DA /* InstitutionManager.h */,
+				8445148518D1FBB4000472DA /* InstitutionManager.m */,
 				844E76FF18AD289100A6FC91 /* Supporting Files */,
 			);
 			path = "College Rank";
@@ -163,8 +170,6 @@
 			children = (
 				E35B7C3B18AFEF1D00F64A68 /* PreferenceManager.h */,
 				E35B7C3C18AFEF1D00F64A68 /* PreferenceManager.m */,
-				E3C5CD6B18CF68B800C5DBA2 /* Institution.h */,
-				E3C5CD6C18CF68B800C5DBA2 /* Institution.m */,
 				844E770018AD289100A6FC91 /* College Rank-Info.plist */,
 				844E770118AD289100A6FC91 /* InfoPlist.strings */,
 				844E770418AD289100A6FC91 /* main.m */,
@@ -290,6 +295,7 @@
 			files = (
 				844E771218AD289100A6FC91 /* SecondViewController.m in Sources */,
 				E3698A9818AD2ED800A54627 /* ThirdViewController.m in Sources */,
+				8445148618D1FBB4000472DA /* InstitutionManager.m in Sources */,
 				844E770918AD289100A6FC91 /* AppDelegate.m in Sources */,
 				84B9BD3918B2DC8700469696 /* Calculations.m in Sources */,
 				E3C5CD7018CF692700C5DBA2 /* Reachability.m in Sources */,
