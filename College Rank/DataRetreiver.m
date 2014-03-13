@@ -12,16 +12,16 @@
 
 BOOL connected(){
     Reachability * reach = [Reachability reachabilityForInternetConnection];
+    [reach startNotifier];
     NetworkStatus netStatus = [reach currentReachabilityStatus];
     return netStatus != NotReachable;
 }
 
 NSMutableArray* GetInstitutions()
 {
-    NSLog(@"Here");
+    //THIS ONLY WORKS IF THE SYSTEMCONFIGURATION FRAMEWORK HAS BEEN ADDED TO THE PROJECT.
     if (!connected()){
-        NSLog(@"Here1");
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Network Failure" message:@"You are not connected to the Internet. \r\nPlease check your connection." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Network Failure" message:@"No internet connection: \r\nplease check your connection." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert setAlertViewStyle:UIAlertViewStyleDefault];
         [alert show];
         return nil;
@@ -39,6 +39,10 @@ NSMutableArray* GetInstitutions()
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
     NSMutableArray *college_list = [[NSMutableArray alloc] init];
     NSError* localError;
+    if(!responseData)
+    {
+        return nil;
+    }
     id colleges = [NSJSONSerialization JSONObjectWithData:responseData
                                                   options:0
                                                     error:&localError];
@@ -66,6 +70,10 @@ NSMutableArray* GetPreferences(NSArray* colleges)
     //NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjects:colleges forKeys:keys];
     //NSLog(@"%@", jsonDictionary);
     NSError *error;
+    if(!college_array)
+    {
+        return nil;
+    }
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:college_array
                                                        options:0
                                                          error:&error];

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3697488618B2DBCA001EE530 /* DataRetreiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 3697488518B2DBCA001EE530 /* DataRetreiver.m */; };
+		8445148318D1F7D3000472DA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8445148218D1F7D3000472DA /* SystemConfiguration.framework */; };
 		844E76F918AD289100A6FC91 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844E76F818AD289100A6FC91 /* Foundation.framework */; };
 		844E76FB18AD289100A6FC91 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844E76FA18AD289100A6FC91 /* CoreGraphics.framework */; };
 		844E76FD18AD289100A6FC91 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844E76FC18AD289100A6FC91 /* UIKit.framework */; };
@@ -43,6 +44,7 @@
 /* Begin PBXFileReference section */
 		3697488418B2DBCA001EE530 /* DataRetreiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataRetreiver.h; sourceTree = "<group>"; };
 		3697488518B2DBCA001EE530 /* DataRetreiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataRetreiver.m; sourceTree = "<group>"; };
+		8445148218D1F7D3000472DA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		844E76F518AD289100A6FC91 /* College Rank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "College Rank.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		844E76F818AD289100A6FC91 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		844E76FA18AD289100A6FC91 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -81,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8445148318D1F7D3000472DA /* SystemConfiguration.framework in Frameworks */,
 				844E76FB18AD289100A6FC91 /* CoreGraphics.framework in Frameworks */,
 				844E76FD18AD289100A6FC91 /* UIKit.framework in Frameworks */,
 				844E76F918AD289100A6FC91 /* Foundation.framework in Frameworks */,
@@ -122,6 +125,7 @@
 		844E76F718AD289100A6FC91 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8445148218D1F7D3000472DA /* SystemConfiguration.framework */,
 				844E76F818AD289100A6FC91 /* Foundation.framework */,
 				844E76FA18AD289100A6FC91 /* CoreGraphics.framework */,
 				844E76FC18AD289100A6FC91 /* UIKit.framework */,
