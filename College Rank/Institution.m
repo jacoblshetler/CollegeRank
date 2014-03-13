@@ -35,10 +35,17 @@
 }
 
 
-/*
- - (int) location{
- return 0;
+
+ - (NSString *) location{
+     NSLog(@"%@",[self.data valueForKey:@"zip_code"][0]);
+     
+     NSString *className = NSStringFromClass([[self.data valueForKey:@"zip_code"][0] class]);
+     NSLog(@"%@",className);
+     
+     return [self.data valueForKey:@"zip_code"][0];
+//     return [[self.data valueForKey:@"zip_code"] componentsJoinedByString:@""];
  }
+/*
  - (NSString*) type{
  return nil;
  }
