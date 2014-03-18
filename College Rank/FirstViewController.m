@@ -50,8 +50,8 @@
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
-#warning allInstitutions is a list of strings, need zip code
-    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"name contains[c] %@", searchText];
+#warning needs zip code
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"Self contains[c] %@", searchText];
     _searchResults = [[_institutions allInstitutions] filteredArrayUsingPredicate:resultPredicate];
 }
 
@@ -60,8 +60,7 @@
     [self filterContentForSearchText:searchString
                                scope:[[self.searchDisplayController.searchBar scopeButtonTitles]
                                       objectAtIndex:[self.searchDisplayController.searchBar
-                                                     selectedScopeButtonIndex]]];
-    
+                                                    selectedScopeButtonIndex]]];
     return YES;
 }
 
@@ -85,16 +84,20 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    Institution* inst = nil;
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        inst = [_searchResults objectAtIndex:indexPath.row];
-    } else {
-        inst = [[_institutions userInstitutions] objectAtIndex:indexPath.row];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier]; //forIndexPath:indexPath];
+
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    cell.textLabel.text = inst.name;
-    cell.detailTextLabel.text = inst.location;
+    
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        cell.textLabel.text = [_searchResults objectAtIndex:indexPath.row];
+        cell.detailTextLabel.text = @"";
+    } else {
+        Institution* inst = [[_institutions userInstitutions] objectAtIndex:indexPath.row];
+        cell.textLabel.text = inst.name;
+        cell.detailTextLabel.text = inst.location;
+    }
     
     return cell;
 }
