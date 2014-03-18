@@ -29,7 +29,6 @@
 		844E772518AD289100A6FC91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 844E772318AD289100A6FC91 /* InfoPlist.strings */; };
 		844E772718AD289100A6FC91 /* College_RankTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 844E772618AD289100A6FC91 /* College_RankTests.m */; };
 		84B9BD3918B2DC8700469696 /* Calculations.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B9BD3818B2DC8700469696 /* Calculations.m */; };
-		E35B7C3D18AFEF1D00F64A68 /* PreferenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E35B7C3C18AFEF1D00F64A68 /* PreferenceManager.m */; };
 		E3698A9818AD2ED800A54627 /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3698A9718AD2ED800A54627 /* ThirdViewController.m */; };
 		E3C5CD6D18CF68B800C5DBA2 /* Institution.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5CD6C18CF68B800C5DBA2 /* Institution.m */; };
 		E3C5CD7018CF692700C5DBA2 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5CD6F18CF692700C5DBA2 /* Reachability.m */; };
@@ -80,8 +79,6 @@
 		844E772618AD289100A6FC91 /* College_RankTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = College_RankTests.m; sourceTree = "<group>"; };
 		84B9BD3718B2DC8700469696 /* Calculations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Calculations.h; sourceTree = "<group>"; };
 		84B9BD3818B2DC8700469696 /* Calculations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Calculations.m; sourceTree = "<group>"; };
-		E35B7C3B18AFEF1D00F64A68 /* PreferenceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferenceManager.h; sourceTree = "<group>"; };
-		E35B7C3C18AFEF1D00F64A68 /* PreferenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferenceManager.m; sourceTree = "<group>"; };
 		E3698A9618AD2ED800A54627 /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
 		E3698A9718AD2ED800A54627 /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
 		E3C5CD6B18CF68B800C5DBA2 /* Institution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Institution.h; sourceTree = "<group>"; };
@@ -183,8 +180,6 @@
 		844E76FF18AD289100A6FC91 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E35B7C3B18AFEF1D00F64A68 /* PreferenceManager.h */,
-				E35B7C3C18AFEF1D00F64A68 /* PreferenceManager.m */,
 				844E770018AD289100A6FC91 /* College Rank-Info.plist */,
 				844E770118AD289100A6FC91 /* InfoPlist.strings */,
 				844E770418AD289100A6FC91 /* main.m */,
@@ -318,7 +313,6 @@
 				3659A79118D79DBB00E975E5 /* Preference.m in Sources */,
 				844E770F18AD289100A6FC91 /* FirstViewController.m in Sources */,
 				E3C5CD6D18CF68B800C5DBA2 /* Institution.m in Sources */,
-				E35B7C3D18AFEF1D00F64A68 /* PreferenceManager.m in Sources */,
 				3697488618B2DBCA001EE530 /* DataRetreiver.m in Sources */,
 				365A9CD518D7B18100978516 /* UserPreference.m in Sources */,
 				844E770518AD289100A6FC91 /* main.m in Sources */,
