@@ -14,6 +14,7 @@ BOOL connected(){
     Reachability * reach = [Reachability reachabilityForInternetConnection];
     [reach startNotifier];
     NetworkStatus netStatus = [reach currentReachabilityStatus];
+    NSLog(@"%d",netStatus != NotReachable);
     return netStatus != NotReachable;
 }
 
