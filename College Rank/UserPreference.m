@@ -26,11 +26,11 @@
 {
     self.weight = weight;
 }
-
 -(int) getWeight
 {
     return self.weight;
 }
+
 
 -(void) changeLock
 {

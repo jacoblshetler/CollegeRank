@@ -39,10 +39,10 @@
  - (NSString *) location{
      return [self.data valueForKey:@"zip_code"][0];
  }
-/*
+
  - (NSString*) type{
  return nil;
- }
+ }/*
  - (NSArray*) urbanization{
  
  }
@@ -69,20 +69,29 @@
  }
  - (NSString*) degree{
  
+ }*/
+ - (NSString*) size{
+     return [self.data valueForKey:@"size"][0];
  }
- - (int) size{
- return 0;
+- (NSString*) cost: (NSString*)type{
+    //acceptable values for parameter "type" are:
+    //cost_alone_in
+    //cost_alone_out
+    //cost_fam_in
+    //cost_fam_out
+    //cost_on_in
+    //cost_in_out
+     return [self.data valueForKey:type][0];
  }
- - (int) cost{
- return 0;
+ - (NSString*) selectivity{
+     return [self.data valueForKey:@"selectivity"][0];
  }
- - (int) selectivity{
- return 0;
+ - (NSString*) sat{
+     int mathAverage = ([[self.data valueForKey:@"sat_math_25"][0] intValue]+[[self.data valueForKey:@"sat_math_75"][0] intValue])/2;
+     int readAverage = ([[self.data valueForKey:@"sat_read_25"][0] intValue]+[[self.data valueForKey:@"sat_read_75"][0] intValue])/2;
+     return [[NSString alloc] initWithFormat:@"%d",mathAverage+readAverage];
  }
- - (float) sat{
- 
- }
- - (NSArray*) demographics{
+/* - (NSArray*) demographics{
  
  }
  */

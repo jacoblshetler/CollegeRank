@@ -27,10 +27,10 @@
 - (BOOL) baseball;
 - (BOOL) xCountryAndTrack;
 - (NSString*) degree;
-- (int) size;
-- (int) cost;
-- (int) selectivity;
-- (float) sat;
+- (NSString*) size;
+- (NSString*) cost: (NSString*) type;
+- (NSString*) selectivity;
+- (NSString*) sat;
 - (NSArray*) demographics;
 - (NSNumber*) studentFacultyRatio;
 
