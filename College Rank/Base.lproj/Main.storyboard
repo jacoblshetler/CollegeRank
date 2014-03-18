@@ -4,61 +4,54 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
-        <!--First View Controller - Colleges-->
-        <scene sceneID="W3I-pn-N6e">
+        <!--Table View Controller - Colleges-->
+        <scene sceneID="I4l-Ra-oIa">
             <objects>
-                <viewController title="Colleges" id="CZ4-MO-1fc" customClass="FirstViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Dyy-E6-ESy"/>
-                        <viewControllerLayoutGuide type="bottom" id="YlO-7k-AAU"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="2VE-Yg-loa">
+                <tableViewController id="U8v-GT-1y8" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="g7W-lV-MwB">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KST-nQ-3aN">
-                                <rect key="frame" x="0.0" y="21" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <items>
-                                    <navigationItem title="College Rank" id="fyC-Qp-uEQ"/>
-                                </items>
-                            </navigationBar>
-                            <searchBar contentMode="redraw" fixedFrame="YES" text="" placeholder="Find a College" translatesAutoresizingMaskIntoConstraints="NO" id="HJa-Pk-RaU">
-                                <rect key="frame" x="0.0" y="65" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="CZ4-MO-1fc" id="e3K-hJ-uqY"/>
-                                </connections>
-                            </searchBar>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Colleges" image="first" id="u1e-5L-l1D"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="duQ-14-ePB">
+                            <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="U8v-GT-1y8" id="Plf-pS-7JI"/>
+                            </connections>
+                        </searchBar>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="aFS-hO-rIM">
+                                <rect key="frame" x="0.0" y="130" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aFS-hO-rIM" id="pmw-Ia-Tzy">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="U8v-GT-1y8" id="wDR-6A-43e"/>
+                            <outlet property="delegate" destination="U8v-GT-1y8" id="x8p-hz-Byt"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Colleges" id="M3j-db-EXH"/>
                     <connections>
-                        <outlet property="searchDisplayController" destination="uln-Be-gVc" id="MQ0-t9-DSa"/>
+                        <outlet property="searchDisplayController" destination="dWa-vY-Kb6" id="CdN-CH-ygW"/>
                     </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Qh2-T1-AhA" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="Mk1-ZN-ZxT">
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4xh-Ta-AYl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="dWa-vY-Kb6">
                     <connections>
-                        <outlet property="delegate" destination="CZ4-MO-1fc" id="FBw-Hi-rih"/>
-                        <outlet property="searchBar" destination="HJa-Pk-RaU" id="Pa4-ds-4bh"/>
-                        <outlet property="searchContentsController" destination="CZ4-MO-1fc" id="m4N-zQ-H3E"/>
-                        <outlet property="searchResultsDataSource" destination="CZ4-MO-1fc" id="SOu-c4-M52"/>
-                        <outlet property="searchResultsDelegate" destination="CZ4-MO-1fc" id="dyN-Ro-aPP"/>
-                    </connections>
-                </searchDisplayController>
-                <searchDisplayController id="uln-Be-gVc">
-                    <connections>
-                        <outlet property="delegate" destination="CZ4-MO-1fc" id="v7p-rk-3DJ"/>
-                        <outlet property="searchContentsController" destination="CZ4-MO-1fc" id="4C5-7S-DYD"/>
-                        <outlet property="searchResultsDataSource" destination="CZ4-MO-1fc" id="hhg-CT-hKK"/>
-                        <outlet property="searchResultsDelegate" destination="CZ4-MO-1fc" id="6G9-vY-9LV"/>
+                        <outlet property="delegate" destination="U8v-GT-1y8" id="gme-Oi-w2s"/>
+                        <outlet property="searchBar" destination="duQ-14-ePB" id="Cfw-Y2-Uhf"/>
+                        <outlet property="searchContentsController" destination="U8v-GT-1y8" id="nDA-nL-xvv"/>
+                        <outlet property="searchResultsDataSource" destination="U8v-GT-1y8" id="27L-3P-ERf"/>
+                        <outlet property="searchResultsDelegate" destination="U8v-GT-1y8" id="Onb-Yv-acZ"/>
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="651" y="-284"/>
+            <point key="canvasLocation" x="1362" y="-587"/>
         </scene>
         <!--Second View Controller - Preferences-->
         <scene sceneID="ot8-2e-RuS">
@@ -134,7 +127,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="CZ4-MO-1fc" kind="relationship" relationship="viewControllers" id="SUk-Ux-ee1"/>
+                        <segue destination="Kpa-85-mMW" kind="relationship" relationship="viewControllers" id="Q7w-7j-Shy"/>
                         <segue destination="QUy-BD-bpt" kind="relationship" relationship="viewControllers" id="M8t-EP-wfW"/>
                         <segue destination="OeI-6D-nyC" kind="relationship" relationship="viewControllers" id="Ftg-ms-UQc"/>
                     </connections>
@@ -142,6 +135,26 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNP-y4-bzi" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="156" y="194"/>
+        </scene>
+        <!--Navigation Controller - Colleges-->
+        <scene sceneID="gJO-Aj-VLn">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Kpa-85-mMW" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Colleges" image="first" id="Mib-Kp-HLj"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="dhw-s7-ohO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="HNg-Vq-e4i">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="U8v-GT-1y8" kind="relationship" relationship="rootViewController" id="I6m-NP-q1B"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aGh-Qm-bBn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="714" y="-569"/>
         </scene>
     </scenes>
     <resources>
