@@ -70,5 +70,17 @@
     return containsQuery;
 }
 
+-(Institution*) getUserInstitutionForString: (NSString*) name{
+    for(Institution* inst in self.userInstitutions)
+    {
+        if([inst.name caseInsensitiveCompare:name] == NSOrderedSame)
+        {
+            return inst;
+        }
+    }
+    return nil;
+
+}
+
 
 @end

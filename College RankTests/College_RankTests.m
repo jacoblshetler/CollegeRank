@@ -7,6 +7,9 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "Institution.h"
+#import "InstitutionManager.h"
+#import "DataRetreiver.h"
 
 @interface College_RankTests : XCTestCase
 
@@ -26,9 +29,22 @@
     [super tearDown];
 }
 
-- (void)testExample
+-(void) testSomeShit
 {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    NSMutableArray *all = GetInstitutions();
+    XCTAssertEqual((int)[all count], 4904, @"Count these bitches.");
+    
+    for (NSString* curName in all){
+        [[InstitutionManager sharedInstance] addInstitution:curName];
+        Institution* curInst = [[InstitutionManager sharedInstance] getUserInstitutionForString:curName];
+        //first make sure names are the same
+        XCTAssertEqual(curInst.name, curName, @"Name mismatch");
+        
+        //check each data point to make sure it is set correctly
+        NSMutableArray* curPrefsFromInterwebs = GetPreferences([[NSArray alloc] initWithObjects:curName, nil]);
+        
+        XCTAssertEqual([curInst location], [curPrefsFromInterwebs[0] valueForKey:@"zip_code"], @"Zip Code mismatch");
+    }
 }
 
 @end
