@@ -31,7 +31,7 @@
 - (NSString*) cost: (NSString*) type;
 - (NSString*) selectivity;
 - (NSString*) sat;
-- (NSArray*) demographics;
+- (NSDictionary*) demographics;
 - (NSNumber*) studentFacultyRatio;
 
 @end

@@ -34,45 +34,53 @@
     return self;
 }
 
-
-
  - (NSString *) location{
      return [self.data valueForKey:@"zip_code"][0];
  }
 
  - (NSString*) type{
- return nil;
- }/*
+     return [self.data valueForKey:@"ownership"][0];
+ }
  - (NSArray*) urbanization{
- 
+     return [self.data valueForKey:@"urbanization"][0];
  }
+
  - (NSString*) religiousAffiliation{
- 
+     return [self.data valueForKey:@"religion"][0];
  }
+
  - (BOOL) studyAbroad{
- 
+     return ([[self.data valueForKey:@"study_abroad"][0] isEqual:@"1"]);
  }
+
  - (BOOL) dayCare{
- 
+     return ([[self.data valueForKey:@"day_care"][0] isEqual:@"1"]);
  }
+
  - (BOOL) football{
- 
+     return ([[self.data valueForKey:@"football_memb"][0] isEqual:@"1"]);
  }
+
  - (BOOL) basketball{
- 
+     return ([[self.data valueForKey:@"basketball_memb"][0] isEqual:@"1"]);
  }
+
  - (BOOL) baseball{
- 
+     return ([[self.data valueForKey:@"baseball_memb"][0] isEqual:@"1"]);
  }
+
  - (BOOL) xCountryAndTrack{
- 
+     return ([[self.data valueForKey:@"xc_memb"][0] isEqual:@"1"]);
  }
+
  - (NSString*) degree{
- 
- }*/
+     return [self.data valueForKey:@"degree"][0];
+ }
+
  - (NSString*) size{
      return [self.data valueForKey:@"size"][0];
  }
+
 - (NSString*) cost: (NSString*)type{
     //acceptable values for parameter "type" are:
     //cost_alone_in
@@ -83,18 +91,28 @@
     //cost_in_out
      return [self.data valueForKey:type][0];
  }
+
  - (NSString*) selectivity{
      return [self.data valueForKey:@"selectivity"][0];
  }
+
  - (NSString*) sat{
      int mathAverage = ([[self.data valueForKey:@"sat_math_25"][0] intValue]+[[self.data valueForKey:@"sat_math_75"][0] intValue])/2;
      int readAverage = ([[self.data valueForKey:@"sat_read_25"][0] intValue]+[[self.data valueForKey:@"sat_read_75"][0] intValue])/2;
      return [[NSString alloc] initWithFormat:@"%d",mathAverage+readAverage];
  }
-/* - (NSArray*) demographics{
- 
+
+- (NSDictionary*) demographics{
+    return @{@"asian":[self.data valueForKey:@"asian_perc"],
+             @"black":[self.data valueForKey:@"black_perc"],
+             @"hispanic":[self.data valueForKey:@"hispanic_perc"],
+             @"native":[self.data valueForKey:@"native_perc"],
+             @"pacific":[self.data valueForKey:@"pac_isl_perc"],
+             @"white":[self.data valueForKey:@"white_perc"]
+             };
  }
- */
+
+
  - (NSNumber *) studentFacultyRatio{
      return [self.data valueForKey:@"stud_to_fac"][0];
  }

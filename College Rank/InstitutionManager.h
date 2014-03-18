@@ -10,7 +10,7 @@
 
 @interface InstitutionManager : NSObject
 
-@property (nonatomic) NSMutableArray* allInstitutions;
+@property (nonatomic) NSArray* allInstitutions;
 @property (nonatomic) NSMutableArray* userInstitutions;
 
 - (void) addInstitution: (NSString *) newInstitutionName; //Initializes and adds an Institution to the userInstitutions
