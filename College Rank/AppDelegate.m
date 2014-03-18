@@ -21,11 +21,7 @@
     
     Institution * newInt = [[Institution alloc] initWithName:@"Goshen College"];
     NSLog(@"%@",[newInt location]);
-    NSLog(@"%@",[newInt studentFacultyRatio]);
-    NSLog(@"%@",[newInt size]);
     NSLog(@"%@",[newInt cost:@"cost_alone_in"]);
-    NSLog(@"%@",[newInt selectivity]);
-    NSLog(@"%@",[newInt sat]);
     
     return YES;
 }
