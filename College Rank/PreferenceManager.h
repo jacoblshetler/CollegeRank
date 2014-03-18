@@ -2,26 +2,29 @@
 //  PreferenceManager.h
 //  College Rank
 //
-//  Created by Philip Bontrager on 2/15/14.
+//  Created by Michael John Yoder on 3/17/14.
 //  Copyright (c) 2014 GCInformatics. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
+@class Preference;
+@class UserPreference;
+
+
 @interface PreferenceManager : NSObject
+@property NSMutableArray* userPrefs;
+@property NSArray* allPrefs;
 
-@property (nonatomic, copy) NSArray* allPreferenceCategories;
-@property (nonatomic, copy) NSMutableArray* userPreferenceCategories;
-@property (nonatomic, copy) NSArray* userWeights;
-@property (nonatomic, copy) NSMutableArray* lockedWeights;
-//@property (nonatomic, copy) institutions
-
-//userData   //User Preference Data
-//dataDictionary
-//getter methods for the six properties
 + (id)sharedInstance;
-- (NSArray*) getAllPreferenceCategories:(NSString *) query;
-- (void) addUserPreference: (NSString *) preference withData: (NSArray *) data;
-//-
+-(NSArray*) getAllPrefs;
+-(NSMutableArray*) getAllUserPrefs;
+-(void) addUserPref: (UserPreference*) pref;
+-(void) addUserPref: (Preference*) pref withWeight: (int) weight;
+-(UserPreference*) getUserPreferenceAtIndex: (int) index;
+-(Preference*) getPreferenceAtIndex: (int) index;
+-(UserPreference*) getUserPreferenceForString: (NSString*) name;
+-(Preference*) getPreferenceForString: (NSString*) name;
+
 
 @end
