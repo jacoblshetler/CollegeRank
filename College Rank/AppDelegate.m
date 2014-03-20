@@ -15,8 +15,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    NSMutableArray *myArr = GetPreferences([[NSArray alloc] initWithObjects:@"Goshen College", nil]);
-    NSLog(@"%@", myArr);
     
     return YES;
 }

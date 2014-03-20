@@ -50,7 +50,7 @@
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
-#warning needs zip code
+//#warning needs zip code
     NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"Self contains[c] %@", searchText];
     _searchResults = [[_institutions allInstitutions] filteredArrayUsingPredicate:resultPredicate];
 }
@@ -92,11 +92,9 @@
     
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         cell.textLabel.text = [_searchResults objectAtIndex:indexPath.row];
-        cell.detailTextLabel.text = @"";
     } else {
         Institution* inst = [[_institutions userInstitutions] objectAtIndex:indexPath.row];
         cell.textLabel.text = inst.name;
-        cell.detailTextLabel.text = inst.location;
     }
     
     return cell;
