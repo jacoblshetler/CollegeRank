@@ -42,7 +42,6 @@ NSMutableArray* GetInstitutions()
     NSURLResponse *response;
     NSError *err;
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
-    NSMutableArray *college_list = [[NSMutableArray alloc] init];
     NSError* localError;
     if(!responseData)
     {
@@ -50,11 +49,8 @@ NSMutableArray* GetInstitutions()
     }
     id colleges = [NSJSONSerialization JSONObjectWithData:responseData
                                                   options:0
-                                                    error:&localError];
-    for(NSDictionary* dict in colleges){
-        [college_list addObject:[dict objectForKey:@"name"]];
-    }
-    return college_list;
+                                                error:&localError];
+    return colleges;
 }
 
 NSMutableArray* GetPreferences(NSArray* colleges)
