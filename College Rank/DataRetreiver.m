@@ -14,7 +14,7 @@ BOOL connected(){
     Reachability * reach = [Reachability reachabilityForInternetConnection];
     [reach startNotifier];
     NetworkStatus netStatus = [reach currentReachabilityStatus];
-    NSLog(@"%d",netStatus != NotReachable);
+    //NSLog(@"%d",netStatus != NotReachable);
     return netStatus != NotReachable;
 }
 
@@ -36,7 +36,7 @@ NSMutableArray* GetInstitutions()
     NSString *post =[[NSString alloc] initWithFormat:@"function=%@", @"getInstitutions"];
     
     url_string = [url_string stringByAppendingString:post];
-    NSLog(@"%@", url_string);
+    //NSLog(@"%@", url_string);
     NSMutableURLRequest *request =[NSMutableURLRequest requestWithURL:[NSURL URLWithString:url_string]];
     
     NSURLResponse *response;

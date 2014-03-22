@@ -29,10 +29,11 @@
     [super tearDown];
 }
 
--(void) testSomeShit
+-(void) testSomeStuff
 {
     NSMutableArray *all = GetInstitutions();
-    XCTAssertEqual((int)[all count], 4904, @"Count these bitches.");
+    XCTAssertEqual((int)[all count], 4904, @"Count these things.");
+    //NSLog(@"%@",all[1]);
     
     for (NSString* curName in all){
         [[InstitutionManager sharedInstance] addInstitution:curName];

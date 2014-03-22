@@ -100,6 +100,17 @@
     return cell;
 }
 
+#pragma actions
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *entry = [_searchResults objectAtIndex:[indexPath row]];
+    [_institutions addInstitution:entry];
+    [self.tableView reloadData];
+    
+    //NSLog(@"%@",entry);
+}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
