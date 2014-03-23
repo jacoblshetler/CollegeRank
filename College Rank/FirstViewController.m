@@ -9,7 +9,7 @@
 #import "InstitutionManager.h"
 #import "Institution.h"
 #import "FirstViewController.h"
-
+#import "DataRetreiver.h"
 @interface FirstViewController ()
 
 @property InstitutionManager* institutions;
@@ -33,6 +33,7 @@
     [super viewDidLoad];
     
     _institutions = [InstitutionManager sharedInstance];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
