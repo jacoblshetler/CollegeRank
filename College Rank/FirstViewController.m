@@ -38,7 +38,7 @@
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,7 +51,6 @@
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
-//#warning needs zip code
     NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"Self contains[c] %@", searchText];
     _searchResults = [[_institutions allInstitutions] filteredArrayUsingPredicate:resultPredicate];
 }
@@ -105,11 +104,22 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *entry = [_searchResults objectAtIndex:[indexPath row]];
-    [_institutions addInstitution:entry];
-    [self.tableView reloadData];
-    
-    //NSLog(@"%@",entry);
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        if ([[_institutions userInstitutions] count] > 10) {
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Maximum Reached" message:@"Sorry, but you can only add up to 10 colleges." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert setAlertViewStyle:UIAlertViewStyleDefault];
+            [alert show];
+            [self.searchDisplayController setActive:NO animated:YES];
+        } else {
+            NSString *entry = [_searchResults objectAtIndex:[indexPath row]];
+            NSPredicate *memberPredicate = [NSPredicate predicateWithFormat:@"name matches %@", entry];
+            if ([[[_institutions userInstitutions] filteredArrayUsingPredicate:memberPredicate] count] < 1) {
+                [_institutions addInstitution:entry];
+                [self.searchDisplayController setActive:NO animated:YES];
+                [self.tableView reloadData];
+            }
+        }
+    }
 }
 
 /*
@@ -121,19 +131,20 @@
 }
 */
 
-/*
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
+        [_institutions removeInstitution:[[[_institutions userInstitutions] objectAtIndex:indexPath.row] name]];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.

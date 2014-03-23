@@ -20,6 +20,7 @@
     if (self = [super init]){
         NSMutableArray *myArrI = GetInstitutions();
         allInstitutions = [[NSArray alloc] initWithArray:myArrI copyItems:TRUE];
+        userInstitutions = [NSMutableArray new];
     }
     return self;
 }
