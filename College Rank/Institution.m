@@ -23,6 +23,7 @@
         self.name = InstitutionName;
         //grab data from webservice
         NSMutableArray * dataFromWeb = GetPreferences([[NSArray alloc] initWithObjects:InstitutionName, nil]);
+        NSLog(@"%@",dataFromWeb);
         //stick data into dictionary
         if (dataFromWeb){
             self.data = [dataFromWeb objectAtIndex:0];

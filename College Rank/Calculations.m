@@ -7,6 +7,7 @@
 //
 
 #import "Calculations.h"
+#import <CoreLocation/CoreLocation.h>
 
 
 NSMutableArray * normalize(NSMutableArray * prefValues){
@@ -25,11 +26,37 @@ NSMutableArray * normalize(NSMutableArray * prefValues){
     return returnArray;
 }
 
-
-float geoDistance(NSString * zip1, NSString * zip2){
+CLLocation *didCalculateDistance(NSString* zipCode) {
+    CLLocation __block *placemark = [CLLocation new];
     
-    return 0.0f;
+    [[CLGeocoder new] geocodeAddressString:zipCode completionHandler:
+     ^(NSArray *placemarks, NSError *error){
+         CLPlacemark *newPlacemark = [placemarks objectAtIndex:0];
+         placemark = newPlacemark.location;
+         NSLog(@"HERE");
+     }];
+
+    
+    NSLog(@"%@",placemark);
+    return placemark;
 }
+
+
+
+
+
+
+
+
+double geoDistance(NSString * zip1, NSString * zip2){
+    CLLocation *location1 = didCalculateDistance(zip1);
+    CLLocation *location2 = didCalculateDistance(zip2);
+    
+    CLLocationDistance meters = [location1 distanceFromLocation:location2];
+    return (double)meters;
+}
+
+
 
 
 NSMutableDictionary * generateRankings(NSMutableArray * usedInstitutions){

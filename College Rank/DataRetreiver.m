@@ -10,6 +10,9 @@
 #import "Reachability.h"
 #import <SystemConfiguration/SystemConfiguration.h>
 
+#define ampCONSTANT "*AMP*"
+#define urlCONSTANT "http://199.8.232.152/college_rank/getData.php?"
+
 BOOL connected(){
     Reachability * reach = [Reachability reachabilityForInternetConnection];
     [reach startNotifier];
@@ -32,8 +35,9 @@ NSMutableArray* GetInstitutions()
         return nil;
     }
     
-    NSString *url_string = @"http://199.8.232.152/college_rank/getData.php?";
+    NSString *url_string = @urlCONSTANT;
     NSString *post =[[NSString alloc] initWithFormat:@"function=%@", @"getInstitutions"];
+    
     
     url_string = [url_string stringByAppendingString:post];
     //NSLog(@"%@", url_string);
@@ -53,7 +57,7 @@ NSMutableArray* GetInstitutions()
                                                 error:&localError];
     
     for(NSDictionary* dict in colleges){
-        [college_list addObject:[dict objectForKey:@"name"]];
+        [college_list addObject:[[dict objectForKey:@"name"] stringByReplacingOccurrencesOfString:@ampCONSTANT withString:@"&"]];
     }
     return college_list;
 }
@@ -68,7 +72,7 @@ NSMutableArray* GetPreferences(NSArray* colleges)
     NSMutableArray *college_array = [[NSMutableArray alloc] init];
     for(NSString* college_name in colleges)
     {
-        NSDictionary* new_dict = [NSDictionary dictionaryWithObject:college_name forKey:@"name"];
+        NSDictionary* new_dict = [NSDictionary dictionaryWithObject:[college_name stringByReplacingOccurrencesOfString:@"&" withString:@ampCONSTANT] forKey:@"name"];
         [college_array addObject:new_dict];
     }
     //NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjects:colleges forKeys:keys];
@@ -83,7 +87,7 @@ NSMutableArray* GetPreferences(NSArray* colleges)
                                                          error:&error];
     NSString *jsonString = [[NSString alloc] initWithData: jsonData encoding:NSUTF8StringEncoding];
     jsonString = [jsonString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *url_string = @"http://199.8.232.152/college_rank/getData.php?";
+    NSString *url_string = @urlCONSTANT;
     
     url_string = [url_string stringByAppendingString:[NSString stringWithFormat:@"function=%@&institutions=%@", @"getPreferences", jsonString]];
     NSMutableURLRequest *request =[NSMutableURLRequest requestWithURL:[NSURL URLWithString:url_string]];
