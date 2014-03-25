@@ -71,13 +71,53 @@
 		<string>Medium (10-30)</string>
 		<string>High (&gt;30)</string>
 	</array>
-	<key>sex</key>
+	<key>femaleRatio</key>
 	<array>
 		<string>All-Male (0%)</string>
 		<string>Majority male (1-45%)</string>
 		<string>Neutral (45-55%)</string>
 		<string>Majority Female (56-99%)</string>
 		<string>All-Female (100%)</string>
+	</array>
+	<key>highestDegree</key>
+	<array>
+		<string>No Degree</string>
+		<string>Associate&apos;s degree</string>
+		<string>Bachelor&apos;s degree</string>
+		<string>Master&apos;s degree</string>
+		<string>Doctor&apos;s degree</string>
+	</array>
+	<key>cost</key>
+	<array>
+		<string>Low ($0-$20,000)</string>
+		<string>Medium ($20,000-$30,000)</string>
+		<string>High (&gt;$30,000)</string>
+	</array>
+	<key>religion</key>
+	<array>
+		<string>No religious affiliation</string>
+		<string>Some Catholic affiliation</string>
+		<string>Some Protestant affiliation</string>
+		<string>Specific affiliation (choose...)</string>
+	</array>
+	<key>citySize</key>
+	<array>
+		<string>Large City (&gt; 250,000 people)</string>
+		<string>Midsize City (100,000 - 250,000 people)</string>
+		<string>Small City (&lt; 100,000 people)</string>
+		<string>Large Suburb (In the suburbs of a large city)</string>
+		<string>Midsize Suburb (In the suburbs of a midsized city)</string>
+		<string>Small Suburb (In the suburbs of a small city)</string>
+		<string>Fringe Town (Urban cluster &lt; 10 miles from a city)</string>
+		<string>Distant Town (Urban cluster 10 - 35 miles from a city)</string>
+		<string>Remote Town (Urban cluster &gt; 35 miles from a city)</string>
+		<string>Fringe Rural (Rural &lt; 5 miles from city or &lt; 2.5 miles from town)</string>
+		<string>Distant Rural (Rural 5 - 25 miles from city or 2.5 - 10 miles from town)</string>
+		<string>Remote Rural (Rural &gt; 25 miles from city and &gt; 10 miles from town)</string>
+	</array>
+	<key>demographics</key>
+	<array>
+		<string>Seriously have no idea what to do here.</string>
 	</array>
 </dict>
 </plist>
