@@ -44,10 +44,14 @@
 
 //Removes an institution with the specified name from the userInstitutions.
 - (void) removeInstitution: (NSString *) institutionName{
+    Institution* deleteInst = nil;
     for (Institution* curInst in userInstitutions){
         if ([curInst.name caseInsensitiveCompare:institutionName]==NSOrderedSame) {
-            [userInstitutions removeObject:curInst];
+            deleteInst = curInst;
         }
+    }
+    if (deleteInst!= nil) {
+        [userInstitutions removeObject:deleteInst];
     }
 }
 

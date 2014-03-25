@@ -92,4 +92,9 @@
     return nil;
 }
 
+-(BOOL) canGoToRank
+{
+    return [_userPrefs count] > 0;
+}
+
 @end

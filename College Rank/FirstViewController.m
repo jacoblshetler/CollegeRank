@@ -10,9 +10,11 @@
 #import "Institution.h"
 #import "FirstViewController.h"
 #import "DataRetreiver.h"
+#import "PreferenceManager.h"
 @interface FirstViewController ()
 
 @property InstitutionManager* institutions;
+@property PreferenceManager* preferences;
 @property NSArray* searchResults;
 
 @end
@@ -33,6 +35,8 @@
     [super viewDidLoad];
     
     _institutions = [InstitutionManager sharedInstance];
+    _preferences = [PreferenceManager sharedInstance];
+    [self canGoToTabs];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -117,11 +121,27 @@
                 [_institutions addInstitution:entry];
                 [self.searchDisplayController setActive:NO animated:YES];
                 [self.tableView reloadData];
+                [self canGoToTabs];
             }
         }
     }
 }
 
+-(void) canGoToTabs
+{
+    if (![_institutions canGoToPreferences]) {
+        [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:FALSE];
+    } else {
+        [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:TRUE];
+    }
+    if (![_preferences canGoToRank]) {
+        [[[[self.tabBarController tabBar]items]objectAtIndex:2]setEnabled:FALSE];
+    } else {
+        [[[[self.tabBarController tabBar]items]objectAtIndex:2]setEnabled:TRUE];
+    }
+
+    
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -139,10 +159,11 @@
         // Delete the row from the data source
         [_institutions removeInstitution:[[[_institutions userInstitutions] objectAtIndex:indexPath.row] name]];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self canGoToTabs];
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    }
 }
 
 

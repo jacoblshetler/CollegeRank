@@ -10,6 +10,9 @@
 #import "Preference.h"
 
 @implementation UserPreference
+
+//@synthesize weight;
+
 -(id) initWithPreference: (Preference*) preference andWeight: (int) wt
 {
     self = [super init];
@@ -22,6 +25,7 @@
     }
     return nil;
 }
+
 -(void) setWeight:(int)weight
 {
     self.weight = weight;
