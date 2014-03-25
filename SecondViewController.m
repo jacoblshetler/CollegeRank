@@ -9,6 +9,8 @@
 #import "SecondViewController.h"
 #import "InstitutionManager.h"
 #import "PreferenceManager.h"
+#import "UserPreference.h"
+#import "Preference.h"
 #import "DataRetreiver.h"
 
 @interface SecondViewController ()
@@ -41,7 +43,7 @@
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -54,6 +56,7 @@
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
+#warning Needs to show all preferences when the search bar is empty.
     NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"Self contains[c] %@", searchText];
     _searchResults = [[_preferences allPrefs] filteredArrayUsingPredicate:resultPredicate];
 }
@@ -81,22 +84,34 @@
     // Return the number of rows in the section.
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return [_searchResults count];
-        
-    } else {
+    }
+    else if ([[_preferences userPrefs] count] < 2){
         return [[_preferences userPrefs] count];
     }
+    else {
+        return [[_preferences userPrefs] count] + 2;
+    }
 }
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier]; //forIndexPath:indexPath];
     
-    // Configure the cell...
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        cell.textLabel.text = [_searchResults objectAtIndex:indexPath.row];
+    } else {
+        UserPreference* usrPref = [[_preferences userPrefs] objectAtIndex:indexPath.row];
+        cell.textLabel.text = usrPref.pref.name;
+    }
     
     return cell;
 }
-*/
+
 
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
