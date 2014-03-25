@@ -9,11 +9,14 @@
 #import "PreferenceManager.h"
 #import "Preference.h"
 #import "UserPreference.h"
+#import "DataRetreiver.h"
 
 @implementation PreferenceManager
 
 - (id)init {
     if (self = [super init]) {
+        //_allPrefs =
+        _userPrefs = [NSMutableArray new];
         //we need to create the list of Preference objects here
     }
     return self;

@@ -128,7 +128,7 @@
 }
 
 -(void) canGoToTabs
-{
+{/*
     if (![_institutions canGoToPreferences]) {
         [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:FALSE];
     } else {
@@ -138,9 +138,7 @@
         [[[[self.tabBarController tabBar]items]objectAtIndex:2]setEnabled:FALSE];
     } else {
         [[[[self.tabBarController tabBar]items]objectAtIndex:2]setEnabled:TRUE];
-    }
-
-    
+    }*/
 }
 /*
 // Override to support conditional editing of the table view.
