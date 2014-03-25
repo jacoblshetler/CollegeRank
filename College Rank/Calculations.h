@@ -18,6 +18,6 @@
  @return NSMutableArray of normalized NSDecimalNumbers representing preference values
  */
 NSMutableArray * normalize(NSMutableArray * prefValues);
-float geoDistance(NSString * zip1, NSString * zip2);
+double geoDistance(NSString * zip1, NSString * zip2);
 NSDictionary * generateRankings(NSMutableArray * usedInstitutions);
 NSMutableArray * calculatePreferences(NSMutableArray * incomingInstitutions);

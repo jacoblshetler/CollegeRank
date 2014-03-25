@@ -11,6 +11,7 @@
 #import "FirstViewController.h"
 #import "DataRetreiver.h"
 #import "PreferenceManager.h"
+#import "Calculations.h"
 @interface FirstViewController ()
 
 @property InstitutionManager* institutions;
@@ -43,6 +44,15 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    
+    
+    
+    
+    
+    
+    
+    NSLog(@"%f",geoDistance(@"46526", @"52247"));
+    
 }
 
 - (void)didReceiveMemoryWarning
