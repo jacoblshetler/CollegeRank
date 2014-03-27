@@ -30,7 +30,6 @@ NSMutableArray * normalize(NSMutableArray * prefValues){
 
 CLLocation *didCalculateDistance(NSString* zipCode) {
     CLLocation __block *placemark = [CLLocation new];
-    
     [[CLGeocoder new] geocodeAddressString:zipCode completionHandler:
      ^(NSArray *placemarks, NSError *error){
          CLPlacemark *newPlacemark = [placemarks objectAtIndex:0];

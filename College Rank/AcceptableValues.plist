@@ -10,95 +10,93 @@
 	</array>
 	<key>location</key>
 	<array>
-		<string>Close (within 150 miles)</string>
+		<string>Close</string>
 		<string>Midranged</string>
-		<string>Far (more than 500 miles)</string>
+		<string>Far</string>
 	</array>
 	<key>sat</key>
 	<array>
-		<string>Low Average</string>
-		<string>Medium Average</string>
-		<string>High Average</string>
+		<string>Low Average Score</string>
+		<string>Medium Average Score</string>
+		<string>High Average Score</string>
 	</array>
 	<key>football</key>
 	<array>
-		<string>No team</string>
-		<string>Has team</string>
+		<string>No Team</string>
+		<string>Has Team</string>
 	</array>
 	<key>baseball</key>
 	<array>
-		<string>No team</string>
-		<string>Has team</string>
+		<string>No Team</string>
+		<string>Has Team</string>
 	</array>
 	<key>basketball</key>
 	<array>
-		<string>No team</string>
-		<string>Has team</string>
+		<string>No Team</string>
+		<string>Has Team</string>
 	</array>
 	<key>xc</key>
 	<array>
-		<string>No team</string>
-		<string>Has team</string>
+		<string>No Team</string>
+		<string>Has Team</string>
 	</array>
 	<key>daycare</key>
 	<array>
-		<string>No provided daycare</string>
-		<string>Provides daycare</string>
+		<string>No Provided Daycare</string>
+		<string>Provides Daycare</string>
 	</array>
 	<key>studyAbroad</key>
 	<array>
-		<string>No study abroad option</string>
-		<string>Has study abroad options</string>
+		<string>No Study Abroad Option</string>
+		<string>Has Study Abroad Options</string>
 	</array>
 	<key>size</key>
 	<array>
-		<string>&lt;1000</string>
-		<string>1000-4000</string>
-		<string>4000-10000</string>
-		<string>10000-25000</string>
-		<string>&gt;25000</string>
+		<string>Small</string>
+		<string>Midsized</string>
+		<string>Large</string>
 	</array>
 	<key>selectivity</key>
 	<array>
-		<string>Very selective (&lt;15%)</string>
-		<string>Somewhat selective (15-50%)</string>
-		<string>Somewhat open (50-85%)</string>
-		<string>Very open (&gt;85%)</string>
+		<string>Very Selective</string>
+		<string>Somewhat Selective</string>
+		<string>Very Open</string>
 	</array>
 	<key>studentFaculty</key>
 	<array>
-		<string>Low (&lt;10)</string>
-		<string>Medium (10-30)</string>
-		<string>High (&gt;30)</string>
+		<string>Low</string>
+		<string>Medium</string>
+		<string>High</string>
 	</array>
 	<key>femaleRatio</key>
 	<array>
-		<string>All-Male (0%)</string>
-		<string>Majority male (1-45%)</string>
-		<string>Neutral (45-55%)</string>
-		<string>Majority Female (56-99%)</string>
-		<string>All-Female (100%)</string>
+		<string>All-Male</string>
+		<string>Majority Male</string>
+		<string>Neutral</string>
+		<string>Majority Female</string>
+		<string>All-Female</string>
 	</array>
 	<key>highestDegree</key>
 	<array>
 		<string>No Degree</string>
-		<string>Associate&apos;s degree</string>
-		<string>Bachelor&apos;s degree</string>
-		<string>Master&apos;s degree</string>
-		<string>Doctor&apos;s degree</string>
+		<string>Associate&apos;s Degree</string>
+		<string>Bachelor&apos;s Degree</string>
+		<string>Master&apos;s Degree</string>
+		<string>Doctor&apos;s Degree</string>
 	</array>
 	<key>cost</key>
 	<array>
-		<string>Low ($0-$20,000)</string>
-		<string>Medium ($20,000-$30,000)</string>
-		<string>High (&gt;$30,000)</string>
+		<string>Low</string>
+		<string>Medium</string>
+		<string>High</string>
 	</array>
 	<key>religion</key>
 	<array>
-		<string>No religious affiliation</string>
-		<string>Some Catholic affiliation</string>
-		<string>Some Protestant affiliation</string>
-		<string>Specific affiliation (choose...)</string>
+		<string>No Religious Affiliation</string>
+		<string>Catholic Affiliation</string>
+		<string>Protestant Affiliation</string>
+		<string>Jewish Affiliation</string>
+		<string>Specific Affiliation (Choose...)</string>
 	</array>
 	<key>citySize</key>
 	<array>
@@ -114,10 +112,6 @@
 		<string>Fringe Rural (Rural &lt; 5 miles from city or &lt; 2.5 miles from town)</string>
 		<string>Distant Rural (Rural 5 - 25 miles from city or 2.5 - 10 miles from town)</string>
 		<string>Remote Rural (Rural &gt; 25 miles from city and &gt; 10 miles from town)</string>
-	</array>
-	<key>demographics</key>
-	<array>
-		<string>Seriously have no idea what to do here.</string>
 	</array>
 </dict>
 </plist>
