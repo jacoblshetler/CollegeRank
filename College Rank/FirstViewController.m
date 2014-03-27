@@ -50,8 +50,8 @@
     
     
     
-    
-    NSLog(@"%f",geoDistance(@"46526", @"52247"));
+    //brief testing of locations
+    NSLog(@"%f",geoDistance(@"46526", @"52247"));   
     
 }
 
