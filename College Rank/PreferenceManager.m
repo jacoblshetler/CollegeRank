@@ -9,12 +9,18 @@
 #import "PreferenceManager.h"
 #import "Preference.h"
 #import "UserPreference.h"
+#import "DataRetreiver.h"
 
 @implementation PreferenceManager
 
 - (id)init {
     if (self = [super init]) {
         //we need to create the list of Preference objects here
+        //Should we use preference ojbects, or a list of strings pulled from data retreiver?
+        //When a preference was selected the object could be created then, this would keep the view controllers similar.
+        //Also, would it make sense to have the preference class inherit from UIViewController?
+        _allPrefs = [NSArray arrayWithObjects:@"Preference 1",@"Preference 2",@"Etc...", nil];
+        _userPrefs = [NSMutableArray new];
     }
     return self;
 }

@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface FirstViewController : UITableViewController
-#warning no Reset feature
 
 -(void) canGoToTabs;
 
