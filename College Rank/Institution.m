@@ -50,28 +50,28 @@
      return [self.data valueForKey:@"religion"][0];
  }
 
- - (int) studyAbroad{
-     return (int)([[self.data valueForKey:@"study_abroad"][0] isEqual:@"1"]);
+ - (NSString*) studyAbroad{
+     return [[NSString alloc] initWithFormat:@"%d",([[self.data valueForKey:@"study_abroad"][0] isEqual:@"1"])];
  }
 
- - (int) dayCare{
-     return (int)([[self.data valueForKey:@"day_care"][0] isEqual:@"1"]);
+ - (NSString*) dayCare{
+     return [[NSString alloc] initWithFormat:@"%d",([[self.data valueForKey:@"day_care"][0] isEqual:@"1"])];
  }
 
- - (int) football{
-     return (int)([[self.data valueForKey:@"football_memb"][0] isEqual:@"1"]);
+ - (NSString*) football{
+     return [[NSString alloc] initWithFormat:@"%d",([[self.data valueForKey:@"football_memb"][0] isEqual:@"1"])];
  }
 
- - (int) basketball{
-     return (int)([[self.data valueForKey:@"basketball_memb"][0] isEqual:@"1"]);
+ - (NSString*) basketball{
+     return [[NSString alloc] initWithFormat:@"%d",([[self.data valueForKey:@"basketball_memb"][0] isEqual:@"1"])];
  }
 
- - (int) baseball{
-     return (int)([[self.data valueForKey:@"baseball_memb"][0] isEqual:@"1"]);
+ - (NSString*) baseball{
+     return [[NSString alloc] initWithFormat:@"%d",([[self.data valueForKey:@"baseball_memb"][0] isEqual:@"1"])];
  }
 
- - (int) xCountryAndTrack{
-     return (int)([[self.data valueForKey:@"xc_memb"][0] isEqual:@"1"]);
+ - (NSString*) xCountryAndTrack{
+     return [[NSString alloc] initWithFormat:@"%d",([[self.data valueForKey:@"xc_memb"][0] isEqual:@"1"])];
  }
 
  - (NSString*) degree{
@@ -82,7 +82,7 @@
      return [self.data valueForKey:@"size"][0];
  }
 
-- (int) cost{
+- (NSString*) cost{
     NSArray* tempArr = [[NSArray alloc] initWithObjects:
                         [self.data valueForKey:@"cost_alone_in"],
                         [self.data valueForKey:@"cost_alone_out"],
@@ -102,7 +102,7 @@
         }
     }
     terriblePracticeArr = terriblePracticeArr/count;
-    return terriblePracticeArr;
+    return [[NSString alloc] initWithFormat:@"%i",terriblePracticeArr];
  }
 
  - (NSString*) selectivity{
@@ -130,9 +130,9 @@
      return [self.data valueForKey:@"stud_to_fac"][0];
  }
 
--(int) femaleRatio
+-(NSString*) femaleRatio
 {
-    return (int)[self.data valueForKey:@"women_perc"][0];
+    return [[NSString alloc] initWithFormat:@"%d",([[self.data valueForKey:@"women_perc"][0] isEqual:@"1"])];
 }
 @end
 

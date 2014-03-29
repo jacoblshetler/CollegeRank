@@ -20,20 +20,20 @@
 - (NSString*) type;
 - (NSArray*) urbanization;
 - (NSString*) religiousAffiliation;
-- (int) studyAbroad;
-- (int) dayCare;
-- (int) football;
-- (int) basketball;
-- (int) baseball;
-- (int) xCountryAndTrack;
+- (NSString*) studyAbroad;
+- (NSString*) dayCare;
+- (NSString*) football;
+- (NSString*) basketball;
+- (NSString*) baseball;
+- (NSString*) xCountryAndTrack;
 - (NSString*) degree;
 - (NSString*) size;
-- (int) cost;
+- (NSString*) cost;
 - (NSString*) selectivity;
 - (NSString*) sat;
 - (NSDictionary*) demographics;
 - (NSNumber*) studentFacultyRatio;
--(int) femaleRatio;
+- (NSString*) femaleRatio;
 
 @end
 

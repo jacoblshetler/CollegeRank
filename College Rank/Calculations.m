@@ -78,6 +78,7 @@ unable to be calculated, the function will return all 0's.
 None of these functions are declared in the header. This is to ensure that they are
 not called from anywhere else in the program.
 */
+
 #warning Need to test all of these functions
 /*
  Functions that have been tested:
