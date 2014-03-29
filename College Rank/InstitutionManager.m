@@ -99,5 +99,16 @@
     return tempArr;
 }
 
+-(NSMutableArray*) getUserInstitutionNames
+{
+    NSMutableArray* tempArr = [NSMutableArray new];
+    for (Institution* curInst in userInstitutions)
+    {
+        [tempArr addObject:curInst.name];
+    }
+    return tempArr;
+}
+
+
 
 @end

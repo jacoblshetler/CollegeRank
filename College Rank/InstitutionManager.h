@@ -20,7 +20,7 @@
 - (NSArray *) searchInstitutions: (NSString *)query; //Searches the list of all institutions for the specified query. Returns all results that contain
 -(Institution*) getUserInstitutionForString: (NSString*) name; //retreive user instutiton based on the name
 -(NSMutableArray*) getValuesForPreference: (NSString*) pref;
-
+-(NSMutableArray*) getUserInstitutionNames;
 
 + (id)sharedInstance;
 
