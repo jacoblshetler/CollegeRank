@@ -19,7 +19,14 @@
         //Should we use preference ojbects, or a list of strings pulled from data retreiver?
         //When a preference was selected the object could be created then, this would keep the view controllers similar.
         //Also, would it make sense to have the preference class inherit from UIViewController?
-        _allPrefs = [NSArray arrayWithObjects:@"Preference 1",@"Preference 2",@"Etc...", nil];
+        NSString *values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
+        NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
+        NSMutableArray *tempArr = [[NSMutableArray alloc] init];
+        for(NSString *key in valuesDict)
+        {
+            [tempArr addObject: [[Preference alloc] initWithName:key andAcceptableValues:[valuesDict objectForKey:key]]];
+        }
+        _allPrefs = [NSArray arrayWithArray:tempArr];
         _userPrefs = [NSMutableArray new];
     }
     return self;
