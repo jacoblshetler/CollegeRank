@@ -76,6 +76,12 @@ unable to be calculated, the function will return all 0's.
 None of these functions are declared in the header. This is to ensure that they are
 not called from anywhere else in the program.
 */
+#warning Need to test all of these functions
+/*
+ Functions that have been tested:
+    -None
+ 
+*/
 
 NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int chosenValue){
     //3 options to choose from. General ideas are: Close, Middle, Far.
@@ -171,19 +177,309 @@ NSMutableArray * normalizeFromStudyAbroad(NSMutableArray* preferenceValues, int 
 
 //Various methods that don't fit together
 NSMutableArray * normalizeFromFemaleRatio(NSMutableArray* preferenceValues, int chosenValue){
-    return [[NSMutableArray alloc] init];
+    switch (chosenValue) {
+        case 0:
+            //Means that we want all men
+        {
+            for (int i = 0; i<[preferenceValues count]; i++){
+                if ([preferenceValues[i] intValue] == 0){
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:1];
+                }
+                else{
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:0];
+                }
+            }
+            break;
+        }
+            
+        case 1:
+            //Means that we want majority men, so normalize around 25%
+        {
+            for (int i = 0; i<[preferenceValues count]; i++){
+                preferenceValues[i] = [[NSNumber alloc] initWithInt:(ABS(25  - [preferenceValues[i] intValue]))];
+            }
+            //Then invert the list using the highest value
+            NSNumber * max = [preferenceValues valueForKeyPath:@"@max.intValue"];
+            for (int i = 0; i<[preferenceValues count]; i++){
+                preferenceValues[i] = [[NSNumber alloc] initWithInt:([max intValue]  - [preferenceValues[i] intValue])];
+            }
+            break;
+        }
+            
+        case 2:
+            //Means that we want neutral, so normalize around 50%
+        {
+            for (int i = 0; i<[preferenceValues count]; i++){
+                preferenceValues[i] = [[NSNumber alloc] initWithInt:(ABS(50  - [preferenceValues[i] intValue]))];
+            }
+            //Then invert the list using the highest value
+            NSNumber * max = [preferenceValues valueForKeyPath:@"@max.intValue"];
+            for (int i = 0; i<[preferenceValues count]; i++){
+                preferenceValues[i] = [[NSNumber alloc] initWithInt:([max intValue]  - [preferenceValues[i] intValue])];
+            }
+            break;
+        }
+            
+        case 3:
+            //Means that we want majority women, so normalize around 75%
+        {
+            for (int i = 0; i<[preferenceValues count]; i++){
+                preferenceValues[i] = [[NSNumber alloc] initWithInt:(ABS(75  - [preferenceValues[i] intValue]))];
+            }
+            //Then invert the list using the highest value
+            NSNumber * max = [preferenceValues valueForKeyPath:@"@max.intValue"];
+            for (int i = 0; i<[preferenceValues count]; i++){
+                preferenceValues[i] = [[NSNumber alloc] initWithInt:([max intValue]  - [preferenceValues[i] intValue])];
+            }
+            break;
+        }
+            
+        case 4:
+            //Means that we want all female
+        {
+            for (int i = 0; i<[preferenceValues count]; i++){
+                if ([preferenceValues[i] intValue] != 100){
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:0];
+                }
+            }
+            break;
+        }
+    }
+    return normalize(preferenceValues);
 }
+
 NSMutableArray * normalizeFromType(NSMutableArray* preferenceValues, int chosenValue){
-    return [[NSMutableArray alloc] init];
+    switch (chosenValue) {
+        case 0:
+            //Means that we want public
+        {
+            for (int i = 0; i<[preferenceValues count]; i++){
+                if ([preferenceValues[i] intValue] != 1){
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:0];
+                }
+            }
+            break;
+        }
+            
+        case 1:
+            //Means that we want private
+        {
+            for (int i = 0; i<[preferenceValues count]; i++){
+                if ([preferenceValues[i] intValue] != 2){
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:0];
+                }
+            }
+            break;
+        }
+            
+        case 2:
+            //Means that we want private, non-profit
+        {
+            for (int i = 0; i<[preferenceValues count]; i++){
+                if ([preferenceValues[i] intValue] != 3){
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:0];
+                }
+            }
+            break;
+        }
+    }
+    return normalize(preferenceValues);
 }
 NSMutableArray * normalizeFromDegree(NSMutableArray* preferenceValues, int chosenValue){
-    return [[NSMutableArray alloc] init];
+    switch (chosenValue) {
+        case 0:
+            //Means that we want no degrees
+        {
+            for (int i = 0; i<[preferenceValues count]; i++){
+                if ([preferenceValues[i] intValue] == 0){
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:1];
+                }
+                else{
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:0];
+                }
+            }
+            break;
+        }
+            
+        case 1:
+            //Means that we want at least Associate's (any of 11,12,13,14,20,30,40)
+        {
+            NSArray* degrees = @[@11,@12,@13,@14,@20,@30,@40,@"11",@"12",@"13",@"14",@"20",@"30",@"40"];
+            for (int i = 0; i<[preferenceValues count]; i++){
+                if ([degrees containsObject:preferenceValues[i]]){
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:1];
+                }
+                else{
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:0];
+                }
+            }
+            break;
+        }
+            
+        case 2:
+            //Means that we want at least Bachelor's (any of 11,12,13,14,20,30)
+        {
+            NSArray* degrees = @[@11,@12,@13,@14,@20,@30,@"11",@"12",@"13",@"14",@"20",@"30"];
+            for (int i = 0; i<[preferenceValues count]; i++){
+                if ([degrees containsObject:preferenceValues[i]]){
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:1];
+                }
+                else{
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:0];
+                }
+            }
+            break;
+        }
+            
+        case 3:
+            //Means that we want at least Master's (any of 11,12,13,14,20)
+        {
+            NSArray* degrees = @[@11,@12,@13,@14,@20,@"11",@"12",@"13",@"14",@"20"];
+            for (int i = 0; i<[preferenceValues count]; i++){
+                if ([degrees containsObject:preferenceValues[i]]){
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:1];
+                }
+                else{
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:0];
+                }
+            }
+            break;
+        }
+            
+        case 4:
+            //Means that we want at least Doctor's (any of 11,12,13,14)
+        {
+            NSArray* degrees = @[@11,@12,@13,@14,@"11",@"12",@"13",@"14"];
+            for (int i = 0; i<[preferenceValues count]; i++){
+                if ([degrees containsObject:preferenceValues[i]]){
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:1];
+                }
+                else{
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:0];
+                }
+            }
+            break;
+        }
+    }
+    return normalize(preferenceValues);
 }
 NSMutableArray * normalizeFromReligion(NSMutableArray* preferenceValues, int chosenValue){
-    return [[NSMutableArray alloc] init];
+    switch (chosenValue) {
+        case 0:
+            //Means that we want no religious affiliation
+        {
+            for (int i = 0; i<[preferenceValues count]; i++){
+                if ([preferenceValues[i] intValue] == -2){
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:1];
+                }
+                else{
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:0];
+                }
+            }
+            break;
+        }
+            
+        case 1:
+            //Means that we want any catholic affiliation (30,91,92)
+        {
+            NSArray* religions = @[@30,@91,@92,@"30",@"91",@"92"];
+            for (int i = 0; i<[preferenceValues count]; i++){
+                if ([religions containsObject:preferenceValues[i]]){
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:1];
+                }
+                else{
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:0];
+                }
+            }
+            break;
+        }
+            
+        case 2:
+            //We want any protestant religion - Anything that is not (-2,30,80,91, or 92)
+        {
+            NSArray* religions = @[@(-2),@30,@80,@91,@92,@"-2",@"30",@"80",@"91",@"92"];
+            for (int i = 0; i<[preferenceValues count]; i++){
+                if ([religions containsObject:preferenceValues[i]]){
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:0];
+                }
+                else{
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:1];
+                }
+            }
+            break;
+        }
+            
+        case 3:
+            //Means that we want Jewish affiliation - (80)
+        {
+            NSArray* religions = @[@80,@"80"];
+            for (int i = 0; i<[preferenceValues count]; i++){
+                if ([religions containsObject:preferenceValues[i]]){
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:1];
+                }
+                else{
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:0];
+                }
+            }
+            break;
+        }
+    }
+    return normalize(preferenceValues);
 }
+
 NSMutableArray * normalizeFromCity(NSMutableArray* preferenceValues, int chosenValue){
-    return [[NSMutableArray alloc] init];
+    //translate acceptedValue choice to what the city code is in the database
+    int cityType = 0;
+    switch (chosenValue) {
+        case 0:
+            cityType = 11;
+            break;
+        case 1:
+            cityType = 12;
+            break;
+        case 2:
+            cityType = 13;
+            break;
+        case 3:
+            cityType = 21;
+            break;
+        case 4:
+            cityType = 22;
+            break;
+        case 5:
+            cityType = 23;
+            break;
+        case 6:
+            cityType = 31;
+            break;
+        case 7:
+            cityType = 32;
+            break;
+        case 8:
+            cityType = 33;
+            break;
+        case 9:
+            cityType = 41;
+            break;
+        case 10:
+            cityType = 42;
+            break;
+        case 11:
+            cityType = 43;
+            break;
+    }
+    
+    //if it's that code, give them 100%, else you get 0%
+    for (int i = 0; i<[preferenceValues count]; i++){
+        if ([preferenceValues[i] intValue] == cityType){
+            preferenceValues[i] = [[NSNumber alloc] initWithInt:1];
+        }
+        else{
+            preferenceValues[i] = [[NSNumber alloc] initWithInt:0];
+        }
+    }
+
+    return normalize(preferenceValues);
 }
 
 
