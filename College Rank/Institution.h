@@ -28,11 +28,12 @@
 - (int) xCountryAndTrack;
 - (NSString*) degree;
 - (NSString*) size;
-- (NSString*) cost: (NSString*) type;
+- (int) cost;
 - (NSString*) selectivity;
 - (NSString*) sat;
 - (NSDictionary*) demographics;
 - (NSNumber*) studentFacultyRatio;
+-(int) femaleRatio;
 
 @end
 

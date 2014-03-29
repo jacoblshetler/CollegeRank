@@ -88,7 +88,7 @@
 }
 
 #warning Need to test this
--(NSArray*) getValuesForPreference: (NSString*) pref
+-(NSMutableArray*) getValuesForPreference: (NSString*) pref
 {
     NSMutableArray* tempArr = [NSMutableArray new];
     for (Institution* curInst in userInstitutions)
@@ -96,7 +96,7 @@
         SEL s = NSSelectorFromString(pref);
         [tempArr addObject:[curInst performSelector:s]];
     }
-    return [NSArray arrayWithArray:tempArr];
+    return tempArr;
 }
 
 

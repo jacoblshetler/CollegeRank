@@ -197,7 +197,9 @@ NSMutableArray * normalizeFromCity(NSMutableArray* preferenceValues, int chosenV
 NSMutableDictionary * generateRankings(NSMutableArray * usedInstitutions){
     PreferenceManager *prefMan = [PreferenceManager sharedInstance];
     InstitutionManager *instMan = [InstitutionManager sharedInstance];
-    NSMutableDictionary* normalizedPrefs = [NSDictionary new];
+    NSMutableDictionary* normalizedPrefs = [NSMutableDictionary new];
+    NSMutableDictionary* weightDict = [NSMutableDictionary new];
+
     for (UserPreference* userPref in [prefMan getAllUserPrefs])
     {
         NSMutableArray* value = [NSMutableArray new];
@@ -207,38 +209,76 @@ NSMutableDictionary * generateRankings(NSMutableArray * usedInstitutions){
         }
         else if([[userPref getName] isEqualToString:@"location"])
         {
-            value = normalizeFromLocaton([instMan getValuesForPreference:@"type"], [userPref getPrefVal]);
+            value = normalizeFromDistance([instMan getValuesForPreference:@"location"], [userPref getPrefVal]);
         }
         
-        else if([[userPref getName] isEqualToString:@"type"])
+        else if([[userPref getName] isEqualToString:@"citySize"])
         {
-            value = normalizeFromType([instMan getValuesForPreference:@"type"], [userPref getPrefVal]);
+            value = normalizeFromCity([instMan getValuesForPreference:@"urbanization"], [userPref getPrefVal]);
         }
         
-        else if([[userPref getName] isEqualToString:@"type"])
+        else if([[userPref getName] isEqualToString:@"sat"])
         {
-            value = normalizeFromType([instMan getValuesForPreference:@"type"], [userPref getPrefVal]);
+            value = normalizeFromSAT([instMan getValuesForPreference:@"sat"], [userPref getPrefVal]);
         }
-        else if([[userPref getName] isEqualToString:@"type"])
+        else if([[userPref getName] isEqualToString:@"football"])
         {
-            value = normalizeFromType([instMan getValuesForPreference:@"type"], [userPref getPrefVal]);
+            value = normalizeFromFootball([instMan getValuesForPreference:@"football"], [userPref getPrefVal]);
         }
-        else if([[userPref getName] isEqualToString:@"type"])
+        else if([[userPref getName] isEqualToString:@"basketball"])
         {
-            value = normalizeFromType([instMan getValuesForPreference:@"type"], [userPref getPrefVal]);
+            value = normalizeFromBasketball([instMan getValuesForPreference:@"basketball"], [userPref getPrefVal]);
         }
-        else if([[userPref getName] isEqualToString:@"type"])
+        else if([[userPref getName] isEqualToString:@"baseball"])
         {
-            value = normalizeFromType([instMan getValuesForPreference:@"type"], [userPref getPrefVal]);
+            value = normalizeFromBaseball([instMan getValuesForPreference:@"baseball"], [userPref getPrefVal]);
         }
-        else if([[userPref getName] isEqualToString:@"type"])
+        else if([[userPref getName] isEqualToString:@"xc"])
         {
-            value = normalizeFromType([instMan getValuesForPreference:@"type"], [userPref getPrefVal]);
+            value = normalizeFromXC([instMan getValuesForPreference:@"xCountryAndTrack"], [userPref getPrefVal]);
         }
-        
-        
-        [normalizedPrefs setObject: forKey:[userPref getName]]
+        else if([[userPref getName] isEqualToString:@"daycare"])
+        {
+            value = normalizeFromDaycare([instMan getValuesForPreference:@"dayCare"], [userPref getPrefVal]);
+        }
+        else if([[userPref getName] isEqualToString:@"studyAbroad"])
+        {
+            value = normalizeFromStudyAbroad([instMan getValuesForPreference:@"studyAbroad"], [userPref getPrefVal]);
+        }
+        else if([[userPref getName] isEqualToString:@"size"])
+        {
+            value = normalizeFromSize([instMan getValuesForPreference:@"size"], [userPref getPrefVal]);
+        }
+        else if([[userPref getName] isEqualToString:@"selectivity"])
+        {
+            value = normalizeFromSelectivity([instMan getValuesForPreference:@"selectivity"], [userPref getPrefVal]);
+        }
+        else if([[userPref getName] isEqualToString:@"studentFaculty"])
+        {
+            value = normalizeFromStudentRatio([instMan getValuesForPreference:@"studentFacultyRatio"], [userPref getPrefVal]);
+        }
+        else if([[userPref getName] isEqualToString:@"femaleRatio"])
+        {
+            value = normalizeFromFemaleRatio([instMan getValuesForPreference:@"femaleRatio"], [userPref getPrefVal]);
+        }
+        else if([[userPref getName] isEqualToString:@"highestDegree"])
+        {
+            value = normalizeFromDegree([instMan getValuesForPreference:@"type"], [userPref getPrefVal]);
+        }
+        else if([[userPref getName] isEqualToString:@"cost"])
+        {
+            value = normalizeFromCost([instMan getValuesForPreference:@"cost"], [userPref getPrefVal]);
+        }
+        else if([[userPref getName] isEqualToString:@"religion"])
+        {
+            value = normalizeFromReligion([instMan getValuesForPreference:@"religion"], [userPref getPrefVal]);
+        }
+        else{
+        }
+        [weightDict setObject:[NSNumber numberWithInt:[userPref getWeight]] forKey:[userPref getName]];
+        [normalizedPrefs setObject: value forKey:[userPref getName]];
     }
+    
     
     return [[NSMutableDictionary alloc] init];
 }

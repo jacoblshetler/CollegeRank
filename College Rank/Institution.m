@@ -82,15 +82,27 @@
      return [self.data valueForKey:@"size"][0];
  }
 
-- (NSString*) cost: (NSString*)type{
-    //acceptable values for parameter "type" are:
-    //cost_alone_in
-    //cost_alone_out
-    //cost_fam_in
-    //cost_fam_out
-    //cost_on_in
-    //cost_in_out
-     return [self.data valueForKey:type][0];
+- (int) cost{
+    NSArray* tempArr = [[NSArray alloc] initWithObjects:
+                        [self.data valueForKey:@"cost_alone_in"],
+                        [self.data valueForKey:@"cost_alone_out"],
+                        [self.data valueForKey:@"cost_fam_in"],
+                        [self.data valueForKey:@"cost_fam_out"],
+                        [self.data valueForKey:@"cost_on_in"],
+                        [self.data valueForKey:@"cost_in_out"], nil];
+    
+    int count = 0;
+    int terriblePracticeArr = 0;
+    for(id object in tempArr)
+    {
+        if(![object isEqualToString:@"<null>"])
+        {
+            count += 1;
+            terriblePracticeArr += (int)object;
+        }
+    }
+    terriblePracticeArr = terriblePracticeArr/count;
+    return terriblePracticeArr;
  }
 
  - (NSString*) selectivity{
@@ -118,6 +130,9 @@
      return [self.data valueForKey:@"stud_to_fac"][0];
  }
 
-
+-(int) femaleRatio
+{
+    return (int)[self.data valueForKey:@"women_perc"][0];
+}
 @end
 
