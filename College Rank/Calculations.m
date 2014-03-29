@@ -8,7 +8,8 @@
 
 #import "Calculations.h"
 #import <CoreLocation/CoreLocation.h>
-
+#import "InstitutionManager.h"
+#import "PreferenceManager.h"
 
 NSMutableArray * normalize(NSMutableArray * prefValues){
     //create the sum values
@@ -74,12 +75,17 @@ NSMutableArray * normalizeFromDistance(NSMutableArray* preferences, NSString* ac
 
 
 NSMutableDictionary * generateRankings(NSMutableArray * usedInstitutions){
+    PreferenceManager *prefMan = [PreferenceManager sharedInstance];
+    InstitutionManager *instMan = [InstitutionManager sharedInstance];
+    
     
     return [[NSMutableDictionary alloc] init];
 }
 
 
 NSMutableArray * calculatePreferences(NSMutableArray * incomingInstitutions){
+    
+    
     
     return [[NSMutableArray alloc] init];
 }
