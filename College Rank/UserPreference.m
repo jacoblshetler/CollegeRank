@@ -26,13 +26,13 @@
     return nil;
 }
 
--(void) setWeight:(int)weight
+-(void) setWeight:(int)wt
 {
-    self.weight = weight;
+    self.weight = wt;
 }
 -(int) getWeight
 {
-    return self.weight;
+    return weight;
 }
 
 
