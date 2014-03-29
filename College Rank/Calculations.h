@@ -25,3 +25,5 @@ NSMutableArray * calculatePreferences(NSMutableArray * incomingInstitutions);
 
 NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int chosenValue);
 NSMutableArray * normalizeFromBool(NSMutableArray* preferenceValues, int chosenValue);
+
+NSMutableArray * normalizeFromDegree(NSMutableArray* preferenceValues, int chosenValue);
