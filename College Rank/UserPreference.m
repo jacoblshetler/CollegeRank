@@ -11,7 +11,6 @@
 
 @implementation UserPreference
 
-//@synthesize weight;
 
 -(id) initWithPreference: (Preference*) preference andWeight: (int) wt
 {
@@ -53,6 +52,17 @@
 -(Preference*) getPref
 {
     return self.pref;
+}
+
+-(int) getPrefVal
+{
+    return preferredPrefValue;
+}
+
+
+-(void) setPrefVal: (int) prf
+{
+    preferredPrefValue = prf;
 }
 
 @end

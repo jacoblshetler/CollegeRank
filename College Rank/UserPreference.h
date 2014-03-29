@@ -12,18 +12,21 @@
 @interface UserPreference : NSObject
 {
     int weight;
+    int preferredPrefValue;
+
 }
 @property (nonatomic, retain) Preference* pref;
 @property bool locked;
 
 //index of the preferred list value in the Preference
-@property int preferredPrefValue;
 
 -(id) initWithPreference: (Preference*) preference andWeight: (int) wt;
 -(void) setWeight:(int)wt;
 -(void) changeLock;
 -(bool) getLock;
 -(int) getWeight;
+-(int) getPrefVal;
+-(void) setPrefVal: (int) prf;
 -(NSString*) getName;
 -(Preference*) getPref;
 

@@ -10,6 +10,8 @@
 #import <CoreLocation/CoreLocation.h>
 #import "InstitutionManager.h"
 #import "PreferenceManager.h"
+#import "UserPreference.h"
+#import "Preference.h"
 
 float median(NSMutableArray* list) {
     if (list.count == 1) return [list[0] floatValue];
@@ -123,7 +125,49 @@ NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int cho
 NSMutableDictionary * generateRankings(NSMutableArray * usedInstitutions){
     PreferenceManager *prefMan = [PreferenceManager sharedInstance];
     InstitutionManager *instMan = [InstitutionManager sharedInstance];
-
+    NSMutableDictionary* normalizedPrefs = [NSDictionary new];
+    for (UserPreference* userPref in [prefMan getAllUserPrefs])
+    {
+        NSMutableArray* value = [NSMutableArray new];
+        if([[userPref getName] isEqualToString:@"type"])
+        {
+            value = normalizeFromType([instMan getValuesForPreference:@"type"], [userPref getPrefVal]);
+        }
+        else if([[userPref getName] isEqualToString:@"location"])
+        {
+            value = normalizeFromLocaton([instMan getValuesForPreference:@"type"], [userPref getPrefVal]);
+        }
+        
+        else if([[userPref getName] isEqualToString:@"type"])
+        {
+            value = normalizeFromType([instMan getValuesForPreference:@"type"], [userPref getPrefVal]);
+        }
+        
+        else if([[userPref getName] isEqualToString:@"type"])
+        {
+            value = normalizeFromType([instMan getValuesForPreference:@"type"], [userPref getPrefVal]);
+        }
+        else if([[userPref getName] isEqualToString:@"type"])
+        {
+            value = normalizeFromType([instMan getValuesForPreference:@"type"], [userPref getPrefVal]);
+        }
+        else if([[userPref getName] isEqualToString:@"type"])
+        {
+            value = normalizeFromType([instMan getValuesForPreference:@"type"], [userPref getPrefVal]);
+        }
+        else if([[userPref getName] isEqualToString:@"type"])
+        {
+            value = normalizeFromType([instMan getValuesForPreference:@"type"], [userPref getPrefVal]);
+        }
+        else if([[userPref getName] isEqualToString:@"type"])
+        {
+            value = normalizeFromType([instMan getValuesForPreference:@"type"], [userPref getPrefVal]);
+        }
+        
+        
+        [normalizedPrefs setObject: forKey:[userPref getName]]
+    }
+    
     return [[NSMutableDictionary alloc] init];
 }
 
