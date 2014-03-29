@@ -50,28 +50,28 @@
      return [self.data valueForKey:@"religion"][0];
  }
 
- - (BOOL) studyAbroad{
-     return ([[self.data valueForKey:@"study_abroad"][0] isEqual:@"1"]);
+ - (int) studyAbroad{
+     return (int)([[self.data valueForKey:@"study_abroad"][0] isEqual:@"1"]);
  }
 
- - (BOOL) dayCare{
-     return ([[self.data valueForKey:@"day_care"][0] isEqual:@"1"]);
+ - (int) dayCare{
+     return (int)([[self.data valueForKey:@"day_care"][0] isEqual:@"1"]);
  }
 
- - (BOOL) football{
-     return ([[self.data valueForKey:@"football_memb"][0] isEqual:@"1"]);
+ - (int) football{
+     return (int)([[self.data valueForKey:@"football_memb"][0] isEqual:@"1"]);
  }
 
- - (BOOL) basketball{
-     return ([[self.data valueForKey:@"basketball_memb"][0] isEqual:@"1"]);
+ - (int) basketball{
+     return (int)([[self.data valueForKey:@"basketball_memb"][0] isEqual:@"1"]);
  }
 
- - (BOOL) baseball{
-     return ([[self.data valueForKey:@"baseball_memb"][0] isEqual:@"1"]);
+ - (int) baseball{
+     return (int)([[self.data valueForKey:@"baseball_memb"][0] isEqual:@"1"]);
  }
 
- - (BOOL) xCountryAndTrack{
-     return ([[self.data valueForKey:@"xc_memb"][0] isEqual:@"1"]);
+ - (int) xCountryAndTrack{
+     return (int)([[self.data valueForKey:@"xc_memb"][0] isEqual:@"1"]);
  }
 
  - (NSString*) degree{

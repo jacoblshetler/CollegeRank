@@ -20,12 +20,12 @@
 - (NSString*) type;
 - (NSArray*) urbanization;
 - (NSString*) religiousAffiliation;
-- (BOOL) studyAbroad;
-- (BOOL) dayCare;
-- (BOOL) football;
-- (BOOL) basketball;
-- (BOOL) baseball;
-- (BOOL) xCountryAndTrack;
+- (int) studyAbroad;
+- (int) dayCare;
+- (int) football;
+- (int) basketball;
+- (int) baseball;
+- (int) xCountryAndTrack;
 - (NSString*) degree;
 - (NSString*) size;
 - (NSString*) cost: (NSString*) type;

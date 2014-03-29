@@ -53,6 +53,9 @@
     //brief testing of locations
     NSArray * evenNumberOfElements = @[@10.0, @20, @30, @"40", @50, @60, @70, @1000.0, @"2000.0"];
     NSLog(@"%@",normalizeFromDistance([[NSMutableArray alloc] initWithArray:evenNumberOfElements], 0));
+    
+    NSArray * boolElements = @[@1, @1, @1, @0.0, @0, @1, @0];
+    NSLog(@"%@",normalizeFromBool([[NSMutableArray alloc] initWithArray:boolElements], 1));
 }
 
 - (void)didReceiveMemoryWarning

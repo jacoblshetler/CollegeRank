@@ -33,7 +33,6 @@ float median(NSMutableArray* list) {
 
 NSMutableArray * normalize(NSMutableArray * prefValues){
     //create the sum values
-    NSLog(@"%@",prefValues);
     float sum = [[prefValues valueForKeyPath:@"@sum.self"] floatValue];
     
     NSMutableArray* returnArray = [[NSMutableArray alloc]init];
@@ -41,7 +40,6 @@ NSMutableArray * normalize(NSMutableArray * prefValues){
         //divide each item in the array by the sum
         [returnArray addObject:[[NSNumber alloc] initWithFloat:[cur floatValue]/sum]];
     }
-    NSLog(@"%@",returnArray);
     return returnArray;
 }
 
@@ -116,6 +114,80 @@ NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int cho
     }
     return normalize(preferenceValues);
 }
+
+NSMutableArray * normalizeFromSize(NSMutableArray* preferenceValues, int chosenValue){
+    return normalizeFromDistance(preferenceValues, chosenValue);
+}
+NSMutableArray * normalizeFromSAT(NSMutableArray* preferenceValues, int chosenValue){
+    return normalizeFromDistance(preferenceValues, chosenValue);
+}
+NSMutableArray * normalizeFromSelectivity(NSMutableArray* preferenceValues, int chosenValue){
+    return normalizeFromDistance(preferenceValues, chosenValue);
+}
+NSMutableArray * normalizeFromStudentRatio(NSMutableArray* preferenceValues, int chosenValue){
+    return normalizeFromDistance(preferenceValues, chosenValue);
+}
+NSMutableArray * normalizeFromCost(NSMutableArray* preferenceValues, int chosenValue){
+    return normalizeFromDistance(preferenceValues, chosenValue);
+}
+
+//BOOLs are all or nothing when normalized.
+NSMutableArray * normalizeFromBool(NSMutableArray* preferenceValues, int chosenValue){
+    switch (chosenValue) {
+        case 0:
+            //Means that we want 0's, so invert each one.
+            for (int i = 0; i<[preferenceValues count]; i++){
+                if ([preferenceValues[i] intValue] == 1){
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:0];
+                }
+                else{
+                    preferenceValues[i] = [[NSNumber alloc] initWithInt:1];
+                }
+            }
+            break;
+            
+        case 1:
+            //Means that we don't need to change anything
+            break;
+    }
+    return normalize(preferenceValues);
+}
+NSMutableArray * normalizeFromFootball(NSMutableArray* preferenceValues, int chosenValue){
+    return normalizeFromBool(preferenceValues, chosenValue);
+}
+NSMutableArray * normalizeFromBaseball(NSMutableArray* preferenceValues, int chosenValue){
+    return normalizeFromBool(preferenceValues, chosenValue);
+}
+NSMutableArray * normalizeFromBasketball(NSMutableArray* preferenceValues, int chosenValue){
+    return normalizeFromBool(preferenceValues, chosenValue);
+}
+NSMutableArray * normalizeFromXC(NSMutableArray* preferenceValues, int chosenValue){
+    return normalizeFromBool(preferenceValues, chosenValue);
+}
+NSMutableArray * normalizeFromDaycare(NSMutableArray* preferenceValues, int chosenValue){
+    return normalizeFromBool(preferenceValues, chosenValue);
+}
+NSMutableArray * normalizeFromStudyAbroad(NSMutableArray* preferenceValues, int chosenValue){
+    return normalizeFromBool(preferenceValues, chosenValue);
+}
+
+//Various methods that don't fit together
+NSMutableArray * normalizeFromFemaleRatio(NSMutableArray* preferenceValues, int chosenValue){
+    return [[NSMutableArray alloc] init];
+}
+NSMutableArray * normalizeFromType(NSMutableArray* preferenceValues, int chosenValue){
+    return [[NSMutableArray alloc] init];
+}
+NSMutableArray * normalizeFromDegree(NSMutableArray* preferenceValues, int chosenValue){
+    return [[NSMutableArray alloc] init];
+}
+NSMutableArray * normalizeFromReligion(NSMutableArray* preferenceValues, int chosenValue){
+    return [[NSMutableArray alloc] init];
+}
+NSMutableArray * normalizeFromCity(NSMutableArray* preferenceValues, int chosenValue){
+    return [[NSMutableArray alloc] init];
+}
+
 
 
 
