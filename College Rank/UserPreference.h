@@ -10,15 +10,17 @@
 @class Preference;
 
 @interface UserPreference : NSObject
+{
+    int weight;
+}
 @property (nonatomic, retain) Preference* pref;
-@property int weight;
 @property bool locked;
 
 //index of the preferred list value in the Preference
 @property int preferredPrefValue;
 
 -(id) initWithPreference: (Preference*) preference andWeight: (int) wt;
--(void) setWeight:(int)weight;
+-(void) setWeight:(int)wt;
 -(void) changeLock;
 -(bool) getLock;
 -(int) getWeight;
