@@ -100,7 +100,7 @@
 
 -(BOOL) canGoToRank
 {
-    return [_userPrefs count] > 0;
+    return [_userPrefs count] > 1;
 }
 
 @end

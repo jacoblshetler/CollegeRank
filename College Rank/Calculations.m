@@ -62,8 +62,27 @@ None of these functions are declared in the header. This is to ensure that they 
 not called from anywhere else in the program.
 */
 
-NSMutableArray * normalizeFromDistance(NSMutableArray* preferences, NSString* acceptedValue){
-    //Maximum distance
+NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int chosenValue){
+    //3 options to choose from. General ideas are: Close, Middle, Far.
+    
+    switch (chosenValue){
+        case 0:
+        {
+            //Subtract each value from the highest value
+            NSNumber * max = [preferenceValues valueForKeyPath:@"@max.intValue"];
+            for (int i = 0; i<[preferenceValues count]; i++){
+                preferenceValues[i] = [[NSNumber alloc] initWithInt:([max intValue]  - [preferenceValues[i] intValue])];
+            }
+            return normalize(preferenceValues);
+            break;
+        }
+        case 1:
+            break;
+        case 2:
+            //Don't need to do anything since it is already in order
+            return normalize(preferenceValues);
+            break;
+    }
     
     return [[NSMutableArray alloc] init];
 }
@@ -74,13 +93,11 @@ NSMutableArray * normalizeFromDistance(NSMutableArray* preferences, NSString* ac
 
 
 NSMutableDictionary * generateRankings(NSMutableArray * usedInstitutions){
-    
     return [[NSMutableDictionary alloc] init];
 }
 
 
 NSMutableArray * calculatePreferences(NSMutableArray * incomingInstitutions){
-    
     return [[NSMutableArray alloc] init];
 }
 
