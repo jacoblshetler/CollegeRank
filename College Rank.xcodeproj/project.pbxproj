@@ -27,6 +27,7 @@
 		844E771D18AD289100A6FC91 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844E76FC18AD289100A6FC91 /* UIKit.framework */; };
 		844E772518AD289100A6FC91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 844E772318AD289100A6FC91 /* InfoPlist.strings */; };
 		844E772718AD289100A6FC91 /* College_RankTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 844E772618AD289100A6FC91 /* College_RankTests.m */; };
+		8472BA0418E711720034C6D6 /* AcceptableValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84EBAEA618DB2F2F006CC653 /* AcceptableValues.plist */; };
 		84B9BD3918B2DC8700469696 /* Calculations.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B9BD3818B2DC8700469696 /* Calculations.m */; };
 		84EBAEA718DB2F2F006CC653 /* AcceptableValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84EBAEA618DB2F2F006CC653 /* AcceptableValues.plist */; };
 		E329800318D89A0A00DDE110 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E329800218D89A0A00DDE110 /* FirstViewController.m */; };
@@ -294,7 +295,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3631352618E7118A003F13AD /* AcceptableValues.plist in Resources */,
+				8472BA0418E711720034C6D6 /* AcceptableValues.plist in Resources */,
 				844E771418AD289100A6FC91 /* Images.xcassets in Resources */,
 				844E770318AD289100A6FC91 /* InfoPlist.strings in Resources */,
 				844E770C18AD289100A6FC91 /* Main.storyboard in Resources */,
