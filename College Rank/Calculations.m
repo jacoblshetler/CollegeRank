@@ -11,19 +11,35 @@
 #import "InstitutionManager.h"
 #import "PreferenceManager.h"
 
+float median(NSMutableArray* list) {
+    if (list.count == 1) return [list[0] floatValue];
+    
+    float result = 0;
+    NSUInteger middle;
+    
+    NSArray * sorted = [list sortedArrayUsingSelector:@selector(compare:)];
+    if (list.count % 2 != 0) {  //odd number of members
+        middle = (sorted.count / 2);
+        result = [[sorted objectAtIndex:middle] floatValue];
+    }
+    else {
+        middle = (sorted.count / 2) - 1;
+        result = [[@[[sorted objectAtIndex:middle], [sorted objectAtIndex:middle + 1]] valueForKeyPath:@"@avg.self"] floatValue];
+    }
+    return result;
+}
+
 NSMutableArray * normalize(NSMutableArray * prefValues){
     //create the sum values
-    NSDecimalNumber* sum = [NSDecimalNumber decimalNumberWithString:@"0.0"];
-    for (NSDecimalNumber * cur in prefValues){
-        //loop thru and add all values to the sum
-        sum = [sum decimalNumberByAdding:cur];
-    }
+    NSLog(@"%@",prefValues);
+    float sum = [[prefValues valueForKeyPath:@"@sum.self"] floatValue];
     
     NSMutableArray* returnArray = [[NSMutableArray alloc]init];
     for (NSDecimalNumber * cur in prefValues){
         //divide each item in the array by the sum
-        [returnArray addObject:[cur decimalNumberByDividingBy:sum]];
+        [returnArray addObject:[[NSNumber alloc] initWithFloat:[cur floatValue]/sum]];
     }
+    NSLog(@"%@",returnArray);
     return returnArray;
 }
 
@@ -65,7 +81,6 @@ not called from anywhere else in the program.
 
 NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int chosenValue){
     //3 options to choose from. General ideas are: Close, Middle, Far.
-    
     switch (chosenValue){
         case 0:
         {
@@ -74,18 +89,30 @@ NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int cho
             for (int i = 0; i<[preferenceValues count]; i++){
                 preferenceValues[i] = [[NSNumber alloc] initWithInt:([max intValue]  - [preferenceValues[i] intValue])];
             }
-            return normalize(preferenceValues);
+            
             break;
         }
         case 1:
+        {
+            //find the middle value and subtract all other values from it, using absolute values.
+            NSNumber *medianNum = [[NSNumber alloc] initWithFloat:median(preferenceValues)];
+            for (int i = 0; i<[preferenceValues count]; i++){
+                preferenceValues[i] = [[NSNumber alloc] initWithInt:(ABS([medianNum intValue]  - [preferenceValues[i] intValue]))];
+            }
+            //Then invert the list using the highest value
+            NSNumber * max = [preferenceValues valueForKeyPath:@"@max.intValue"];
+            for (int i = 0; i<[preferenceValues count]; i++){
+                preferenceValues[i] = [[NSNumber alloc] initWithInt:([max intValue]  - [preferenceValues[i] intValue])];
+            }
             break;
+        }
         case 2:
+        {
             //Don't need to do anything since it is already in order
-            return normalize(preferenceValues);
             break;
+        }
     }
-    
-    return [[NSMutableArray alloc] init];
+    return normalize(preferenceValues);
 }
 
 
@@ -94,24 +121,15 @@ NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int cho
 
 
 NSMutableDictionary * generateRankings(NSMutableArray * usedInstitutions){
-<<<<<<< HEAD
     PreferenceManager *prefMan = [PreferenceManager sharedInstance];
     InstitutionManager *instMan = [InstitutionManager sharedInstance];
-    
-    
-=======
->>>>>>> 1b5fa6030eb5e2f1e5a8e1b82ad161278dc1d281
+
     return [[NSMutableDictionary alloc] init];
 }
 
 
 NSMutableArray * calculatePreferences(NSMutableArray * incomingInstitutions){
-<<<<<<< HEAD
-    
-    
-    
-=======
->>>>>>> 1b5fa6030eb5e2f1e5a8e1b82ad161278dc1d281
+
     return [[NSMutableArray alloc] init];
 }
 

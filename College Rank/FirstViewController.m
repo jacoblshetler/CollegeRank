@@ -51,8 +51,8 @@
     
     
     //brief testing of locations
-    NSLog(@"%f",geoDistance(@"46526", @"52247"));   
-    
+    NSArray * evenNumberOfElements = @[@10.0, @20, @30, @"40", @50, @60, @70, @1000.0, @"2000.0"];
+    NSLog(@"%@",normalizeFromDistance([[NSMutableArray alloc] initWithArray:evenNumberOfElements], 0));
 }
 
 - (void)didReceiveMemoryWarning
