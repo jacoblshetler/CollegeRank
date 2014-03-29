@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3631352618E7118A003F13AD /* AcceptableValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84EBAEA618DB2F2F006CC653 /* AcceptableValues.plist */; };
 		3659A79118D79DBB00E975E5 /* Preference.m in Sources */ = {isa = PBXBuildFile; fileRef = 3659A79018D79DBB00E975E5 /* Preference.m */; };
 		365A9CD518D7B18100978516 /* UserPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 365A9CD418D7B18100978516 /* UserPreference.m */; };
 		365A9CD818D7B4F000978516 /* PreferenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 365A9CD718D7B4F000978516 /* PreferenceManager.m */; };
