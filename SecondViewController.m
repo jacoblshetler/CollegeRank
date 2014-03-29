@@ -58,7 +58,7 @@
 {
 #warning Needs to show all preferences when the search bar is empty.
     NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"Self contains[c] %@", searchText];
-    _searchResults = [[_preferences allPrefs] filteredArrayUsingPredicate:resultPredicate];
+    _searchResults = [[_preferences getAllPrefNames] filteredArrayUsingPredicate:resultPredicate];
 }
 
 -(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString

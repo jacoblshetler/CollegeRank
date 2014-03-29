@@ -494,8 +494,8 @@ NSMutableArray * normalizeFromCity(NSMutableArray* preferenceValues, int chosenV
 NSMutableDictionary * generateRankings(NSMutableArray * usedInstitutions){
     PreferenceManager *prefMan = [PreferenceManager sharedInstance];
     InstitutionManager *instMan = [InstitutionManager sharedInstance];
-    NSMutableDictionary* normalizedPrefs = [NSMutableDictionary new];
-    NSMutableDictionary* weightDict = [NSMutableDictionary new];
+    NSMutableArray* normalizedPrefs = [NSMutableArray new];
+    NSMutableArray* weightArr = [NSMutableArray new];
 
     for (UserPreference* userPref in [prefMan getAllUserPrefs])
     {
@@ -572,17 +572,44 @@ NSMutableDictionary * generateRankings(NSMutableArray * usedInstitutions){
         }
         else{
         }
-        [weightDict setObject:[NSNumber numberWithInt:[userPref getWeight]] forKey:[userPref getName]];
-        [normalizedPrefs setObject: value forKey:[userPref getName]];
+        [weightArr addObject:[NSNumber numberWithInt:[userPref getWeight]]];
+        [normalizedPrefs addObject: value];
+    }
+    NSMutableDictionary* weightDict = calculatePreferences(normalizedPrefs, weightArr);
+    NSMutableArray* instNames = [instMan getUserInstitutionNames];
+    NSMutableDictionary* rankedInstitutions = [NSMutableDictionary new];
+    for(int i=0; i<[instNames count]; i++)
+    {
+        NSString* index = [NSString stringWithFormat:@"%i", i];
+        [rankedInstitutions setObject:[weightDict objectForKey:index] forKey:[instNames objectAtIndex:i]];
     }
     
-    
-    return [[NSMutableDictionary alloc] init];
+    return rankedInstitutions;
 }
 
 
-NSMutableArray * calculatePreferences(NSMutableArray * incomingInstitutions){
-
-    return [[NSMutableArray alloc] init];
+NSMutableDictionary * calculatePreferences(NSMutableArray * incomingInstitutions, NSMutableArray* weights){
+    
+    NSMutableDictionary* cardinalUtilities = [NSMutableDictionary new];
+    for(int i=0; i<[incomingInstitutions count]; i++)
+    {
+        NSMutableArray* tempArr = [incomingInstitutions objectAtIndex:i];
+        for(int j=0;j<[tempArr count];j++)
+        {
+            float weightedValue = [[tempArr objectAtIndex:j] floatValue] * [[weights objectAtIndex:i] floatValue];
+            NSString* nsJ = [[NSString alloc] initWithFormat:@"%i", j];
+            if([cardinalUtilities objectForKey:nsJ])
+            {
+                float wtVal = [[cardinalUtilities valueForKey:nsJ] floatValue] + weightedValue;
+                [cardinalUtilities setObject:[NSNumber numberWithFloat:wtVal] forKey:nsJ];
+            }
+            else
+            {
+                [cardinalUtilities setObject:[NSNumber numberWithFloat:weightedValue] forKey:nsJ];
+                
+            }
+        }
+    }
+    return cardinalUtilities;
 }
 

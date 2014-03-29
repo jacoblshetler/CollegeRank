@@ -19,8 +19,8 @@
  */
 NSMutableArray * normalize(NSMutableArray * prefValues);
 double geoDistance(NSString * zip1, NSString * zip2);
-NSDictionary * generateRankings(NSMutableArray * usedInstitutions);
-NSMutableArray * calculatePreferences(NSMutableArray * incomingInstitutions);
+NSMutableDictionary * generateRankings(NSMutableArray * usedInstitutions);
+NSMutableDictionary * calculatePreferences(NSMutableArray * incomingInstitutions, NSMutableArray* weights);
 
 
 NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int chosenValue);

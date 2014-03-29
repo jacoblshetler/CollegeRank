@@ -25,6 +25,7 @@
 -(Preference*) getPreferenceAtIndex: (int) index;
 -(UserPreference*) getUserPreferenceForString: (NSString*) name;
 -(Preference*) getPreferenceForString: (NSString*) name;
+-(NSMutableArray*) getAllPrefNames;
 -(BOOL) canGoToRank;
 
 

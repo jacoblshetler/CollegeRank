@@ -110,4 +110,14 @@
     return [_userPrefs count] > 1;
 }
 
+-(NSMutableArray*) getAllPrefNames
+{
+    NSMutableArray* tempArr = [NSMutableArray new];
+    for(Preference *curPref in self.allPrefs)
+    {
+        [tempArr addObject:[curPref getName]];
+    }
+    return tempArr;
+}
+
 @end
