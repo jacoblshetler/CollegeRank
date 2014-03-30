@@ -21,6 +21,7 @@
 //index of the preferred list value in the Preference
 
 -(id) initWithPreference: (Preference*) preference andWeight: (int) wt;
+-(id) initWithPreference: (Preference*) preference andWeight: (int) wt andPrefVal: (int) value;
 -(void) setWeight:(int)wt;
 -(void) changeLock;
 -(bool) getLock;

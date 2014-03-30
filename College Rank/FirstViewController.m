@@ -38,7 +38,7 @@
     _institutions = [InstitutionManager sharedInstance];
     _preferences = [PreferenceManager sharedInstance];
     [self canGoToTabs];
-    
+    [self testCalculations];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -209,5 +209,22 @@
 }
 
  */
+
+-(void) testCalculations
+{
+    PreferenceManager* myP = [PreferenceManager sharedInstance];
+    InstitutionManager* myI = [InstitutionManager sharedInstance];
+    [myP addUserPref:[myP getPreferenceAtIndex:0] withWeight:1 andPrefVal:0];
+    [myP addUserPref:[myP getPreferenceAtIndex:1] withWeight:2 andPrefVal:0];
+    [myP addUserPref:[myP getPreferenceAtIndex:2] withWeight:3 andPrefVal:0];
+    
+    [myI addInstitution:[[myI searchInstitutions:@"g"] objectAtIndex:0]];
+    [myI addInstitution:[[myI searchInstitutions:@"g"] objectAtIndex:1]];
+    [myI addInstitution:[[myI searchInstitutions:@"g"] objectAtIndex:2]];
+    
+    NSLog(@"Ranked list: %@", generateRankings());
+    
+}
+
 
 @end

@@ -67,6 +67,11 @@
     [self.userPrefs addObject:[[UserPreference alloc] initWithPreference:pref andWeight:weight]];
 }
 
+-(void) addUserPref: (Preference*) pref withWeight: (int) weight andPrefVal: (int) prefVal
+{
+    [self.userPrefs addObject:[[UserPreference alloc] initWithPreference:pref andWeight:weight andPrefVal:prefVal]];
+}
+
 
 -(UserPreference*) getUserPreferenceAtIndex: (int) index
 {

@@ -18,8 +18,22 @@
     if (self)
     {
         self.pref = preference;
-        self.weight = wt;
+        weight = wt;
         self.locked = false;
+        return self;
+    }
+    return nil;
+}
+
+-(id) initWithPreference: (Preference*) preference andWeight: (int) wt andPrefVal: (int) value
+{
+    self = [super init];
+    if (self)
+    {
+        self.pref = preference;
+        weight = wt;
+        self.locked = false;
+        preferredPrefValue = value;
         return self;
     }
     return nil;

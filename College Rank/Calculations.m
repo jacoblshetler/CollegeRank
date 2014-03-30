@@ -491,7 +491,7 @@ NSMutableArray * normalizeFromCity(NSMutableArray* preferenceValues, int chosenV
 #pragma mark - Generate Rankings
 
 
-NSMutableDictionary * generateRankings(NSMutableArray * usedInstitutions){
+NSMutableDictionary * generateRankings(){
     PreferenceManager *prefMan = [PreferenceManager sharedInstance];
     InstitutionManager *instMan = [InstitutionManager sharedInstance];
     NSMutableArray* normalizedPrefs = [NSMutableArray new];

@@ -21,6 +21,7 @@
 -(NSMutableArray*) getAllUserPrefs;
 -(void) addUserPref: (UserPreference*) pref;
 -(void) addUserPref: (Preference*) pref withWeight: (int) weight;
+-(void) addUserPref: (Preference*) pref withWeight: (int) weight andPrefVal: (int) prefVal;
 -(UserPreference*) getUserPreferenceAtIndex: (int) index;
 -(Preference*) getPreferenceAtIndex: (int) index;
 -(UserPreference*) getUserPreferenceForString: (NSString*) name;
