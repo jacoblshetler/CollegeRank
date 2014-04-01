@@ -38,7 +38,7 @@
     _institutions = [InstitutionManager sharedInstance];
     _preferences = [PreferenceManager sharedInstance];
     [self canGoToTabs];
-    [self testCalculations];
+    //[self testCalculations];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
