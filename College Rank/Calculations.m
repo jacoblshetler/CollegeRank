@@ -574,7 +574,7 @@ NSMutableDictionary * generateRankings(){
         }
         else if([[userPref getName] isEqualToString:@"religion"])
         {
-            value = normalizeFromReligion([instMan getValuesForPreference:@"religion"], [userPref getPrefVal]);
+            value = normalizeFromReligion([instMan getValuesForPreference:@"religiousAffiliation"], [userPref getPrefVal]);
         }
         else{
         }
