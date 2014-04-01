@@ -132,7 +132,7 @@
 
 -(NSString*) femaleRatio
 {
-    return [[NSString alloc] initWithFormat:@"%d",([[self.data valueForKey:@"women_perc"][0] isEqual:@"1"])];
+    return [[NSString alloc] initWithFormat:@"%i",([[self.data valueForKey:@"women_perc"][0] intValue])];
 }
 @end
 
