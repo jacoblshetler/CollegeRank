@@ -38,8 +38,14 @@ NSMutableArray * normalize(NSMutableArray * prefValues){
     NSMutableArray* returnArray = [[NSMutableArray alloc]init];
     for (NSDecimalNumber * cur in prefValues){
         //divide each item in the array by the sum
-        [returnArray addObject:[[NSNumber alloc] initWithFloat:[cur floatValue]/sum]];
+        if (sum==0){
+            [returnArray addObject:[[NSNumber alloc] initWithFloat:0.0]];
+        }
+        else{
+            [returnArray addObject:[[NSNumber alloc] initWithFloat:[cur floatValue]/sum]];
+        }
     }
+    NSLog(@"%@",returnArray);
     return returnArray;
 }
 

@@ -218,13 +218,12 @@
     [myP addUserPref:[myP getPreferenceAtIndex:1] withWeight:2 andPrefVal:0];
     [myP addUserPref:[myP getPreferenceAtIndex:2] withWeight:3 andPrefVal:0];
     
-    [myI addInstitution:[[myI searchInstitutions:@"g"] objectAtIndex:0]];
-    [myI addInstitution:[[myI searchInstitutions:@"g"] objectAtIndex:1]];
-    [myI addInstitution:[[myI searchInstitutions:@"g"] objectAtIndex:2]];
+    [myI addInstitution:[[myI searchInstitutions:@"Goshen"] objectAtIndex:0]];
+    [myI addInstitution:[[myI searchInstitutions:@"DePauw"] objectAtIndex:0]];
+    [myI addInstitution:[[myI searchInstitutions:@"Mennonite"] objectAtIndex:1]];
     
     NSLog(@"Ranked list: %@", generateRankings());
     
 }
-
 
 @end
