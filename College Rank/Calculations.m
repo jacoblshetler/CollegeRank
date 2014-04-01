@@ -45,7 +45,6 @@ NSMutableArray * normalize(NSMutableArray * prefValues){
             [returnArray addObject:[[NSNumber alloc] initWithFloat:[cur floatValue]/sum]];
         }
     }
-    NSLog(@"%@",returnArray);
     return returnArray;
 }
 
@@ -578,6 +577,7 @@ NSMutableDictionary * generateRankings(){
         }
         else{
         }
+        NSLog(@"%@ - %@",[userPref getName],value);
         [weightArr addObject:[NSNumber numberWithInt:[userPref getWeight]]];
         [normalizedPrefs addObject: value];
     }
