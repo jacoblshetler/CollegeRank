@@ -13,6 +13,9 @@
 #import "UserPreference.h"
 #import "Preference.h"
 
+#pragma mark - Pure Math Functions
+
+//finds the median of any list
 float median(NSMutableArray* list) {
     if (list.count == 1) return [list[0] floatValue];
     
@@ -72,6 +75,79 @@ double geoDistance(NSString * zip1, NSString * zip2){
     CLLocationDistance meters = [location1 distanceFromLocation:location2];
     return (double)(meters*0.000621371); //converting meters to miles
 }
+
+#pragma mark - Weight Calculations
+#warning Need to test both weight manipulators.
+
+//Function to update the weights in the PreferenceManager for the UserPrefs.
+//Will be called with the index of the preference to update in UserPrefs along
+//with the new weight for that preference.
+void updateWeights(int index, float newWeight){
+    PreferenceManager *prefMan = [PreferenceManager sharedInstance];
+    NSMutableArray* userPrefs = [prefMan getAllUserPrefs];
+    
+    //build list of all user preferences that are not locked.
+    NSMutableArray* changeablePrefs = [[NSMutableArray alloc] init];
+    for (int i=0; i<[userPrefs count]; i++) {
+        UserPreference *p = [userPrefs objectAtIndex:i];
+        if (!p.getLock){
+            [changeablePrefs addObject:p];
+        }
+    }
+    
+    //find out how much we need to subtract from each changeablePreference
+    float oldWeight = [(UserPreference*)[userPrefs objectAtIndex:index] getWeight];
+    float difference = newWeight - oldWeight;
+    float subtractFromEach = difference/(float)[changeablePrefs count];
+    
+    //Go through each changeablePref and update it
+    NSMutableArray* newPrefs = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [userPrefs count]; i++ ){
+        UserPreference *p = [userPrefs objectAtIndex:i];
+        if (!p.getLock){
+            [p setWeight:[p getWeight]-subtractFromEach];
+        }
+        [newPrefs addObject:p];
+    }
+    
+    //set the user preferences in the preference manager
+    prefMan.userPrefs = newPrefs;
+}
+
+//function will calculate the range of how much weight a certain preference
+//has to work with in the pie chart. The range of weights is between 0 and 1,
+//so this will return two numbers, both between 0 and 1.
+NSArray * weightToWorkWith(int index){
+    //figure out how much is locked.
+    PreferenceManager *prefMan = [PreferenceManager sharedInstance];
+    NSMutableArray* userPrefs = [prefMan getAllUserPrefs];
+    
+    //build float for max weight. Starts at 1.0 and subtracts for each locked weight
+    //standardize that no weight can go below 1%, so subtract .01 for each non-locked weight
+    float maxWeight = 1.0;
+    int countOfLocked = 0;
+    for (UserPreference *p in userPrefs) {
+        if (p.getLock){
+            maxWeight -= [p getWeight];
+            countOfLocked++;
+        }
+        else{
+            maxWeight -= 0.01;
+        }
+    }
+    
+    //Now that we have the max weight, need to have minimum weight
+    //If the number of locked items is total-1, then min=max. Else min = .01
+    float minWeight = 0.01;
+    if (countOfLocked == [userPrefs count]-1){
+        minWeight = maxWeight;
+    }
+    
+    //return minWeight, maxWeight wrapped in NSNumbers.
+    return [[NSArray alloc] initWithObjects:[NSNumber numberWithFloat:minWeight], [NSNumber numberWithFloat:maxWeight], nil];
+}
+
+
 
 #pragma mark - Preference Calculations
 /*

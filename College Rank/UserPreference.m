@@ -12,7 +12,7 @@
 @implementation UserPreference
 
 
--(id) initWithPreference: (Preference*) preference andWeight: (int) wt
+-(id) initWithPreference: (Preference*) preference andWeight: (float) wt
 {
     self = [super init];
     if (self)
@@ -25,7 +25,7 @@
     return nil;
 }
 
--(id) initWithPreference: (Preference*) preference andWeight: (int) wt andPrefVal: (int) value
+-(id) initWithPreference: (Preference*) preference andWeight: (float) wt andPrefVal: (int) value
 {
     self = [super init];
     if (self)
@@ -39,7 +39,7 @@
     return nil;
 }
 
--(void) setWeight:(int)wt
+-(void) setWeight:(float)wt
 {
     self.weight = wt;
 }

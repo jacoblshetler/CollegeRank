@@ -62,12 +62,12 @@
 }
 
 
--(void) addUserPref: (Preference*) pref withWeight: (int) weight
+-(void) addUserPref: (Preference*) pref withWeight: (float) weight
 {
     [self.userPrefs addObject:[[UserPreference alloc] initWithPreference:pref andWeight:weight]];
 }
 
--(void) addUserPref: (Preference*) pref withWeight: (int) weight andPrefVal: (int) prefVal
+-(void) addUserPref: (Preference*) pref withWeight: (float) weight andPrefVal: (int) prefVal
 {
     [self.userPrefs addObject:[[UserPreference alloc] initWithPreference:pref andWeight:weight andPrefVal:prefVal]];
 }
