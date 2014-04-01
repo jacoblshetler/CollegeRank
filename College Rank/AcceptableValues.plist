@@ -2,73 +2,73 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>type</key>
+	<key>Public or Private</key>
 	<array>
 		<string>Public</string>
 		<string>Private</string>
 		<string>Private (Non-Profit)</string>
 	</array>
-	<key>location</key>
+	<key>Location</key>
 	<array>
 		<string>Close</string>
 		<string>Midranged</string>
 		<string>Far</string>
 	</array>
-	<key>sat</key>
+	<key>Average SAT Score</key>
 	<array>
 		<string>Low Average Score</string>
 		<string>Medium Average Score</string>
 		<string>High Average Score</string>
 	</array>
-	<key>football</key>
+	<key>Football Team</key>
 	<array>
 		<string>No Team</string>
 		<string>Has Team</string>
 	</array>
-	<key>baseball</key>
+	<key>Baseball Team</key>
 	<array>
 		<string>No Team</string>
 		<string>Has Team</string>
 	</array>
-	<key>basketball</key>
+	<key>Basketball Team</key>
 	<array>
 		<string>No Team</string>
 		<string>Has Team</string>
 	</array>
-	<key>xc</key>
+	<key>Cross Country Team</key>
 	<array>
 		<string>No Team</string>
 		<string>Has Team</string>
 	</array>
-	<key>daycare</key>
+	<key>Available Daycare</key>
 	<array>
 		<string>No Provided Daycare</string>
 		<string>Provides Daycare</string>
 	</array>
-	<key>studyAbroad</key>
+	<key>Study Abroad Oppurtunites</key>
 	<array>
 		<string>No Study Abroad Option</string>
 		<string>Has Study Abroad Options</string>
 	</array>
-	<key>size</key>
+	<key>Number of Students</key>
 	<array>
 		<string>Small</string>
 		<string>Midsized</string>
 		<string>Large</string>
 	</array>
-	<key>selectivity</key>
+	<key>College Selectivity</key>
 	<array>
 		<string>Very Selective</string>
 		<string>Somewhat Selective</string>
 		<string>Very Open</string>
 	</array>
-	<key>studentFaculty</key>
+	<key>Student Faculty Ratio</key>
 	<array>
 		<string>Low</string>
 		<string>Medium</string>
 		<string>High</string>
 	</array>
-	<key>femaleRatio</key>
+	<key>Gender Ratio</key>
 	<array>
 		<string>All-Male</string>
 		<string>Majority Male</string>
@@ -76,7 +76,7 @@
 		<string>Majority Female</string>
 		<string>All-Female</string>
 	</array>
-	<key>highestDegree</key>
+	<key>Highest Available Degree</key>
 	<array>
 		<string>No Degree</string>
 		<string>Associate&apos;s Degree</string>
@@ -84,20 +84,20 @@
 		<string>Master&apos;s Degree</string>
 		<string>Doctor&apos;s Degree</string>
 	</array>
-	<key>cost</key>
+	<key>Tuition</key>
 	<array>
 		<string>Low</string>
 		<string>Medium</string>
 		<string>High</string>
 	</array>
-	<key>religion</key>
+	<key>Religious Affiliation</key>
 	<array>
 		<string>No Religious Affiliation</string>
 		<string>Catholic Affiliation</string>
 		<string>Protestant Affiliation</string>
 		<string>Jewish Affiliation</string>
 	</array>
-	<key>citySize</key>
+	<key>Size of City</key>
 	<array>
 		<string>Large City (&gt; 250,000 people)</string>
 		<string>Midsize City (100,000 - 250,000 people)</string>

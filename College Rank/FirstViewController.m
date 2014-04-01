@@ -214,9 +214,10 @@
 {
     PreferenceManager* myP = [PreferenceManager sharedInstance];
     InstitutionManager* myI = [InstitutionManager sharedInstance];
-    [myP addUserPref:[myP getPreferenceAtIndex:0] withWeight:1 andPrefVal:0];
-    [myP addUserPref:[myP getPreferenceAtIndex:1] withWeight:2 andPrefVal:0];
-    [myP addUserPref:[myP getPreferenceAtIndex:2] withWeight:3 andPrefVal:0];
+    for(Preference* newPref in [myP getAllPrefs])
+    {
+        [myP addUserPref:newPref withWeight:1 andPrefVal:0];
+    }
     
     [myI addInstitution:[[myI searchInstitutions:@"Goshen"] objectAtIndex:0]];
     [myI addInstitution:[[myI searchInstitutions:@"DePauw"] objectAtIndex:0]];

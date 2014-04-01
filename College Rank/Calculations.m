@@ -506,75 +506,75 @@ NSMutableDictionary * generateRankings(){
     for (UserPreference* userPref in [prefMan getAllUserPrefs])
     {
         NSMutableArray* value = [NSMutableArray new];
-        if([[userPref getName] isEqualToString:@"type"])
+        if([[userPref getName] isEqualToString:@"Public or Private"])
         {
             value = normalizeFromType([instMan getValuesForPreference:@"type"], [userPref getPrefVal]);
         }
-        else if([[userPref getName] isEqualToString:@"location"])
+        else if([[userPref getName] isEqualToString:@"Location"])
         {
             value = normalizeFromDistance([instMan getValuesForPreference:@"location"], [userPref getPrefVal]);
         }
         
-        else if([[userPref getName] isEqualToString:@"citySize"])
+        else if([[userPref getName] isEqualToString:@"Size of City"])
         {
             value = normalizeFromCity([instMan getValuesForPreference:@"urbanization"], [userPref getPrefVal]);
         }
         
-        else if([[userPref getName] isEqualToString:@"sat"])
+        else if([[userPref getName] isEqualToString:@"Average SAT Score"])
         {
             value = normalizeFromSAT([instMan getValuesForPreference:@"sat"], [userPref getPrefVal]);
         }
-        else if([[userPref getName] isEqualToString:@"football"])
+        else if([[userPref getName] isEqualToString:@"Football Team"])
         {
             value = normalizeFromFootball([instMan getValuesForPreference:@"football"], [userPref getPrefVal]);
         }
-        else if([[userPref getName] isEqualToString:@"basketball"])
+        else if([[userPref getName] isEqualToString:@"Basketball Team"])
         {
             value = normalizeFromBasketball([instMan getValuesForPreference:@"basketball"], [userPref getPrefVal]);
         }
-        else if([[userPref getName] isEqualToString:@"baseball"])
+        else if([[userPref getName] isEqualToString:@"Baseball Team"])
         {
             value = normalizeFromBaseball([instMan getValuesForPreference:@"baseball"], [userPref getPrefVal]);
         }
-        else if([[userPref getName] isEqualToString:@"xc"])
+        else if([[userPref getName] isEqualToString:@"Cross Country Team"])
         {
             value = normalizeFromXC([instMan getValuesForPreference:@"xCountryAndTrack"], [userPref getPrefVal]);
         }
-        else if([[userPref getName] isEqualToString:@"daycare"])
+        else if([[userPref getName] isEqualToString:@"Available Daycare"])
         {
             value = normalizeFromDaycare([instMan getValuesForPreference:@"dayCare"], [userPref getPrefVal]);
         }
-        else if([[userPref getName] isEqualToString:@"studyAbroad"])
+        else if([[userPref getName] isEqualToString:@"Study Abroad Oppurtunities"])
         {
             value = normalizeFromStudyAbroad([instMan getValuesForPreference:@"studyAbroad"], [userPref getPrefVal]);
         }
-        else if([[userPref getName] isEqualToString:@"size"])
+        else if([[userPref getName] isEqualToString:@"Number of Students"])
         {
             value = normalizeFromSize([instMan getValuesForPreference:@"size"], [userPref getPrefVal]);
         }
-        else if([[userPref getName] isEqualToString:@"selectivity"])
+        else if([[userPref getName] isEqualToString:@"College Selectivity"])
         {
             value = normalizeFromSelectivity([instMan getValuesForPreference:@"selectivity"], [userPref getPrefVal]);
         }
-        else if([[userPref getName] isEqualToString:@"studentFaculty"])
+        else if([[userPref getName] isEqualToString:@"Student Faculty Ratio"])
         {
             value = normalizeFromStudentRatio([instMan getValuesForPreference:@"studentFacultyRatio"], [userPref getPrefVal]);
         }
-        else if([[userPref getName] isEqualToString:@"femaleRatio"])
+        else if([[userPref getName] isEqualToString:@"Gender Ratio"])
         {
             value = normalizeFromFemaleRatio([instMan getValuesForPreference:@"femaleRatio"], [userPref getPrefVal]);
         }
-        else if([[userPref getName] isEqualToString:@"highestDegree"])
+        else if([[userPref getName] isEqualToString:@"Highest Available Degree"])
         {
             value = normalizeFromDegree([instMan getValuesForPreference:@"type"], [userPref getPrefVal]);
         }
-        else if([[userPref getName] isEqualToString:@"cost"])
+        else if([[userPref getName] isEqualToString:@"Tuition"])
         {
             value = normalizeFromCost([instMan getValuesForPreference:@"cost"], [userPref getPrefVal]);
         }
-        else if([[userPref getName] isEqualToString:@"religion"])
+        else if([[userPref getName] isEqualToString:@"Religious Affiliation"])
         {
-            value = normalizeFromReligion([instMan getValuesForPreference:@"religion"], [userPref getPrefVal]);
+            value = normalizeFromReligion([instMan getValuesForPreference:@"religiousAffiliation"], [userPref getPrefVal]);
         }
         else{
         }

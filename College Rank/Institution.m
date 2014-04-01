@@ -84,12 +84,12 @@
 
 - (NSString*) cost{
     NSArray* tempArr = [[NSArray alloc] initWithObjects:
-                        [self.data valueForKey:@"cost_alone_in"],
-                        [self.data valueForKey:@"cost_alone_out"],
-                        [self.data valueForKey:@"cost_fam_in"],
-                        [self.data valueForKey:@"cost_fam_out"],
-                        [self.data valueForKey:@"cost_on_in"],
-                        [self.data valueForKey:@"cost_in_out"], nil];
+                        [self.data valueForKey:@"cost_alone_in"][0],
+                        [self.data valueForKey:@"cost_alone_out"][0],
+                        [self.data valueForKey:@"cost_fam_in"][0],
+                        [self.data valueForKey:@"cost_fam_out"][0],
+                        [self.data valueForKey:@"cost_on_in"][0],
+                        [self.data valueForKey:@"cost_on_out"][0], nil];
     
     int count = 0;
     int terriblePracticeArr = 0;
