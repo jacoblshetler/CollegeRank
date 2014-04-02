@@ -12,7 +12,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Select Up To 10 Colleges" id="duQ-14-ePB">
+                        <searchBar key="tableHeaderView" contentMode="redraw" text="" placeholder="Select Up To 10 Colleges" id="duQ-14-ePB">
                             <rect key="frame" x="0.0" y="64" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <color key="tintColor" red="1" green="0.23545848540145986" blue="0.19477075729927007" alpha="1" colorSpace="calibratedRGB"/>
@@ -80,8 +80,8 @@
             <objects>
                 <viewController id="6jN-Hu-J2L" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="YdJ-2S-86d"/>
-                        <viewControllerLayoutGuide type="bottom" id="81z-Ta-aXN"/>
+                        <viewControllerLayoutGuide type="top" id="KTf-Wj-W9w"/>
+                        <viewControllerLayoutGuide type="bottom" id="PlF-o4-xGv"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="H1t-lu-kgN">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -109,8 +109,8 @@
             <objects>
                 <viewController title="Rank" id="OeI-6D-nyC" customClass="ThirdViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="KE7-x8-Urf"/>
-                        <viewControllerLayoutGuide type="bottom" id="Sag-JA-fXa"/>
+                        <viewControllerLayoutGuide type="top" id="VkR-HS-NZy"/>
+                        <viewControllerLayoutGuide type="bottom" id="9eg-kW-N3m"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="uWh-Jg-KZu">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -133,6 +133,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="tintColor" red="1" green="0.23677007299270073" blue="0.19477075729927007" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="selectedImageTintColor" red="1" green="0.236770073" blue="0.19477075730000001" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="Kpa-85-mMW" kind="relationship" relationship="viewControllers" id="Q7w-7j-Shy"/>
@@ -219,7 +220,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Preferences" id="lml-nW-Vpr">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="D5O-YW-fYj">
+                        <barButtonItem key="rightBarButtonItem" id="D5O-YW-fYj">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" id="MfF-id-Ny8">
                                 <rect key="frame" x="282" y="11" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -252,6 +253,7 @@
         <image name="first" width="30" height="30"/>
         <image name="second" width="30" height="30"/>
     </resources>
+    <color key="tintColor" red="1" green="0.236770073" blue="0.19477075730000001" alpha="1" colorSpace="calibratedRGB"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

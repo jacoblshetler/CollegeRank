@@ -39,6 +39,7 @@
     _preferences = [PreferenceManager sharedInstance];
     //[self canGoToTabs];
 
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -54,19 +55,37 @@
 
 #pragma mark - Search Results
 
+- (void) searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller {
+    
+    self.searchDisplayController.searchBar.text = @"\n";
+}
+
+
+
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
-#warning Needs to show all preferences when the search bar is empty.
-    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"Self contains[c] %@", searchText];
-    _searchResults = [[_preferences getAllPrefNames] filteredArrayUsingPredicate:resultPredicate];
+    if ([searchText isEqualToString:@"\n"])
+    {
+        _searchResults = [_preferences getAllPrefNames];
+    } else
+    {
+        NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"Self contains[c] %@", searchText];
+        _searchResults = [[_preferences getAllPrefNames] filteredArrayUsingPredicate:resultPredicate];
+    }
 }
 
 -(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
+    if ([searchString isEqualToString:@"\n"])
+    {
+        self.searchDisplayController.searchBar.text = @"";
+    }
+
     [self filterContentForSearchText:searchString
                                scope:[[self.searchDisplayController.searchBar scopeButtonTitles]
                                       objectAtIndex:[self.searchDisplayController.searchBar
-                                                     selectedScopeButtonIndex]]];
+                                                    selectedScopeButtonIndex]]];
+    
     return YES;
 }
 
