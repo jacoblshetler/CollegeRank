@@ -8,9 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-//TODO: We need to rethink how the methods that generate preference data are going to work
-//for the different preference types, as Philip pointed out
-
 /**
  Normalizes an NSMutableArray of NSDecimalNumbers and returns it in the same order. The normalized vales will sum to 1 and will all be between 0 and 1.
  @param prefValues
@@ -22,8 +19,5 @@ double geoDistance(NSString * zip1, NSString * zip2);
 NSMutableDictionary * generateRankings();
 NSMutableDictionary * calculatePreferences(NSMutableArray * incomingInstitutions, NSMutableArray* weights);
 
-
-NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int chosenValue);
-NSMutableArray * normalizeFromBool(NSMutableArray* preferenceValues, int chosenValue);
-
-NSMutableArray * normalizeFromDegree(NSMutableArray* preferenceValues, int chosenValue);
+void updateWeights(int index, float newWeight);
+NSArray * weightToWorkWith(int index);

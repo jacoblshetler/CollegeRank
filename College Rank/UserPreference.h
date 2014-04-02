@@ -11,7 +11,7 @@
 
 @interface UserPreference : NSObject
 {
-    int weight;
+    float weight;
     int preferredPrefValue;
 
 }
@@ -20,9 +20,9 @@
 
 //index of the preferred list value in the Preference
 
--(id) initWithPreference: (Preference*) preference andWeight: (int) wt;
--(id) initWithPreference: (Preference*) preference andWeight: (int) wt andPrefVal: (int) value;
--(void) setWeight:(int)wt;
+-(id) initWithPreference: (Preference*) preference andWeight: (float) wt;
+-(id) initWithPreference: (Preference*) preference andWeight: (float) wt andPrefVal: (int) value;
+-(void) setWeight:(float)wt;
 -(void) changeLock;
 -(bool) getLock;
 -(int) getWeight;

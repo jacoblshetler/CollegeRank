@@ -46,21 +46,6 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
-    
-    
-    
-    
-    
-    //brief testing of locations
-    NSArray * evenNumberOfElements = @[@10.0, @20, @30, @"40", @50, @60, @70, @1000.0, @"2000.0"];
-    NSLog(@"%@",normalizeFromDistance([[NSMutableArray alloc] initWithArray:evenNumberOfElements], 0));
-    
-    NSArray * boolElements = @[@1, @1, @1, @0.0, @0, @1, @0];
-    NSLog(@"%@",normalizeFromBool([[NSMutableArray alloc] initWithArray:boolElements], 1));
-    
-    //check the degree
-    NSArray * degElements = @[@"11", @12, @13, @"14", @24, @20.0, @30, @"34", @40];
-    NSLog(@"%@",normalizeFromDegree([[NSMutableArray alloc] initWithArray:degElements], 4));
 }
 
 - (void)didReceiveMemoryWarning
