@@ -135,8 +135,7 @@
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-#warning add a check to make sure there are at least two preferences
-    if (indexPath.row < 2) {
+    if ([[_preferences userPrefs] count] > 1 && indexPath.row < 2) {
         return NO;
     }
     else {
