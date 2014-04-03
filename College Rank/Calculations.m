@@ -567,7 +567,17 @@ NSMutableArray * normalizeFromCity(NSMutableArray* preferenceValues, int chosenV
 }
 
 
+//This function will convert a list of y-values of custom preference markers
+//to their normalized equivalents. Returns them in the same order it was sent
+NSMutableArray * normalizeFromContinuum(NSMutableArray * yValues){
+    //Subtract each value from the highest value
+    NSNumber * max = [yValues valueForKeyPath:@"@max.floatValue"];
+    for (int i = 0; i<[yValues count]; i++){
+        yValues[i] = [[NSNumber alloc] initWithFloat:([max floatValue]  - [yValues[i] floatValue])];
+    }
 
+    return normalize(yValues);
+}
 
 #pragma mark - Generate Rankings
 
