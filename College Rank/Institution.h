@@ -13,7 +13,7 @@
 -(id)initWithName: (NSString *) InstitutionName;
 
 @property   NSString* name;  	//Will use synthesize
-@property   NSDictionary* data;	//dictionary of all preference data related to the institution
+@property   NSMutableDictionary* data;	//dictionary of all preference data related to the institution
 
 //These functions are used to grab data out of the dataDictionary and return it
 - (NSString*) location;
