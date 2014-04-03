@@ -60,8 +60,6 @@
     self.searchDisplayController.searchBar.text = @"\n";
 }
 
-
-
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
     if ([searchText isEqualToString:@"\n"])
@@ -73,6 +71,11 @@
         _searchResults = [[_preferences getAllPrefNames] filteredArrayUsingPredicate:resultPredicate];
     }
 }
+
+-(void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView {
+    self.searchDisplayController.searchBar.text = @"\n";
+}
+
 
 -(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
