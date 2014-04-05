@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3631352618E7118A003F13AD /* AcceptableValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84EBAEA618DB2F2F006CC653 /* AcceptableValues.plist */; };
 		3659A79118D79DBB00E975E5 /* Preference.m in Sources */ = {isa = PBXBuildFile; fileRef = 3659A79018D79DBB00E975E5 /* Preference.m */; };
 		365A9CD518D7B18100978516 /* UserPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 365A9CD418D7B18100978516 /* UserPreference.m */; };
 		365A9CD818D7B4F000978516 /* PreferenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 365A9CD718D7B4F000978516 /* PreferenceManager.m */; };
@@ -35,6 +34,7 @@
 		E3B04FEC18DFE28600D4BD7B /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B04FEB18DFE28600D4BD7B /* SecondViewController.m */; };
 		E3C5CD6D18CF68B800C5DBA2 /* Institution.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5CD6C18CF68B800C5DBA2 /* Institution.m */; };
 		E3C5CD7018CF692700C5DBA2 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5CD6F18CF692700C5DBA2 /* Reachability.m */; };
+		E3FA36A118F0ADE600FE14A9 /* MissingDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FA36A018F0ADE600FE14A9 /* MissingDataViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +89,8 @@
 		E3C5CD6C18CF68B800C5DBA2 /* Institution.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Institution.m; sourceTree = "<group>"; };
 		E3C5CD6E18CF692700C5DBA2 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		E3C5CD6F18CF692700C5DBA2 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		E3FA369F18F0ADE600FE14A9 /* MissingDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MissingDataViewController.h; sourceTree = "<group>"; };
+		E3FA36A018F0ADE600FE14A9 /* MissingDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MissingDataViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +215,8 @@
 				E329800218D89A0A00DDE110 /* FirstViewController.m */,
 				E3B04FEA18DFE28600D4BD7B /* SecondViewController.h */,
 				E3B04FEB18DFE28600D4BD7B /* SecondViewController.m */,
+				E3FA369F18F0ADE600FE14A9 /* MissingDataViewController.h */,
+				E3FA36A018F0ADE600FE14A9 /* MissingDataViewController.m */,
 				E3698A9618AD2ED800A54627 /* ThirdViewController.h */,
 				E3698A9718AD2ED800A54627 /* ThirdViewController.m */,
 			);
@@ -329,6 +333,7 @@
 				3659A79118D79DBB00E975E5 /* Preference.m in Sources */,
 				E3C5CD6D18CF68B800C5DBA2 /* Institution.m in Sources */,
 				3697488618B2DBCA001EE530 /* DataRetreiver.m in Sources */,
+				E3FA36A118F0ADE600FE14A9 /* MissingDataViewController.m in Sources */,
 				365A9CD518D7B18100978516 /* UserPreference.m in Sources */,
 				844E770518AD289100A6FC91 /* main.m in Sources */,
 			);

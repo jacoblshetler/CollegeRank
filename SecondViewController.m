@@ -12,6 +12,7 @@
 #import "UserPreference.h"
 #import "Preference.h"
 #import "DataRetreiver.h"
+#import "MissingDataViewController.h"
 
 @interface SecondViewController ()
 
@@ -22,6 +23,7 @@
 @end
 
 @implementation SecondViewController
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -132,6 +134,51 @@
     }
     
     return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        /*if ([[_institutions userInstitutions] count] > 10) {
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Maximum Reached" message:@"Sorry, but you can only add up to 10 colleges." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert setAlertViewStyle:UIAlertViewStyleDefault];
+            [alert show];
+            [self.searchDisplayController setActive:NO animated:YES];
+        } else {
+            NSString *entry = [_searchResults objectAtIndex:[indexPath row]];
+            NSPredicate *memberPredicate = [NSPredicate predicateWithFormat:@"name matches %@", entry];
+            if ([[[_institutions userInstitutions] filteredArrayUsingPredicate:memberPredicate] count] < 1) {
+                [_institutions addInstitution:entry];
+                [self.searchDisplayController setActive:NO animated:YES];
+                [self.tableView reloadData];
+                [self canGoToTabs];
+            }
+        }*/
+        //UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        MissingDataViewController* missingData = [self.storyboard instantiateViewControllerWithIdentifier:@"MissingDataView"];
+        [self presentViewController:missingData animated:YES completion:nil];
+        
+        //[self performSegueWithIdentifier: @"missingDataPush" sender: self];
+    }
+}
+
+//This is for sending information to the detail view
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"missingData"]) {
+        NSIndexPath *indexPath = nil;
+        //Recipe *recipe = nil;
+        
+        if (self.searchDisplayController.active) {
+            indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
+            //recipe = [searchResults objectAtIndex:indexPath.row];
+        } else {
+            //indexPath = [self.tableView indexPathForSelectedRow];
+            //recipe = [recipes objectAtIndex:indexPath.row];
+        }
+        
+        //ViewController *view = segue.destinationViewController;
+        //RecipeDetailViewController *destViewController = segue.destinationViewController;
+        //destViewController.recipe = recipe;
+    }
 }
 
 
