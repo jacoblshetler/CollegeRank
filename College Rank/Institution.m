@@ -95,11 +95,17 @@
     int terriblePracticeArr = 0;
     for(id object in tempArr)
     {
+        if([object isEqual:[NSNull null]]){
+            continue;
+        }
         if(![object isEqualToString:@"<null>"])
         {
             count += 1;
             terriblePracticeArr += (int)object;
         }
+    }
+    if (count==0) {
+        return [[NSString alloc] initWithFormat:@"<null>"];
     }
     terriblePracticeArr = terriblePracticeArr/count;
     return [[NSString alloc] initWithFormat:@"%i",terriblePracticeArr];
@@ -110,8 +116,22 @@
  }
 
  - (NSString*) sat{
-     int mathAverage = ([[self.data valueForKey:@"sat_math_25"][0] intValue]+[[self.data valueForKey:@"sat_math_75"][0] intValue])/2;
-     int readAverage = ([[self.data valueForKey:@"sat_read_25"][0] intValue]+[[self.data valueForKey:@"sat_read_75"][0] intValue])/2;
+     int mathLow = 0;
+     int mathHigh = 0;
+     int readLow = 0;
+     int readHigh = 0;
+     @try{
+         mathLow = [[self.data valueForKey:@"sat_math_25"][0] intValue];
+         mathHigh = [[self.data valueForKey:@"sat_math_75"][0] intValue];
+         readLow = [[self.data valueForKey:@"sat_read_25"][0] intValue];
+         readHigh = [[self.data valueForKey:@"sat_read_75"][0] intValue];
+     }
+     @catch (NSException *e) {
+         //NSLog(@"SAT Error: %@",e.description);
+         return [[NSString alloc] initWithFormat:@"<null>"];
+     }
+     int mathAverage = (mathLow+mathHigh)/2;
+     int readAverage = (readLow+readHigh)/2;
      return [[NSString alloc] initWithFormat:@"%d",mathAverage+readAverage];
  }
 
@@ -132,7 +152,17 @@
 
 -(NSString*) femaleRatio
 {
-    return [[NSString alloc] initWithFormat:@"%i",([[self.data valueForKey:@"women_perc"][0] intValue])];
+    int females = 0;
+    BOOL crashed = false;
+    @try{
+        females = [[self.data valueForKey:@"women_perc"][0] intValue];
+    }
+    @catch (NSException *e) {
+        NSLog(@"Female Error: %@",e.description);
+        crashed = true;
+    }
+    if (crashed) return [[NSString alloc] initWithFormat:@"<null>"];
+    return [[NSString alloc] initWithFormat:@"%i",females];
 }
 @end
 

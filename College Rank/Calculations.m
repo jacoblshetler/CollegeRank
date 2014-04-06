@@ -147,6 +147,52 @@ NSArray * weightToWorkWith(int index){
     return [[NSArray alloc] initWithObjects:[NSNumber numberWithFloat:minWeight], [NSNumber numberWithFloat:maxWeight], nil];
 }
 
+#pragma mark - Null Manipulations
+
+NSMutableDictionary * takeOutNulls(NSMutableArray* inArray){
+    //in order to handle nulls in the calcs, we will take out each type of NSNull or string "<null>".
+    //Dictionary returns Key:"newList" value:NSMutArr without nulls
+    //Key:"nullIndexs" value:NSMutArr with indecies of null vals in original string.
+    NSMutableDictionary* returnDict = [[NSMutableDictionary alloc] init];
+    NSMutableArray* goodArr = [[NSMutableArray alloc]init];
+    NSMutableArray* indexs = [[NSMutableArray alloc] init];
+    for (int i=0; i<[inArray count];i++) {
+        id obj = [inArray objectAtIndex:i];
+        if (!([obj isEqual:[NSNull null]] || [[NSString stringWithFormat:@"%@",obj] isEqual:@"<null>"])){
+            //Then its good
+            [goodArr addObject:obj];
+        }
+        else{
+            [indexs addObject:[NSNumber numberWithInt:i]];
+        }
+    }
+    
+    [returnDict setObject:goodArr forKey:@"newList"];
+    [returnDict setObject:indexs forKey:@"nullIndexs"];
+    
+    return returnDict;
+}
+
+NSMutableArray * putMeanBackIn(NSMutableArray* prefVals, NSMutableArray* replaceVals){
+    //create new array and at insert the mean at the indexes indicated by the replaceVals array
+    NSMutableArray* returnArr = [[NSMutableArray alloc]init];
+    float mean = [[prefVals valueForKeyPath:@"@avg.self"] floatValue];
+    int prefValIndex = 0;
+    
+    for (int i=0; i<([prefVals count]+[replaceVals count]); i++) {
+        if ([replaceVals containsObject:[NSNumber numberWithInt:i]]) {
+            //then insert the mean
+            [returnArr addObject:[NSNumber numberWithFloat:mean]];
+        }
+        else{
+            //else insert whatever is in the prefValIndex in the prefVals. and increment
+            [returnArr addObject:[prefVals objectAtIndex:prefValIndex]];
+            prefValIndex++;
+        }
+    }
+    
+    return normalize(returnArr);
+}
 
 
 #pragma mark - Preference Calculations
@@ -169,6 +215,10 @@ not called from anywhere else in the program.
 
 NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int chosenValue){
     //3 options to choose from. General ideas are: Close, Middle, Far.
+    NSMutableDictionary* dataDict = takeOutNulls(preferenceValues);
+    preferenceValues = [dataDict valueForKey:@"newList"];
+    NSMutableArray* replaceVals = [dataDict valueForKey:@"nullIndexs"];
+    
     switch (chosenValue){
         case 0:
         {
@@ -200,7 +250,10 @@ NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int cho
             break;
         }
     }
-    return normalize(preferenceValues);
+    
+    //Normalize. Then replace everything in the replaceVals with the mean
+    NSMutableArray* normalizedVals = normalize(preferenceValues);
+    return putMeanBackIn(normalizedVals, replaceVals);
 }
 
 NSMutableArray * normalizeFromSize(NSMutableArray* preferenceValues, int chosenValue){
@@ -629,7 +682,7 @@ NSMutableDictionary * generateRankings(){
         {
             value = normalizeFromDaycare([instMan getValuesForPreference:@"dayCare"], [userPref getPrefVal]);
         }
-        else if([[userPref getName] isEqualToString:@"Study Abroad Oppurtunities"])
+        else if([[userPref getName] isEqualToString:@"Study Abroad Opportunities"])
         {
             value = normalizeFromStudyAbroad([instMan getValuesForPreference:@"studyAbroad"], [userPref getPrefVal]);
         }

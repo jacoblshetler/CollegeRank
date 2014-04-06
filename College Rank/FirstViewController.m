@@ -34,12 +34,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     
     _institutions = [InstitutionManager sharedInstance];
     _preferences = [PreferenceManager sharedInstance];
     [self canGoToTabs];
-    //[self testCalculations];
+    [self testCalculations];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -207,6 +206,7 @@
     [myI addInstitution:[[myI searchInstitutions:@"Goshen"] objectAtIndex:0]];
     [myI addInstitution:[[myI searchInstitutions:@"DePauw"] objectAtIndex:0]];
     [myI addInstitution:[[myI searchInstitutions:@"Mennonite"] objectAtIndex:1]];
+    [myI addInstitution:[[myI searchInstitutions:@"Commun"] objectAtIndex:0]];
     
     NSLog(@"Ranked list: %@", generateRankings());
     
