@@ -23,3 +23,5 @@ void updateWeights(int index, float newWeight);
 NSArray * weightToWorkWith(int index);
 
 NSMutableArray * normalizeFromContinuum(NSMutableArray * yValues);
+
+void setANewWeight();
