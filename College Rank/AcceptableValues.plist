@@ -4,72 +4,85 @@
 <dict>
 	<key>Public or Private</key>
 	<array>
+		<string>type</string>
 		<string>Public</string>
 		<string>Private</string>
 		<string>Private (Non-Profit)</string>
 	</array>
 	<key>Location</key>
 	<array>
+		<string>location</string>
 		<string>Close</string>
 		<string>Midranged</string>
 		<string>Far</string>
 	</array>
 	<key>Average SAT Score</key>
 	<array>
+		<string>sat</string>
 		<string>Low Average Score</string>
 		<string>Medium Average Score</string>
 		<string>High Average Score</string>
 	</array>
 	<key>Football Team</key>
 	<array>
+		<string>football</string>
 		<string>No Team</string>
 		<string>Has Team</string>
 	</array>
 	<key>Baseball Team</key>
 	<array>
+		<string>baseball</string>
 		<string>No Team</string>
 		<string>Has Team</string>
 	</array>
 	<key>Basketball Team</key>
 	<array>
+		<string>basketball</string>
 		<string>No Team</string>
 		<string>Has Team</string>
 	</array>
-	<key>Cross Country Team</key>
+	<key>Cross Country And Track Team</key>
 	<array>
+		<string>xCountryAndTrack</string>
 		<string>No Team</string>
 		<string>Has Team</string>
 	</array>
 	<key>Available Daycare</key>
 	<array>
+		<string>dayCare</string>
 		<string>No Provided Daycare</string>
 		<string>Provides Daycare</string>
 	</array>
 	<key>Study Abroad Opportunities</key>
 	<array>
+		<string>studyAbroad</string>
 		<string>No Study Abroad Option</string>
 		<string>Has Study Abroad Options</string>
 	</array>
 	<key>Number of Students</key>
 	<array>
+		<string>size</string>
 		<string>Small</string>
 		<string>Midsized</string>
 		<string>Large</string>
 	</array>
 	<key>College Selectivity</key>
 	<array>
+		<string>selectivity</string>
 		<string>Very Selective</string>
 		<string>Somewhat Selective</string>
 		<string>Very Open</string>
 	</array>
 	<key>Student Faculty Ratio</key>
 	<array>
+		<string>studentFacultyRatio</string>
 		<string>Low</string>
 		<string>Medium</string>
 		<string>High</string>
 	</array>
 	<key>Gender Ratio</key>
 	<array>
+		<string>femaleRatio</string>
 		<string>All-Male</string>
 		<string>Majority Male</string>
 		<string>Neutral</string>
@@ -78,6 +91,7 @@
 	</array>
 	<key>Highest Available Degree</key>
 	<array>
+		<string>degree</string>
 		<string>No Degree</string>
 		<string>Associate&apos;s Degree</string>
 		<string>Bachelor&apos;s Degree</string>
@@ -86,12 +100,14 @@
 	</array>
 	<key>Tuition</key>
 	<array>
+		<string>cost</string>
 		<string>Low</string>
 		<string>Medium</string>
 		<string>High</string>
 	</array>
 	<key>Religious Affiliation</key>
 	<array>
+		<string>religiousAffiliation</string>
 		<string>No Religious Affiliation</string>
 		<string>Catholic Affiliation</string>
 		<string>Protestant Affiliation</string>
@@ -99,6 +115,7 @@
 	</array>
 	<key>Size of City</key>
 	<array>
+		<string>urbanization</string>
 		<string>Large City (&gt; 250,000 people)</string>
 		<string>Midsize City (100,000 - 250,000 people)</string>
 		<string>Small City (&lt; 100,000 people)</string>

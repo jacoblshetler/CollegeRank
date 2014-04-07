@@ -37,8 +37,8 @@
     
     _institutions = [InstitutionManager sharedInstance];
     _preferences = [PreferenceManager sharedInstance];
-    [self canGoToTabs];
     [self testCalculations];
+    [self canGoToTabs];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -129,7 +129,7 @@
 }
 
 -(void) canGoToTabs
-{/*
+{
     if (![_institutions canGoToPreferences]) {
         [[[[self.tabBarController tabBar]items]objectAtIndex:1]setEnabled:FALSE];
     } else {
@@ -139,7 +139,7 @@
         [[[[self.tabBarController tabBar]items]objectAtIndex:2]setEnabled:FALSE];
     } else {
         [[[[self.tabBarController tabBar]items]objectAtIndex:2]setEnabled:TRUE];
-    }*/
+    }
 }
 /*
 // Override to support conditional editing of the table view.
@@ -196,19 +196,20 @@
 
 -(void) testCalculations
 {
-    PreferenceManager* myP = [PreferenceManager sharedInstance];
+    //PreferenceManager* myP = [PreferenceManager sharedInstance];
     InstitutionManager* myI = [InstitutionManager sharedInstance];
+    /*
     for(Preference* newPref in [myP getAllPrefs])
     {
         [myP addUserPref:newPref withWeight:1 andPrefVal:0];
-    }
+    }*/
     
     [myI addInstitution:[[myI searchInstitutions:@"Goshen"] objectAtIndex:0]];
     [myI addInstitution:[[myI searchInstitutions:@"DePauw"] objectAtIndex:0]];
     [myI addInstitution:[[myI searchInstitutions:@"Mennonite"] objectAtIndex:1]];
     [myI addInstitution:[[myI searchInstitutions:@"Commun"] objectAtIndex:0]];
     
-    NSLog(@"Ranked list: %@", generateRankings());
+    //NSLog(@"Ranked list: %@", generateRankings());
     
 }
 

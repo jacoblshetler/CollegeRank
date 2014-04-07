@@ -153,15 +153,17 @@
                 [self canGoToTabs];
             }
         }*/
-        //UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        //Have it deal with preferences that were already added
+        NSString *entry = [_searchResults objectAtIndex:[indexPath row]];
+        [_institutions getValuesForPreference:entry];
+        
         MissingDataViewController* missingData = [self.storyboard instantiateViewControllerWithIdentifier:@"MissingDataView"];
         [self presentViewController:missingData animated:YES completion:nil];
         
-        //[self performSegueWithIdentifier: @"missingDataPush" sender: self];
     }
 }
 
-//This is for sending information to the detail view
+/*/This is for sending information to the detail view
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"missingData"]) {
         NSIndexPath *indexPath = nil;
@@ -179,7 +181,7 @@
         //RecipeDetailViewController *destViewController = segue.destinationViewController;
         //destViewController.recipe = recipe;
     }
-}
+}*/
 
 
 // Override to support conditional editing of the table view.

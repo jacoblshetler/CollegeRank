@@ -704,7 +704,7 @@ NSMutableDictionary * generateRankings(){
         }
         else if([[userPref getName] isEqualToString:@"Highest Available Degree"])
         {
-            value = normalizeFromDegree([instMan getValuesForPreference:@"type"], [userPref getPrefVal]);
+            value = normalizeFromDegree([instMan getValuesForPreference:@"degree"], [userPref getPrefVal]);
         }
         else if([[userPref getName] isEqualToString:@"Tuition"])
         {
