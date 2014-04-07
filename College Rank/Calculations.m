@@ -147,6 +147,41 @@ NSArray * weightToWorkWith(int index){
     return [[NSArray alloc] initWithObjects:[NSNumber numberWithFloat:minWeight], [NSNumber numberWithFloat:maxWeight], nil];
 }
 
+//Calculates the weight for a new preference. Returns the weight as a float
+//Pre-Condition 1: New Preference must be added to the PreferenceManager
+//Pre-Condition 2: New Preference's weight must be set as "unlocked"
+//Pre-Condition 3: New Preference's weight must be 0.0
+void setANewWeight(int justAddedIndex){
+    //find total unlocked area
+    PreferenceManager *prefMan = [PreferenceManager sharedInstance];
+    NSMutableArray* userPrefs = [prefMan getAllUserPrefs];
+    float unlockedWeight = 0.0;
+    int countUnlocked = 0;
+    for (UserPreference *p in userPrefs) {
+        if (!p.getLock){
+            countUnlocked++;
+            unlockedWeight += [p getWeight];
+        }
+    }
+    
+    //Multiply area by 1/countUnlocked to get area for newly added
+    float newWeight = unlockedWeight * (1.0/countUnlocked);
+    
+    //Subtract proportionate amounts from each of the other wedges so that their proportions stay the same.
+    for (int i=0; i<[userPrefs count]; i++) {
+        UserPreference* curPref = [userPrefs objectAtIndex:i];
+        //If unlocked, subtract a proportionate amount
+        if(i==justAddedIndex){
+            [curPref setWeight:newWeight];
+        }
+        else if(!curPref.getLock){
+            float subtractWeight = ([curPref getWeight]/unlockedWeight)*newWeight;
+            float oldWeight = [curPref getWeight];
+            [curPref setWeight:(oldWeight-subtractWeight)];
+        }
+    }
+}
+
 #pragma mark - Null Manipulations
 
 NSMutableDictionary * takeOutNulls(NSMutableArray* inArray){
@@ -717,7 +752,7 @@ NSMutableDictionary * generateRankings(){
         else{
         }
         NSLog(@"%@ - %@",[userPref getName],value);
-        [weightArr addObject:[NSNumber numberWithInt:[userPref getWeight]]];
+        [weightArr addObject:[NSNumber numberWithFloat:[userPref getWeight]]];
         [normalizedPrefs addObject: value];
     }
     NSMutableDictionary* weightDict = calculatePreferences(normalizedPrefs, weightArr);
@@ -734,7 +769,6 @@ NSMutableDictionary * generateRankings(){
 
 
 NSMutableDictionary * calculatePreferences(NSMutableArray * incomingInstitutions, NSMutableArray* weights){
-    
     NSMutableDictionary* cardinalUtilities = [NSMutableDictionary new];
     for(int i=0; i<[incomingInstitutions count]; i++)
     {

@@ -41,9 +41,9 @@
 
 -(void) setWeight:(float)wt
 {
-    self.weight = wt;
+    self->weight = wt;
 }
--(int) getWeight
+-(float) getWeight
 {
     return weight;
 }
@@ -51,7 +51,7 @@
 
 -(void) changeLock
 {
-    self.locked = !self.locked;
+    self->_locked = !self.locked;
 }
 -(bool) getLock
 {

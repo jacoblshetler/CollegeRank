@@ -25,7 +25,7 @@
 -(void) setWeight:(float)wt;
 -(void) changeLock;
 -(bool) getLock;
--(int) getWeight;
+-(float) getWeight;
 -(int) getPrefVal;
 -(void) setPrefVal: (int) prf;
 -(NSString*) getName;
