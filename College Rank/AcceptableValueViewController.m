@@ -24,6 +24,9 @@
 
 @property int pickerSelection;
 @property bool isNull;
+
+@property (nonatomic, strong) UIDynamicAnimator *anim;
+@property (nonatomic, strong) UIAttachmentBehavior *att;
 @end
 
 @implementation AcceptableValueViewController
@@ -45,18 +48,79 @@
 	// Do any additional setup after loading the view.
 }
 
+- (void) handlePanGestures:(UIPanGestureRecognizer*)paramSender{
+    
+    if (paramSender.state != UIGestureRecognizerStateEnded &&
+        paramSender.state != UIGestureRecognizerStateFailed){
+        
+        CGPoint location = [paramSender
+                            locationInView:paramSender.view.superview];
+        paramSender.view.center = location;
+    }
+    else if(paramSender.state == UIGestureRecognizerStateEnded)
+    {
+        CGPoint location = [paramSender locationInView:paramSender.view.superview];
+        location.x = self.view.bounds.size.width * .75;
+        if(location.y < self.view.bounds.size.height/5)
+        {
+            location.y = self.view.bounds.size.height/5;
+        }
+        else if(location.y > self.view.bounds.size.height * .75 + self.view.bounds.size.height/5)
+        {
+            location.y = self.view.bounds.size.height * .75 + self.view.bounds.size.height/5;
+        }
+        location.x = location.x - paramSender.view.bounds.size.width/2;
+        paramSender.view.center = location;
+    }
+    
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
     //for testing
-    self.pref = [self.preferences getPreferenceAtIndex:0];
+    //self.pref = [self.preferences getPreferenceAtIndex:0];
     
     
     if(self.pref.getValues == nil)
     {
         //load in the selector bar
         self.isNull = true;
+#warning Change me to change the properties of the vertical line!
+        //add the line to snap to
+        UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.bounds.size.width*.75, self.view.bounds.size.height/5 - 20, 30, 20)];
+        topLabel.text = @"Best";
+        UILabel *botLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.bounds.size.width*.75, self.view.bounds.size.height/5 + self.view.bounds.size.height*75 + 20, 30, 20)];
+        botLabel.text = @"Worst";
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width*.75, self.view.bounds.size.height/5, 5, self.view.bounds.size.height*.75)];
+        lineView.backgroundColor = [UIColor blackColor];
+        lineView.layer.cornerRadius = 5.0;
+        lineView.layer.masksToBounds = YES;
+        [self.view addSubview:lineView];
+        [self.view addSubview:topLabel];
+        [self.view addSubview:botLabel];
+        
+        //add the markers
+        int height = self.view.bounds.size.height/5;
+        int markerHeight = 30;
+        int markerWidth = 150;
+        for(NSString *institutionName in [self.institutions getUserInstitutionNames])
+        {
+            CGRect boundingBox = CGRectMake(5, height, markerWidth, markerHeight);
+            UIImage* pointer = [UIImage imageNamed:@"pointer.png"];
+            UIImageView* imgView = [[UIImageView alloc] initWithFrame:boundingBox];
+            [imgView setTintColor:[UIColor redColor]];
+            imgView.userInteractionEnabled=YES;
+            UIPanGestureRecognizer* pan = [[UIPanGestureRecognizer alloc]
+                                           initWithTarget:self action:@selector(handlePanGestures:)];
+            pan.maximumNumberOfTouches = 1;
+            pan.minimumNumberOfTouches = 1;
+            [imgView addGestureRecognizer:pan];
+            [imgView setImage:pointer];
+            [self.view addSubview:imgView];
+            height += markerHeight + 5;
+        }
     }
     else{
         //load in the picker

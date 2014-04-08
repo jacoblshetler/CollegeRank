@@ -24,7 +24,12 @@
         NSMutableArray *tempArr = [[NSMutableArray alloc] init];
         for(NSString *key in valuesDict)
         {
-            [tempArr addObject: [[Preference alloc] initWithName:key andAcceptableValues:[valuesDict objectForKey:key]]];
+            NSMutableArray* valueArr = [[NSMutableArray alloc] init];
+            for(int i=1; i<[[valuesDict objectForKey:key] count]; i++)
+            {
+                [valueArr addObject:[[valuesDict objectForKey:key] objectAtIndex:i]];
+            }
+            [tempArr addObject: [[Preference alloc] initWithName:key andAcceptableValues:valueArr]];
         }
         _allPrefs = [NSArray arrayWithArray:tempArr];
         _userPrefs = [NSMutableArray new];

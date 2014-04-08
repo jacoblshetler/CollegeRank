@@ -150,6 +150,9 @@
         NSString *entry = [_searchResults objectAtIndex:[indexPath row]];
         NSString *entryDecoded = [[valuesDict valueForKeyPath:entry] objectAtIndex:0];
         
+        NSLog(entry);
+        Preference *pref = [self.preferences getPreferenceForString:entry];
+        
         //[_institutions getValuesForPreference:entryDecoded];
         /*
         MissingDataViewController* missingData = [self.storyboard instantiateViewControllerWithIdentifier:@"MissingDataView"];
@@ -158,6 +161,7 @@
         */
         
         AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
+        //[userPrefView setPref:pref];
         [self presentViewController:userPrefView animated:YES completion:nil];
         
     }
