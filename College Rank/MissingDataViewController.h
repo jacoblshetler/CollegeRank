@@ -10,4 +10,6 @@
 
 @interface MissingDataViewController : UIViewController
 
+@property IBOutlet UILabel* test;
+
 @end

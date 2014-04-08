@@ -138,27 +138,22 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        /*if ([[_institutions userInstitutions] count] > 10) {
-            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Maximum Reached" message:@"Sorry, but you can only add up to 10 colleges." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert setAlertViewStyle:UIAlertViewStyleDefault];
-            [alert show];
-            [self.searchDisplayController setActive:NO animated:YES];
-        } else {
-            NSString *entry = [_searchResults objectAtIndex:[indexPath row]];
-            NSPredicate *memberPredicate = [NSPredicate predicateWithFormat:@"name matches %@", entry];
-            if ([[[_institutions userInstitutions] filteredArrayUsingPredicate:memberPredicate] count] < 1) {
-                [_institutions addInstitution:entry];
-                [self.searchDisplayController setActive:NO animated:YES];
-                [self.tableView reloadData];
-                [self canGoToTabs];
-            }
-        }*/
-        //Have it deal with preferences that were already added
+        //Check for number of preferences (Use alert from view controller 1)
+        //Check for previously added institutions
+        //[self.tableView reloadData];
+        //[self canGoToTabs];
+       
+        NSString *values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
+        NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
+        
         NSString *entry = [_searchResults objectAtIndex:[indexPath row]];
-        [_institutions getValuesForPreference:entry];
+        NSString *entryDecoded = [[valuesDict valueForKeyPath:entry] objectAtIndex:0];
+        
+        //[_institutions getValuesForPreference:entryDecoded];
         
         MissingDataViewController* missingData = [self.storyboard instantiateViewControllerWithIdentifier:@"MissingDataView"];
         [self presentViewController:missingData animated:YES completion:nil];
+        missingData.test.text = @"Different";
         
     }
 }
