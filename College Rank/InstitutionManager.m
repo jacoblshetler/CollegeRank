@@ -109,6 +109,18 @@
     return tempArr;
 }
 
-
+- (NSMutableArray*) getMissingDataInstitutionsForPreference: (NSString*) prefName{
+    NSMutableArray* dataArr = [self getValuesForPreference:prefName];
+    NSMutableArray* instNames = [self getUserInstitutionNames];
+    NSMutableArray* missingDataArr = [[NSMutableArray alloc] init];
+    for (int i =0; i<[dataArr count]; i++) {
+        id obj = [dataArr objectAtIndex:i];
+        if ([obj isEqual:[NSNull null]] || [[NSString stringWithFormat:@"%@",obj] isEqual:@"<null>"]){
+            [missingDataArr addObject:[ instNames objectAtIndex:i]];
+        }
+    }
+    
+    return missingDataArr;
+}
 
 @end

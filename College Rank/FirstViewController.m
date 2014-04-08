@@ -196,8 +196,6 @@
 
 -(void) testCalculations
 {
-    //PreferenceManager* myP = [PreferenceManager sharedInstance];
-    InstitutionManager* myI = [InstitutionManager sharedInstance];
     /*
     
     int i=0;
@@ -218,8 +216,8 @@
     [myI addInstitution:[[myI searchInstitutions:@"Mennonite"] objectAtIndex:1]];
     [myI addInstitution:[[myI searchInstitutions:@"Commun"] objectAtIndex:0]];
     
-    //NSLog(@"Ranked list: %@", generateRankings());
-    
+    NSLog(@"Ranked list: %@", generateRankings());
+    */
 }
 
 @end

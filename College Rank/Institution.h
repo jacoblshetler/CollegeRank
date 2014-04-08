@@ -14,6 +14,7 @@
 
 @property   NSString* name;  	//Will use synthesize
 @property   NSMutableDictionary* data;	//dictionary of all preference data related to the institution
+@property   NSMutableDictionary* customData; //dictionary to hold custom data key/value pairs
 
 //These functions are used to grab data out of the dataDictionary and return it
 - (NSString*) location;
@@ -34,6 +35,13 @@
 - (NSDictionary*) demographics;
 - (NSNumber*) studentFacultyRatio;
 - (NSString*) femaleRatio;
+
+-(void) setValue: (NSString*) val ForKeyInDataDictionary: (NSString*) key;
+
+
+- (NSString*) customValueForKey: (NSString*) key;
+- (void) setValue: (NSString*) val ForKeyInCustomDictionary: (NSString*) key;
+- (void) deleteKeyValuePairForKey: (NSString*) key;
 
 @end
 

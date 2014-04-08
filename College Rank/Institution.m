@@ -14,11 +14,14 @@
 
 @synthesize name;
 @synthesize data;
+@synthesize customData;
 
 -(id)initWithName: (NSString *) InstitutionName
 {
     if (self = [super init])
     {
+        //reset custom dictionary
+        self.customData = [[NSMutableDictionary alloc]init];
         //set the name
         self.name = InstitutionName;
         //grab data from webservice
@@ -163,6 +166,24 @@
     }
     if (crashed) return [[NSString alloc] initWithFormat:@"<null>"];
     return [[NSString alloc] initWithFormat:@"%i",females];
+}
+
+-(void) setValue: (NSString*) val ForKeyInDataDictionary: (NSString*) key{
+    if ([self.data objectForKey:key]) {
+        //then it contains the obj, so update it
+        [self.data setObject:val forKey:key];
+    }
+}
+
+- (NSString*) customValueForKey: (NSString*) key{
+    return [customData objectForKey:key];
+}
+
+- (void) setValue: (NSString*) val ForKeyInCustomDictionary: (NSString*) key{
+    [self.customData setObject:val forKey:key];
+}
+- (void) deleteKeyValuePairForKey: (NSString*) key{
+    [self.customData removeObjectForKey:key];
 }
 @end
 
