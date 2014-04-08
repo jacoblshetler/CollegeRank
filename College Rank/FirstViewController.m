@@ -209,8 +209,17 @@
     [myI addInstitution:[[myI searchInstitutions:@"DePauw"] objectAtIndex:0]];
     [myI addInstitution:[[myI searchInstitutions:@"Mennonite"] objectAtIndex:1]];
     [myI addInstitution:[[myI searchInstitutions:@"Commun"] objectAtIndex:0]];
+    [myI addInstitution:[[myI searchInstitutions:@"System"] objectAtIndex:0]];
     
     NSLog(@"Ranked list: %@", generateRankings());
+    
+    NSString *values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
+    NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
+    for(NSString *key in valuesDict)
+    {
+        NSString* curProp = [valuesDict valueForKey:key][0];
+        NSLog(@"Missing %@: %@", curProp ,[myI getMissingDataInstitutionsForPreference:curProp]);
+    }
     */
 }
 
