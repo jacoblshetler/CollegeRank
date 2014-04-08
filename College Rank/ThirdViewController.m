@@ -7,6 +7,8 @@
 //
 
 #import "ThirdViewController.h"
+#import "AcceptableValueViewController.h"
+#import "PreferenceManager.h"
 
 @interface ThirdViewController ()
 
@@ -34,5 +36,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 
 @end

@@ -10,6 +10,7 @@
 		3659A79118D79DBB00E975E5 /* Preference.m in Sources */ = {isa = PBXBuildFile; fileRef = 3659A79018D79DBB00E975E5 /* Preference.m */; };
 		365A9CD518D7B18100978516 /* UserPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 365A9CD418D7B18100978516 /* UserPreference.m */; };
 		365A9CD818D7B4F000978516 /* PreferenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 365A9CD718D7B4F000978516 /* PreferenceManager.m */; };
+		36957AC118F32ED50021814B /* AcceptableValueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36957AC018F32ED50021814B /* AcceptableValueViewController.m */; };
 		3697488618B2DBCA001EE530 /* DataRetreiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 3697488518B2DBCA001EE530 /* DataRetreiver.m */; };
 		8445148318D1F7D3000472DA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8445148218D1F7D3000472DA /* SystemConfiguration.framework */; };
 		8445148618D1FBB4000472DA /* InstitutionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445148518D1FBB4000472DA /* InstitutionManager.m */; };
@@ -54,6 +55,8 @@
 		365A9CD418D7B18100978516 /* UserPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPreference.m; sourceTree = "<group>"; };
 		365A9CD618D7B4F000978516 /* PreferenceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferenceManager.h; sourceTree = "<group>"; };
 		365A9CD718D7B4F000978516 /* PreferenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferenceManager.m; sourceTree = "<group>"; };
+		36957ABF18F32ED50021814B /* AcceptableValueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AcceptableValueViewController.h; sourceTree = "<group>"; };
+		36957AC018F32ED50021814B /* AcceptableValueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AcceptableValueViewController.m; sourceTree = "<group>"; };
 		3697488418B2DBCA001EE530 /* DataRetreiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataRetreiver.h; sourceTree = "<group>"; };
 		3697488518B2DBCA001EE530 /* DataRetreiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataRetreiver.m; sourceTree = "<group>"; };
 		8445148218D1F7D3000472DA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -219,6 +222,8 @@
 				E3FA36A018F0ADE600FE14A9 /* MissingDataViewController.m */,
 				E3698A9618AD2ED800A54627 /* ThirdViewController.h */,
 				E3698A9718AD2ED800A54627 /* ThirdViewController.m */,
+				36957ABF18F32ED50021814B /* AcceptableValueViewController.h */,
+				36957AC018F32ED50021814B /* AcceptableValueViewController.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -333,6 +338,7 @@
 				3659A79118D79DBB00E975E5 /* Preference.m in Sources */,
 				E3C5CD6D18CF68B800C5DBA2 /* Institution.m in Sources */,
 				3697488618B2DBCA001EE530 /* DataRetreiver.m in Sources */,
+				36957AC118F32ED50021814B /* AcceptableValueViewController.m in Sources */,
 				E3FA36A118F0ADE600FE14A9 /* MissingDataViewController.m in Sources */,
 				365A9CD518D7B18100978516 /* UserPreference.m in Sources */,
 				844E770518AD289100A6FC91 /* main.m in Sources */,
