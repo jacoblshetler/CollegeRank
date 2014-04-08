@@ -196,21 +196,22 @@
 
 -(void) testCalculations
 {
-    //PreferenceManager* myP = [PreferenceManager sharedInstance];
-    InstitutionManager* myI = [InstitutionManager sharedInstance];
     /*
+    PreferenceManager* myP = [PreferenceManager sharedInstance];
+    InstitutionManager* myI = [InstitutionManager sharedInstance];
+    
     for(Preference* newPref in [myP getAllPrefs])
     {
-        [myP addUserPref:newPref withWeight:1 andPrefVal:0];
-    }*/
+        [myP addUserPref:newPref withWeight:1 andPrefVal:2];
+    }
     
     [myI addInstitution:[[myI searchInstitutions:@"Goshen"] objectAtIndex:0]];
     [myI addInstitution:[[myI searchInstitutions:@"DePauw"] objectAtIndex:0]];
     [myI addInstitution:[[myI searchInstitutions:@"Mennonite"] objectAtIndex:1]];
     [myI addInstitution:[[myI searchInstitutions:@"Commun"] objectAtIndex:0]];
     
-    //NSLog(@"Ranked list: %@", generateRankings());
-    
+    NSLog(@"Ranked list: %@", generateRankings());
+    */
 }
 
 @end

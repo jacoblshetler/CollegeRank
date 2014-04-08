@@ -77,7 +77,7 @@ double geoDistance(NSString * zip1, NSString * zip2){
 }
 
 #pragma mark - Weight Calculations
-#warning Need to test both weight manipulators.
+#warning Need to test all weight manipulators.
 
 //Function to update the weights in the PreferenceManager for the UserPrefs.
 //Will be called with the index of the preference to update in UserPrefs along
@@ -255,7 +255,7 @@ NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int cho
     NSMutableArray* replaceVals = [dataDict valueForKey:@"nullIndexs"];
     
     switch (chosenValue){
-        case 0:
+        case 1:
         {
             //Subtract each value from the highest value
             NSNumber * max = [preferenceValues valueForKeyPath:@"@max.intValue"];
@@ -265,7 +265,7 @@ NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int cho
             
             break;
         }
-        case 1:
+        case 2:
         {
             //find the middle value and subtract all other values from it, using absolute values.
             NSNumber *medianNum = [[NSNumber alloc] initWithFloat:median(preferenceValues)];
@@ -279,7 +279,7 @@ NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int cho
             }
             break;
         }
-        case 2:
+        case 3:
         {
             //Don't need to do anything since it is already in order
             break;
@@ -309,8 +309,12 @@ NSMutableArray * normalizeFromCost(NSMutableArray* preferenceValues, int chosenV
 
 //BOOLs are all or nothing when normalized.
 NSMutableArray * normalizeFromBool(NSMutableArray* preferenceValues, int chosenValue){
+    NSMutableDictionary* dataDict = takeOutNulls(preferenceValues);
+    preferenceValues = [dataDict valueForKey:@"newList"];
+    NSMutableArray* replaceVals = [dataDict valueForKey:@"nullIndexs"];
+    
     switch (chosenValue) {
-        case 0:
+        case 1:
             //Means that we want 0's, so invert each one.
             for (int i = 0; i<[preferenceValues count]; i++){
                 if ([preferenceValues[i] intValue] == 1){
@@ -322,11 +326,14 @@ NSMutableArray * normalizeFromBool(NSMutableArray* preferenceValues, int chosenV
             }
             break;
             
-        case 1:
+        case 2:
             //Means that we don't need to change anything
             break;
     }
-    return normalize(preferenceValues);
+    
+    //Normalize. Then replace everything in the replaceVals with the mean
+    NSMutableArray* normalizedVals = normalize(preferenceValues);
+    return putMeanBackIn(normalizedVals, replaceVals);
 }
 NSMutableArray * normalizeFromFootball(NSMutableArray* preferenceValues, int chosenValue){
     return normalizeFromBool(preferenceValues, chosenValue);
@@ -349,8 +356,12 @@ NSMutableArray * normalizeFromStudyAbroad(NSMutableArray* preferenceValues, int 
 
 //Various methods that don't fit together
 NSMutableArray * normalizeFromFemaleRatio(NSMutableArray* preferenceValues, int chosenValue){
+    NSMutableDictionary* dataDict = takeOutNulls(preferenceValues);
+    preferenceValues = [dataDict valueForKey:@"newList"];
+    NSMutableArray* replaceVals = [dataDict valueForKey:@"nullIndexs"];
+    
     switch (chosenValue) {
-        case 0:
+        case 1:
             //Means that we want all men
         {
             for (int i = 0; i<[preferenceValues count]; i++){
@@ -364,7 +375,7 @@ NSMutableArray * normalizeFromFemaleRatio(NSMutableArray* preferenceValues, int 
             break;
         }
             
-        case 1:
+        case 2:
             //Means that we want majority men, so normalize around 25%
         {
             for (int i = 0; i<[preferenceValues count]; i++){
@@ -378,7 +389,7 @@ NSMutableArray * normalizeFromFemaleRatio(NSMutableArray* preferenceValues, int 
             break;
         }
             
-        case 2:
+        case 3:
             //Means that we want neutral, so normalize around 50%
         {
             for (int i = 0; i<[preferenceValues count]; i++){
@@ -392,7 +403,7 @@ NSMutableArray * normalizeFromFemaleRatio(NSMutableArray* preferenceValues, int 
             break;
         }
             
-        case 3:
+        case 4:
             //Means that we want majority women, so normalize around 75%
         {
             for (int i = 0; i<[preferenceValues count]; i++){
@@ -406,7 +417,7 @@ NSMutableArray * normalizeFromFemaleRatio(NSMutableArray* preferenceValues, int 
             break;
         }
             
-        case 4:
+        case 5:
             //Means that we want all female
         {
             for (int i = 0; i<[preferenceValues count]; i++){
@@ -417,12 +428,19 @@ NSMutableArray * normalizeFromFemaleRatio(NSMutableArray* preferenceValues, int 
             break;
         }
     }
-    return normalize(preferenceValues);
+    
+    //Normalize. Then replace everything in the replaceVals with the mean
+    NSMutableArray* normalizedVals = normalize(preferenceValues);
+    return putMeanBackIn(normalizedVals, replaceVals);
 }
 
 NSMutableArray * normalizeFromType(NSMutableArray* preferenceValues, int chosenValue){
+    NSMutableDictionary* dataDict = takeOutNulls(preferenceValues);
+    preferenceValues = [dataDict valueForKey:@"newList"];
+    NSMutableArray* replaceVals = [dataDict valueForKey:@"nullIndexs"];
+    
     switch (chosenValue) {
-        case 0:
+        case 1:
             //Means that we want public
         {
             for (int i = 0; i<[preferenceValues count]; i++){
@@ -433,7 +451,7 @@ NSMutableArray * normalizeFromType(NSMutableArray* preferenceValues, int chosenV
             break;
         }
             
-        case 1:
+        case 2:
             //Means that we want private
         {
             for (int i = 0; i<[preferenceValues count]; i++){
@@ -444,7 +462,7 @@ NSMutableArray * normalizeFromType(NSMutableArray* preferenceValues, int chosenV
             break;
         }
             
-        case 2:
+        case 3:
             //Means that we want private, non-profit
         {
             for (int i = 0; i<[preferenceValues count]; i++){
@@ -455,11 +473,18 @@ NSMutableArray * normalizeFromType(NSMutableArray* preferenceValues, int chosenV
             break;
         }
     }
-    return normalize(preferenceValues);
+    
+    //Normalize. Then replace everything in the replaceVals with the mean
+    NSMutableArray* normalizedVals = normalize(preferenceValues);
+    return putMeanBackIn(normalizedVals, replaceVals);
 }
 NSMutableArray * normalizeFromDegree(NSMutableArray* preferenceValues, int chosenValue){
+    NSMutableDictionary* dataDict = takeOutNulls(preferenceValues);
+    preferenceValues = [dataDict valueForKey:@"newList"];
+    NSMutableArray* replaceVals = [dataDict valueForKey:@"nullIndexs"];
+    
     switch (chosenValue) {
-        case 0:
+        case 1:
             //Means that we want no degrees
         {
             for (int i = 0; i<[preferenceValues count]; i++){
@@ -473,7 +498,7 @@ NSMutableArray * normalizeFromDegree(NSMutableArray* preferenceValues, int chose
             break;
         }
             
-        case 1:
+        case 2:
             //Means that we want at least Associate's (any of 11,12,13,14,20,30,40)
         {
             NSArray* degrees = @[@11,@12,@13,@14,@20,@30,@40,@"11",@"12",@"13",@"14",@"20",@"30",@"40"];
@@ -488,7 +513,7 @@ NSMutableArray * normalizeFromDegree(NSMutableArray* preferenceValues, int chose
             break;
         }
             
-        case 2:
+        case 3:
             //Means that we want at least Bachelor's (any of 11,12,13,14,20,30)
         {
             NSArray* degrees = @[@11,@12,@13,@14,@20,@30,@"11",@"12",@"13",@"14",@"20",@"30"];
@@ -503,7 +528,7 @@ NSMutableArray * normalizeFromDegree(NSMutableArray* preferenceValues, int chose
             break;
         }
             
-        case 3:
+        case 4:
             //Means that we want at least Master's (any of 11,12,13,14,20)
         {
             NSArray* degrees = @[@11,@12,@13,@14,@20,@"11",@"12",@"13",@"14",@"20"];
@@ -518,7 +543,7 @@ NSMutableArray * normalizeFromDegree(NSMutableArray* preferenceValues, int chose
             break;
         }
             
-        case 4:
+        case 5:
             //Means that we want at least Doctor's (any of 11,12,13,14)
         {
             NSArray* degrees = @[@11,@12,@13,@14,@"11",@"12",@"13",@"14"];
@@ -533,11 +558,18 @@ NSMutableArray * normalizeFromDegree(NSMutableArray* preferenceValues, int chose
             break;
         }
     }
-    return normalize(preferenceValues);
+    
+    //Normalize. Then replace everything in the replaceVals with the mean
+    NSMutableArray* normalizedVals = normalize(preferenceValues);
+    return putMeanBackIn(normalizedVals, replaceVals);
 }
 NSMutableArray * normalizeFromReligion(NSMutableArray* preferenceValues, int chosenValue){
+    NSMutableDictionary* dataDict = takeOutNulls(preferenceValues);
+    preferenceValues = [dataDict valueForKey:@"newList"];
+    NSMutableArray* replaceVals = [dataDict valueForKey:@"nullIndexs"];
+    
     switch (chosenValue) {
-        case 0:
+        case 1:
             //Means that we want no religious affiliation
         {
             for (int i = 0; i<[preferenceValues count]; i++){
@@ -551,7 +583,7 @@ NSMutableArray * normalizeFromReligion(NSMutableArray* preferenceValues, int cho
             break;
         }
             
-        case 1:
+        case 2:
             //Means that we want any catholic affiliation (30,91,92)
         {
             NSArray* religions = @[@30,@91,@92,@"30",@"91",@"92"];
@@ -566,7 +598,7 @@ NSMutableArray * normalizeFromReligion(NSMutableArray* preferenceValues, int cho
             break;
         }
             
-        case 2:
+        case 3:
             //We want any protestant religion - Anything that is not (-2,30,80,91, or 92)
         {
             NSArray* religions = @[@(-2),@30,@80,@91,@92,@"-2",@"30",@"80",@"91",@"92"];
@@ -581,7 +613,7 @@ NSMutableArray * normalizeFromReligion(NSMutableArray* preferenceValues, int cho
             break;
         }
             
-        case 3:
+        case 4:
             //Means that we want Jewish affiliation - (80)
         {
             NSArray* religions = @[@80,@"80"];
@@ -596,47 +628,54 @@ NSMutableArray * normalizeFromReligion(NSMutableArray* preferenceValues, int cho
             break;
         }
     }
-    return normalize(preferenceValues);
+    
+    //Normalize. Then replace everything in the replaceVals with the mean
+    NSMutableArray* normalizedVals = normalize(preferenceValues);
+    return putMeanBackIn(normalizedVals, replaceVals);
 }
 
 NSMutableArray * normalizeFromCity(NSMutableArray* preferenceValues, int chosenValue){
+    NSMutableDictionary* dataDict = takeOutNulls(preferenceValues);
+    preferenceValues = [dataDict valueForKey:@"newList"];
+    NSMutableArray* replaceVals = [dataDict valueForKey:@"nullIndexs"];
+    
     //translate acceptedValue choice to what the city code is in the database
     int cityType = 0;
     switch (chosenValue) {
-        case 0:
+        case 1:
             cityType = 11;
             break;
-        case 1:
+        case 2:
             cityType = 12;
             break;
-        case 2:
+        case 3:
             cityType = 13;
             break;
-        case 3:
+        case 4:
             cityType = 21;
             break;
-        case 4:
+        case 5:
             cityType = 22;
             break;
-        case 5:
+        case 6:
             cityType = 23;
             break;
-        case 6:
+        case 7:
             cityType = 31;
             break;
-        case 7:
+        case 8:
             cityType = 32;
             break;
-        case 8:
+        case 9:
             cityType = 33;
             break;
-        case 9:
+        case 10:
             cityType = 41;
             break;
-        case 10:
+        case 11:
             cityType = 42;
             break;
-        case 11:
+        case 12:
             cityType = 43;
             break;
     }
@@ -651,7 +690,10 @@ NSMutableArray * normalizeFromCity(NSMutableArray* preferenceValues, int chosenV
         }
     }
 
-    return normalize(preferenceValues);
+    
+    //Normalize. Then replace everything in the replaceVals with the mean
+    NSMutableArray* normalizedVals = normalize(preferenceValues);
+    return putMeanBackIn(normalizedVals, replaceVals);
 }
 
 

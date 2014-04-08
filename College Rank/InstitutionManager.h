@@ -21,6 +21,7 @@
 -(Institution*) getUserInstitutionForString: (NSString*) name; //retreive user instutiton based on the name
 -(NSMutableArray*) getValuesForPreference: (NSString*) pref;
 -(NSMutableArray*) getUserInstitutionNames;
+- (NSMutableArray*) getMissingDataInstitutionsForPreference: (NSString*) prefName;
 
 + (id)sharedInstance;
 
