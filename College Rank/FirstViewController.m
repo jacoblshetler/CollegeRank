@@ -197,7 +197,7 @@
 -(void) testCalculations
 {
     //PreferenceManager* myP = [PreferenceManager sharedInstance];
-    InstitutionManager* myI = [InstitutionManager sharedInstance];
+    //InstitutionManager* myI = [InstitutionManager sharedInstance];
     /*
     [_institutions addInstitution:[[_institutions searchInstitutions:@"Goshen"] objectAtIndex:0]];
     [_institutions addInstitution:[[_institutions searchInstitutions:@"DePauw"] objectAtIndex:0]];

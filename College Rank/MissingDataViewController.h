@@ -9,7 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @interface MissingDataViewController : UIViewController
+//Possibly add a poopup that explains this page's function.
+//When user hit the "Next" button, give a pop-up warning saying that leaving data empty will skew the data.
 
 @property IBOutlet UILabel* test;
+
+@property NSString* prefName;
+@property NSMutableArray* missingInstitutions;
 
 @end
