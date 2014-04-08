@@ -13,6 +13,7 @@
 #import "Preference.h"
 #import "DataRetreiver.h"
 #import "MissingDataViewController.h"
+#import "AcceptableValueViewController.h"
 
 @interface SecondViewController ()
 
@@ -150,10 +151,14 @@
         NSString *entryDecoded = [[valuesDict valueForKeyPath:entry] objectAtIndex:0];
         
         //[_institutions getValuesForPreference:entryDecoded];
-        
+        /*
         MissingDataViewController* missingData = [self.storyboard instantiateViewControllerWithIdentifier:@"MissingDataView"];
         [self presentViewController:missingData animated:YES completion:nil];
         missingData.test.text = @"Different";
+        */
+        
+        AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
+        [self presentViewController:userPrefView animated:YES completion:nil];
         
     }
 }

@@ -199,15 +199,36 @@
     //PreferenceManager* myP = [PreferenceManager sharedInstance];
     InstitutionManager* myI = [InstitutionManager sharedInstance];
     /*
+    [_institutions addInstitution:[[_institutions searchInstitutions:@"Goshen"] objectAtIndex:0]];
+    [_institutions addInstitution:[[_institutions searchInstitutions:@"DePauw"] objectAtIndex:0]];
+    [_institutions addInstitution:[[_institutions searchInstitutions:@"Mennonite"] objectAtIndex:1]];
+    [_institutions addInstitution:[[_institutions searchInstitutions:@"Commun"] objectAtIndex:0]];
+    [_institutions addInstitution:[[_institutions searchInstitutions:@"System"] objectAtIndex:0]];
+    
     int i=0;
     for(Preference* newPref in [_preferences getAllPrefs])
     {
-        [myP addUserPref:newPref withWeight:1 andPrefVal:2];
+        if (i==0) [_preferences addUserPref:newPref withWeight:1.0 andPrefVal:0];
+        else [_preferences addUserPref:newPref withWeight:0.0 andPrefVal:0];
+        if(i>0){
+            setANewWeight(i);
+        }
+        i++;
+        [_preferences addUserPref:newPref withWeight:1 andPrefVal:0];
     }
     
 
     
-    //NSLog(@"Ranked list: %@", generateRankings());
+    NSLog(@"Ranked list: %@", generateRankings());
+    
+    NSString *values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
+    NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
+    for(NSString *key in valuesDict)
+    {
+        NSString* curProp = [valuesDict valueForKey:key][0];
+        NSLog(@"Missing %@: %@", curProp ,[_institutions getMissingDataInstitutionsForPreference:curProp]);
+    }
+     */
 }
 
 @end
