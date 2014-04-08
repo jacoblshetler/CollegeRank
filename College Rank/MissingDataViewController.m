@@ -32,6 +32,19 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     test.text = @"Changed";
+    
+    for (UITextField *text in [self.view subviews]) {
+        if(text.tag ==1){
+            text.delegate = self;
+        }
+    }
+    
+}
+
+-(BOOL) textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning

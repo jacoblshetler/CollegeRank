@@ -13,6 +13,7 @@
 //When user hit the "Next" button, give a pop-up warning saying that leaving data empty will skew the data.
 
 @property IBOutlet UILabel* test;
+@property (weak, nonatomic) IBOutlet UITextField *firstCell;
 
 @property NSString* prefName;
 @property NSMutableArray* missingInstitutions;
