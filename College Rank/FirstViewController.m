@@ -200,17 +200,12 @@
     InstitutionManager* myI = [InstitutionManager sharedInstance];
     /*
     int i=0;
-    for(Preference* newPref in [myP getAllPrefs])
+    for(Preference* newPref in [_preferences getAllPrefs])
     {
         [myP addUserPref:newPref withWeight:1 andPrefVal:2];
     }
-        [myP addUserPref:newPref withWeight:1 andPrefVal:0];
-    }*/
     
-    [myI addInstitution:[[myI searchInstitutions:@"Goshen"] objectAtIndex:0]];
-    [myI addInstitution:[[myI searchInstitutions:@"DePauw"] objectAtIndex:0]];
-    [myI addInstitution:[[myI searchInstitutions:@"Mennonite"] objectAtIndex:1]];
-    [myI addInstitution:[[myI searchInstitutions:@"Commun"] objectAtIndex:0]];
+
     
     //NSLog(@"Ranked list: %@", generateRankings());
 }
