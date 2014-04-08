@@ -15,6 +15,8 @@
 @implementation MissingDataViewController
 
 @synthesize test;
+@synthesize missingInstitutions;
+@synthesize prefName;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
