@@ -25,12 +25,12 @@
 @property int pickerSelection;
 @property bool isNull;
 
-@property (nonatomic, strong) UIDynamicAnimator *anim;
-@property (nonatomic, strong) UIAttachmentBehavior *att;
+
+@property (nonatomic, strong) NSMutableArray* imageArr;
+
 @end
 
 @implementation AcceptableValueViewController
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -43,10 +43,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.institutions = [InstitutionManager sharedInstance];
-    self.preferences = [PreferenceManager sharedInstance];
+    self.imageArr = [[NSMutableArray alloc] init];
+
+
 	// Do any additional setup after loading the view.
 }
+
+-(UIImage*) drawText:(NSString*) text
+             inImage:(UIImage*)  image
+             atPoint:(CGPoint)   point
+{
+    
+    UIFont *font = [UIFont boldSystemFontOfSize:12];
+    UIGraphicsBeginImageContext(image.size);
+    [image drawInRect:CGRectMake(0,0,image.size.width,image.size.height)];
+    CGRect rect = CGRectMake(point.x, point.y, image.size.width, image.size.height);
+    [[UIColor whiteColor] set];
+    [text drawInRect:CGRectIntegral(rect) withAttributes:Nil];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
 
 - (void) handlePanGestures:(UIPanGestureRecognizer*)paramSender{
     
@@ -75,10 +94,15 @@
     
 }
 
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+    self.institutions = [InstitutionManager sharedInstance];
+    self.preferences = [PreferenceManager sharedInstance];
+    [self.imageArr addObject:[UIImage imageNamed:@"pointer1.png"]];
+    [self.imageArr addObject:[UIImage imageNamed:@"pointer2.png"]];
+
     //for testing
     //self.pref = [self.preferences getPreferenceAtIndex:0];
     
@@ -89,26 +113,24 @@
         self.isNull = true;
 #warning Change me to change the properties of the vertical line!
         //add the line to snap to
-        UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.bounds.size.width*.75, self.view.bounds.size.height/5 - 20, 30, 20)];
+        UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.bounds.size.width*.75 - 15, self.view.bounds.size.height/5 - 20, 30, 20)];
         topLabel.text = @"Best";
-        UILabel *botLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.bounds.size.width*.75, self.view.bounds.size.height/5 + self.view.bounds.size.height*75 + 20, 30, 20)];
-        botLabel.text = @"Worst";
+        topLabel.adjustsFontSizeToFitWidth = YES;
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width*.75, self.view.bounds.size.height/5, 5, self.view.bounds.size.height*.75)];
         lineView.backgroundColor = [UIColor blackColor];
         lineView.layer.cornerRadius = 5.0;
         lineView.layer.masksToBounds = YES;
         [self.view addSubview:lineView];
         [self.view addSubview:topLabel];
-        [self.view addSubview:botLabel];
-        
         //add the markers
         int height = self.view.bounds.size.height/5;
+        int i = 0;
         int markerHeight = 30;
         int markerWidth = 150;
         for(NSString *institutionName in [self.institutions getUserInstitutionNames])
         {
             CGRect boundingBox = CGRectMake(5, height, markerWidth, markerHeight);
-            UIImage* pointer = [UIImage imageNamed:@"pointer.png"];
+            UIImage* pointer = [self.imageArr objectAtIndex:i];
             UIImageView* imgView = [[UIImageView alloc] initWithFrame:boundingBox];
             [imgView setTintColor:[UIColor redColor]];
             imgView.userInteractionEnabled=YES;
@@ -118,8 +140,10 @@
             pan.minimumNumberOfTouches = 1;
             [imgView addGestureRecognizer:pan];
             [imgView setImage:pointer];
+            imgView.image = [self drawText:institutionName inImage:imgView.image atPoint:CGPointMake(0, 0)];
             [self.view addSubview:imgView];
             height += markerHeight + 5;
+            i++;
         }
     }
     else{
