@@ -14,6 +14,8 @@
 
 @implementation MissingDataViewController
 
+@synthesize test;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -27,6 +29,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    test.text = @"Changed";
 }
 
 - (void)didReceiveMemoryWarning

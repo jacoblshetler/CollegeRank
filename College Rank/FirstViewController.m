@@ -199,8 +199,17 @@
     //PreferenceManager* myP = [PreferenceManager sharedInstance];
     InstitutionManager* myI = [InstitutionManager sharedInstance];
     /*
+    
+    int i=0;
     for(Preference* newPref in [myP getAllPrefs])
     {
+        if (i==0) [myP addUserPref:newPref withWeight:1.0 andPrefVal:0];
+        else [myP addUserPref:newPref withWeight:0.0 andPrefVal:0];
+        if(i>0){
+            setANewWeight(i);
+        }
+        i++;
+    }
         [myP addUserPref:newPref withWeight:1 andPrefVal:0];
     }*/
     

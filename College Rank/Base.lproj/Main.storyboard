@@ -271,6 +271,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="X0G-Va-fVT"/>
+                    <connections>
+                        <outlet property="test" destination="0VP-T8-TYI" id="oVE-EV-X2D"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tgw-KK-J6E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
