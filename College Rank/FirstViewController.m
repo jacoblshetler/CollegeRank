@@ -197,25 +197,25 @@
 -(void) testCalculations
 {
     /*
+    [_institutions addInstitution:[[_institutions searchInstitutions:@"Goshen"] objectAtIndex:0]];
+    [_institutions addInstitution:[[_institutions searchInstitutions:@"DePauw"] objectAtIndex:0]];
+    [_institutions addInstitution:[[_institutions searchInstitutions:@"Mennonite"] objectAtIndex:1]];
+    [_institutions addInstitution:[[_institutions searchInstitutions:@"Commun"] objectAtIndex:0]];
+    [_institutions addInstitution:[[_institutions searchInstitutions:@"System"] objectAtIndex:0]];
     
     int i=0;
-    for(Preference* newPref in [myP getAllPrefs])
+    for(Preference* newPref in [_preferences getAllPrefs])
     {
-        if (i==0) [myP addUserPref:newPref withWeight:1.0 andPrefVal:0];
-        else [myP addUserPref:newPref withWeight:0.0 andPrefVal:0];
+        if (i==0) [_preferences addUserPref:newPref withWeight:1.0 andPrefVal:0];
+        else [_preferences addUserPref:newPref withWeight:0.0 andPrefVal:0];
         if(i>0){
             setANewWeight(i);
         }
         i++;
+        [_preferences addUserPref:newPref withWeight:1 andPrefVal:0];
     }
-        [myP addUserPref:newPref withWeight:1 andPrefVal:0];
-    }*/
     
-    [myI addInstitution:[[myI searchInstitutions:@"Goshen"] objectAtIndex:0]];
-    [myI addInstitution:[[myI searchInstitutions:@"DePauw"] objectAtIndex:0]];
-    [myI addInstitution:[[myI searchInstitutions:@"Mennonite"] objectAtIndex:1]];
-    [myI addInstitution:[[myI searchInstitutions:@"Commun"] objectAtIndex:0]];
-    [myI addInstitution:[[myI searchInstitutions:@"System"] objectAtIndex:0]];
+
     
     NSLog(@"Ranked list: %@", generateRankings());
     
@@ -224,9 +224,9 @@
     for(NSString *key in valuesDict)
     {
         NSString* curProp = [valuesDict valueForKey:key][0];
-        NSLog(@"Missing %@: %@", curProp ,[myI getMissingDataInstitutionsForPreference:curProp]);
+        NSLog(@"Missing %@: %@", curProp ,[_institutions getMissingDataInstitutionsForPreference:curProp]);
     }
-    */
+     */
 }
 
 @end
