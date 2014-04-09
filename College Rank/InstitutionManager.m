@@ -123,4 +123,10 @@
     return missingDataArr;
 }
 
+-(NSMutableArray*) getAllUserInstitutions
+{
+    return self.userInstitutions;
+}
+
+
 @end

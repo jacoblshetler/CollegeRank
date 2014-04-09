@@ -161,11 +161,13 @@
         */
         
         AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
-        //[userPrefView setPref:pref];
+        [userPrefView setPref:pref];
         [self presentViewController:userPrefView animated:YES completion:nil];
         
     }
 }
+
+
 
 /*/This is for sending information to the detail view
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

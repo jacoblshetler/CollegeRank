@@ -8,6 +8,7 @@
 
 #import "AcceptableValueViewController.h"
 #import "Preference.h"
+#import "Institution.h"
 #import "UserPreference.h"
 #import "InstitutionManager.h"
 #import "PreferenceManager.h"
@@ -25,6 +26,11 @@
 @property int pickerSelection;
 @property bool isNull;
 
+@property int lineX;
+@property int topLineY;
+@property int lineHeight;
+@property int markerHeight;
+@property int markerWidth;
 
 @property (nonatomic, strong) NSMutableArray* imageArr;
 
@@ -44,8 +50,11 @@
 {
     [super viewDidLoad];
     self.imageArr = [[NSMutableArray alloc] init];
-
-
+    self.lineX = self.view.bounds.size.width * .75;
+    self.topLineY = self.view.bounds.size.height/5;
+    self.lineHeight = self.view.bounds.size.height*.75;
+    self.markerHeight = 30;
+    self.markerWidth = 150;
 	// Do any additional setup after loading the view.
 }
 
@@ -79,14 +88,14 @@
     else if(paramSender.state == UIGestureRecognizerStateEnded)
     {
         CGPoint location = [paramSender locationInView:paramSender.view.superview];
-        location.x = self.view.bounds.size.width * .75;
-        if(location.y < self.view.bounds.size.height/5)
+        location.x = self.lineX;
+        if(location.y < self.topLineY)
         {
-            location.y = self.view.bounds.size.height/5;
+            location.y = self.topLineY;
         }
-        else if(location.y > self.view.bounds.size.height * .75 + self.view.bounds.size.height/5)
+        else if(location.y > self.topLineY + self.lineHeight)
         {
-            location.y = self.view.bounds.size.height * .75 + self.view.bounds.size.height/5;
+            location.y = self.topLineY + self.lineHeight;
         }
         location.x = location.x - paramSender.view.bounds.size.width/2;
         paramSender.view.center = location;
@@ -113,10 +122,11 @@
         self.isNull = true;
 #warning Change me to change the properties of the vertical line!
         //add the line to snap to
-        UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.bounds.size.width*.75 - 15, self.view.bounds.size.height/5 - 20, 30, 20)];
+ 
+        UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.lineX - self.markerHeight/2, self.topLineY - 20, 30, 20)];
         topLabel.text = @"Best";
         topLabel.adjustsFontSizeToFitWidth = YES;
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width*.75, self.view.bounds.size.height/5, 5, self.view.bounds.size.height*.75)];
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(self.lineX, self.topLineY, 5, self.lineHeight)];
         lineView.backgroundColor = [UIColor blackColor];
         lineView.layer.cornerRadius = 5.0;
         lineView.layer.masksToBounds = YES;
@@ -125,11 +135,10 @@
         //add the markers
         int height = self.view.bounds.size.height/5;
         int i = 0;
-        int markerHeight = 30;
-        int markerWidth = 150;
-        for(NSString *institutionName in [self.institutions getUserInstitutionNames])
+
+        for(Institution *inst in [self.institutions getAllUserInstitutions])
         {
-            CGRect boundingBox = CGRectMake(5, height, markerWidth, markerHeight);
+            CGRect boundingBox = CGRectMake(5, height, self.markerWidth, self.markerHeight);
             UIImage* pointer = [self.imageArr objectAtIndex:i];
             UIImageView* imgView = [[UIImageView alloc] initWithFrame:boundingBox];
             [imgView setTintColor:[UIColor redColor]];
@@ -140,10 +149,17 @@
             pan.minimumNumberOfTouches = 1;
             [imgView addGestureRecognizer:pan];
             [imgView setImage:pointer];
-            imgView.image = [self drawText:institutionName inImage:imgView.image atPoint:CGPointMake(0, 0)];
+            imgView.image = [self drawText:[inst name]  inImage:imgView.image atPoint:CGPointMake(0, 0)];
+            if([inst customValueForKey:[self.pref getName]] != nil)
+            {
+                imgView.center = CGPointMake(self.lineX, self.topLineY + [[inst customValueForKey:[self.pref getName]] integerValue]);
+            }
+            
+            imgView.tag = i;
             [self.view addSubview:imgView];
-            height += markerHeight + 5;
+            height += self.markerHeight + 5;
             i++;
+
         }
     }
     else{
@@ -152,8 +168,33 @@
         UIPickerView* pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 200, 320, 200)];
         pickerView.delegate = self;
         pickerView.showsSelectionIndicator = YES;
+        pickerView.tag = 0;
         [self.view addSubview:pickerView];
         self.isNull = false;
+    }
+}
+
+
+#warning IMPLEMENT AND TEST ME!!
+-(void) save
+{
+    if(self.isNull)
+    {
+        //if it is a custom
+        int i = 0;
+        for(Institution* inst in [self.institutions getAllUserInstitutions])
+        {
+            if([self.view viewWithTag:i].center.x == self.lineX - self.markerWidth/2)
+            {
+                [inst customValueForKey:[NSString stringWithFormat:@"%f", [self.view viewWithTag:i].center.y - self.topLineY]];
+            }
+        }
+    }
+    else {
+        //if it isn't a custom
+        [[self.preferences getUserPreferenceForString:[self.pref getName]] setPrefVal:self.pickerSelection];
+        //Change to the new view
+        
     }
 }
 
