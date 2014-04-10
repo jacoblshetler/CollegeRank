@@ -21,7 +21,8 @@
         //Also, would it make sense to have the preference class inherit from UIViewController?
         NSString *values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
         NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
-        NSMutableArray *tempArr = [[NSMutableArray alloc] init];
+        _userPrefs = [NSMutableArray new];
+        _allPrefs = [[NSMutableArray alloc] init];
         for(NSString *key in valuesDict)
         {
             NSMutableArray* valueArr = [[NSMutableArray alloc] init];
@@ -29,10 +30,8 @@
             {
                 [valueArr addObject:[[valuesDict objectForKey:key] objectAtIndex:i]];
             }
-            [tempArr addObject: [[Preference alloc] initWithName:key andAcceptableValues:valueArr]];
+            [_allPrefs addObject: [[Preference alloc] initWithName:key andAcceptableValues:valueArr]];
         }
-        _allPrefs = [NSArray arrayWithArray:tempArr];
-        _userPrefs = [NSMutableArray new];
     }
     return self;
 }
@@ -77,6 +76,16 @@
     [self.userPrefs addObject:[[UserPreference alloc] initWithPreference:pref andWeight:weight andPrefVal:prefVal]];
 }
 
+-(void) addUserPref:(Preference*) pref withAcceptableValue: (int) prefVal
+{
+    [self.userPrefs addObject:[[UserPreference alloc] initWithPreference:pref andPrefVal:prefVal]];
+}
+
+-(void) addPreferenceWithName: (NSString*) name andAcceptableValues: (NSArray*) vals
+{
+    [self.allPrefs addObject:[[Preference alloc] initWithName:name andAcceptableValues:vals]];
+}
+
 
 -(UserPreference*) getUserPreferenceAtIndex: (int) index
 {
@@ -88,6 +97,7 @@
 {
     return [self.allPrefs objectAtIndex:index];
 }
+
 
 
 -(UserPreference*) getUserPreferenceForString: (NSString*) name

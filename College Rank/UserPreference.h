@@ -22,6 +22,7 @@
 
 -(id) initWithPreference: (Preference*) preference andWeight: (float) wt;
 -(id) initWithPreference: (Preference*) preference andWeight: (float) wt andPrefVal: (int) value;
+-(id) initWithPreference:(Preference *)preference andPrefVal: (int) value;
 -(void) setWeight:(float)wt;
 -(void) changeLock;
 -(bool) getLock;
