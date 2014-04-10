@@ -29,7 +29,9 @@
         NSLog(@"%@",dataFromWeb);
         //stick data into dictionary
         if (dataFromWeb){
-            self.data = [dataFromWeb objectAtIndex:0];
+            self.data = [dataFromWeb objectAtIndex:0][0];
+            NSLog(@"%@",[dataFromWeb objectAtIndex:0][0]);
+            self.data = [[NSMutableDictionary alloc] initWithDictionary:self.data copyItems:true];
         }
         else{
             return nil;
@@ -39,60 +41,60 @@
 }
 
  - (NSString *) location{
-     return [self.data valueForKey:@"zip_code"][0];
+     return [self.data valueForKey:@"zip_code"];
  }
 
  - (NSString*) type{
-     return [self.data valueForKey:@"ownership"][0];
+     return [self.data valueForKey:@"ownership"];
  }
  - (NSArray*) urbanization{
-     return [self.data valueForKey:@"urbanization"][0];
+     return [self.data valueForKey:@"urbanization"];
  }
 
  - (NSString*) religiousAffiliation{
-     return [self.data valueForKey:@"religion"][0];
+     return [self.data valueForKey:@"religion"];
  }
 
  - (NSString*) studyAbroad{
-     return [[NSString alloc] initWithFormat:@"%d",([[self.data valueForKey:@"study_abroad"][0] isEqual:@"1"])];
+     return [[NSString alloc] initWithFormat:@"%d",([[self.data valueForKey:@"study_abroad"] isEqual:@"1"])];
  }
 
  - (NSString*) dayCare{
-     return [[NSString alloc] initWithFormat:@"%d",([[self.data valueForKey:@"day_care"][0] isEqual:@"1"])];
+     return [[NSString alloc] initWithFormat:@"%d",([[self.data valueForKey:@"day_care"] isEqual:@"1"])];
  }
 
  - (NSString*) football{
-     return [[NSString alloc] initWithFormat:@"%d",([[self.data valueForKey:@"football_memb"][0] isEqual:@"1"])];
+     return [[NSString alloc] initWithFormat:@"%d",([[self.data valueForKey:@"football_memb"] isEqual:@"1"])];
  }
 
  - (NSString*) basketball{
-     return [[NSString alloc] initWithFormat:@"%d",([[self.data valueForKey:@"basketball_memb"][0] isEqual:@"1"])];
+     return [[NSString alloc] initWithFormat:@"%d",([[self.data valueForKey:@"basketball_memb"] isEqual:@"1"])];
  }
 
  - (NSString*) baseball{
-     return [[NSString alloc] initWithFormat:@"%d",([[self.data valueForKey:@"baseball_memb"][0] isEqual:@"1"])];
+     return [[NSString alloc] initWithFormat:@"%d",([[self.data valueForKey:@"baseball_memb"] isEqual:@"1"])];
  }
 
  - (NSString*) xCountryAndTrack{
-     return [[NSString alloc] initWithFormat:@"%d",([[self.data valueForKey:@"xc_memb"][0] isEqual:@"1"])];
+     return [[NSString alloc] initWithFormat:@"%d",([[self.data valueForKey:@"xc_memb"] isEqual:@"1"])];
  }
 
  - (NSString*) degree{
-     return [self.data valueForKey:@"degree"][0];
+     return [self.data valueForKey:@"degree"];
  }
 
  - (NSString*) size{
-     return [self.data valueForKey:@"size"][0];
+     return [self.data valueForKey:@"size"];
  }
 
 - (NSString*) cost{
     NSArray* tempArr = [[NSArray alloc] initWithObjects:
-                        [self.data valueForKey:@"cost_alone_in"][0],
-                        [self.data valueForKey:@"cost_alone_out"][0],
-                        [self.data valueForKey:@"cost_fam_in"][0],
-                        [self.data valueForKey:@"cost_fam_out"][0],
-                        [self.data valueForKey:@"cost_on_in"][0],
-                        [self.data valueForKey:@"cost_on_out"][0], nil];
+                        [self.data valueForKey:@"cost_alone_in"],
+                        [self.data valueForKey:@"cost_alone_out"],
+                        [self.data valueForKey:@"cost_fam_in"],
+                        [self.data valueForKey:@"cost_fam_out"],
+                        [self.data valueForKey:@"cost_on_in"],
+                        [self.data valueForKey:@"cost_on_out"], nil];
     
     int count = 0;
     int terriblePracticeArr = 0;
@@ -115,7 +117,7 @@
  }
 
  - (NSString*) selectivity{
-     return [self.data valueForKey:@"selectivity"][0];
+     return [self.data valueForKey:@"selectivity"];
  }
 
  - (NSString*) sat{
@@ -124,10 +126,10 @@
      int readLow = 0;
      int readHigh = 0;
      @try{
-         mathLow = [[self.data valueForKey:@"sat_math_25"][0] intValue];
-         mathHigh = [[self.data valueForKey:@"sat_math_75"][0] intValue];
-         readLow = [[self.data valueForKey:@"sat_read_25"][0] intValue];
-         readHigh = [[self.data valueForKey:@"sat_read_75"][0] intValue];
+         mathLow = [[self.data valueForKey:@"sat_math_25"] intValue];
+         mathHigh = [[self.data valueForKey:@"sat_math_75"] intValue];
+         readLow = [[self.data valueForKey:@"sat_read_25"] intValue];
+         readHigh = [[self.data valueForKey:@"sat_read_75"] intValue];
      }
      @catch (NSException *e) {
          //NSLog(@"SAT Error: %@",e.description);
@@ -150,7 +152,7 @@
 
 
  - (NSNumber *) studentFacultyRatio{
-     return [self.data valueForKey:@"stud_to_fac"][0];
+     return [self.data valueForKey:@"stud_to_fac"];
  }
 
 -(NSString*) femaleRatio
@@ -158,7 +160,7 @@
     int females = 0;
     BOOL crashed = false;
     @try{
-        females = [[self.data valueForKey:@"women_perc"][0] intValue];
+        females = [[self.data valueForKey:@"women_perc"] intValue];
     }
     @catch (NSException *e) {
         NSLog(@"Female Error: %@",e.description);
@@ -169,9 +171,9 @@
 }
 
 -(void) setValue: (NSString*) val ForKeyInDataDictionary: (NSString*) key{
-    if ([self.data objectForKey:key]) {
+    if ([self.data valueForKey:key]) {
         //then it contains the obj, so update it
-        [self.data setObject:val forKey:key];
+        [self.data setValue:val forKey:key];
     }
 }
 
