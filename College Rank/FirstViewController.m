@@ -111,7 +111,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        if ([[_institutions userInstitutions] count] > 10) {
+        if ([[_institutions userInstitutions] count] == 10) {
             UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Maximum Reached" message:@"Sorry, but you can only add up to 10 colleges." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert setAlertViewStyle:UIAlertViewStyleDefault];
             [alert show];

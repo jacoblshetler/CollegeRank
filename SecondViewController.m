@@ -21,6 +21,8 @@
 @property PreferenceManager* preferences;
 @property NSArray* searchResults;
 
+- (void) preferenceNavigate: (NSIndexPath *) indexPath;
+
 @end
 
 @implementation SecondViewController
@@ -136,21 +138,41 @@
     
     return cell;
 }
+#pragma Selection
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-#warning The below comments need to be added
-        //Check for number of preferences (Use alert from view controller 1)
-        //Check for previously added institutions
-        //[self.tableView reloadData];
-        //[self canGoToTabs];
+        if ([[_preferences userPrefs] count] == 10)
+        {
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Maximum Reached" message:@"Sorry, but you can only add up to 10 Preferences." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert setAlertViewStyle:UIAlertViewStyleDefault];
+            [alert show];
+            [self.searchDisplayController setActive:NO animated:YES];
+
+        }
+
+        //[self.tableView reloadData]; Run from Save button
+        //[self canGoToTabs]; Run from Save button
+        [self preferenceNavigate:indexPath];
+      
+        
        
-        NSString *values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
-        NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
         
-        NSString *entry = [_searchResults objectAtIndex:[indexPath row]];
-        NSString *entryDecoded = [[valuesDict valueForKeyPath:entry] objectAtIndex:0];
         
+    }
+}
+
+- (void) preferenceNavigate: (NSIndexPath *) indexPath
+{
+    NSString *values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
+    NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
+    
+    NSString *entry = [_searchResults objectAtIndex:[indexPath row]];
+    NSString *entryDecoded = [[valuesDict valueForKeyPath:entry] objectAtIndex:0];
+    
+    NSPredicate *memberPredicate = [NSPredicate predicateWithFormat:@"name matches %@", entry];
+    if ([[[_preferences userPrefs] filteredArrayUsingPredicate:memberPredicate] count] < 1) {
+    
         NSMutableArray * missingDataInst = [_institutions getMissingDataInstitutionsForPreference:entryDecoded];
         if ([missingDataInst count]!= 0) {
             MissingDataViewController* missingData = [self.storyboard instantiateViewControllerWithIdentifier:@"MissingDataView"];
@@ -159,16 +181,13 @@
             [self presentViewController:missingData animated:YES completion:nil];
         } else {
             AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
-            //[userPrefView setPref:pref];
             userPrefView.prefName = entry;
             [self presentViewController:userPrefView animated:YES completion:nil];
         }
-        
-        
     }
 }
 
-#pragma editing
+#pragma Extra
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
