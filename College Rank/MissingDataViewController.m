@@ -132,7 +132,7 @@
      Segue to the Choose An Acceptable Value view controller once we have saved the data.
      */
     AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
-    [userPrefView setPref:prefName];
+    userPrefView.prefName = prefName;
     [self presentViewController:userPrefView animated:YES completion:nil];
 }
 
