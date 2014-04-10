@@ -9,15 +9,18 @@
 #import "MissingDataViewController.h"
 #import "AcceptableValueViewController.h"
 #import "Preference.h"
+#import "Institution.h"
+#import "InstitutionManager.h"
 
 @interface MissingDataViewController ()
+
+@property NSMutableArray* arrayOfTextFields;
 
 @end
 
 @implementation MissingDataViewController
 
 @synthesize missingInstitutions;
-//@synthesize pref; //actual preference to create
 @synthesize prefKeysInDictionary;
 @synthesize prefName; //name of the preference that we need to create
 
@@ -30,17 +33,11 @@
     return self;
 }
 
-- (void)putInSomeSampleData{
-    NSArray *sampleDataArr = @[@"Goshen College, 46526",@"Bluffton University",@"Eastern Mennonite University",@"Goshen College, 46526",@"Bluffton University",@"Eastern Mennonite University",@"Goshen College, 46526",@"Bluffton University",@"Eastern Mennonite University",@"Goshen College, 46526"];
-    missingInstitutions = [[NSMutableArray alloc] initWithArray:sampleDataArr copyItems:true];
-    //pref = [[Preference alloc] initWithName:@"Student to Faculty Ratio" andAcceptableValues:@[@"Choice1",@"Choice2"]];
-}
-
--(NSArray*) translatePrefTypeToKeys:(NSString*)prefType{
+-(void) translatePrefTypeToKeys:(NSString*)prefType{
     NSString *values = [[NSBundle mainBundle] pathForResource: @"nameToDataKeys" ofType: @"plist"];
     NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
     
-    return [valuesDict objectForKey:prefType];
+    prefKeysInDictionary = [valuesDict objectForKey:prefType];
 }
 
 -(void) setInputType:(NSString*)prefType{
@@ -50,11 +47,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    //[self putInSomeSampleData];
-    NSLog(@"%@",missingInstitutions);
-    NSLog(@"%@",prefName);
-    
+    _arrayOfTextFields = [[NSMutableArray alloc] init];
     //set each text field's delegate to self and show all of the ones we need to
     //also set the placeholder text for each of the inputs that we show
     int counter = 0;
@@ -63,6 +56,7 @@
             text.delegate = self;
             
             if (counter<[missingInstitutions count]) {
+                [_arrayOfTextFields addObject:text];
                 text.hidden = false;
                 text.placeholder = [NSString stringWithFormat:@"%@",missingInstitutions[counter]];
                 counter++;
@@ -80,6 +74,8 @@
     NSString *values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
     NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
     [self setInputType:[[valuesDict valueForKeyPath:prefName] objectAtIndex:0]];
+    //set the keys to update later
+    [self translatePrefTypeToKeys:[[valuesDict valueForKeyPath:prefName] objectAtIndex:0]];
 }
 
 -(BOOL) textFieldShouldReturn:(UITextField *)textField{
@@ -120,13 +116,17 @@
     /*
     Update all keys in the Institution from what the user generated and what keys were passed in
      */
-    
-    for (int i=0; i<[prefKeysInDictionary count]; i++) {
-        //update
-        //TODO: do I need to update the Institutions directly in the Institution Manager? Or do I just pass the data along to the next view controller? What problems will this create when this view is called from the Preference tab without going on to the ChooseAnAcceptableValue?
-        //PHILIP - When the user hits NEXT add the data to the institutions, that way if the user presses cancel nothing happens. The only thing that gets passed on the next view is the name of the preference.
+    InstitutionManager* institutionManager = [InstitutionManager sharedInstance];
+    for (int i=0; i<[missingInstitutions count]; i++){
+        //get ahold of the Institutions in the InstitutionManager that need to change and change them
+        Institution* curInst = [institutionManager getUserInstitutionForString:[missingInstitutions objectAtIndex:i]];
+        for (NSString* curKey in prefKeysInDictionary) {
+            //change each key
+            UITextField* curText = [_arrayOfTextFields objectAtIndex:i];
+            [curInst setValue:curText.text  ForKeyInDataDictionary:curKey];
+        }
+        NSLog(@"%@",curInst.data);
     }
-    
     
     /*
      Segue to the Choose An Acceptable Value view controller once we have saved the data.
@@ -139,7 +139,7 @@
 - (IBAction)pressedNext:(id)sender {
     //Check to see if all entries all filled.
     bool allFilled = true;
-    for (UITextField *text in [self.view subviews]) {
+    for (UITextField *text in _arrayOfTextFields) {
         if(text.tag ==1){
             if([text.text isEqualToString:@""]) allFilled = false;
         }
