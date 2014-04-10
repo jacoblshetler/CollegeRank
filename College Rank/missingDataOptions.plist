@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>type</key>
+	<array>
+		<array>
+			<string>Public</string>
+			<string>1</string>
+		</array>
+		<array>
+			<string>Private (Non-Profit)</string>
+			<string>2</string>
+		</array>
+		<array>
+			<string>Private (For-Profit)</string>
+			<string>3</string>
+		</array>
+	</array>
+	<key>urbanization</key>
+	<array>
+		<array>
+			<string>Large City (&gt; 250,000 people)</string>
+			<string>11</string>
+		</array>
+		<array>
+			<string>Midsize City (100,000 - 250,000 people)</string>
+			<string>12</string>
+		</array>
+		<array>
+			<string>Small City (&lt; 100,000 people)</string>
+			<string>13</string>
+		</array>
+		<array>
+			<string>Large Suburb (In the suburbs of a large city)</string>
+			<string>21</string>
+		</array>
+		<array>
+			<string>Midsize Suburb (In the suburbs of a midsized city)</string>
+			<string>22</string>
+		</array>
+		<array>
+			<string>Small Suburb (In the suburbs of a small city)</string>
+			<string>23</string>
+		</array>
+		<array>
+			<string>Fringe Town (Urban cluster &lt; 10 miles from a city)</string>
+			<string>31</string>
+		</array>
+		<array>
+			<string>Distant Town (Urban cluster 10 - 35 miles from a city)</string>
+			<string>32</string>
+		</array>
+		<array>
+			<string>Remote Town (Urban cluster &gt; 35 miles from a city)</string>
+			<string>33</string>
+		</array>
+		<array>
+			<string>Fringe Rural (Rural &lt; 5 miles from city or &lt; 2.5 miles from town)</string>
+			<string>41</string>
+		</array>
+		<array>
+			<string>Distant Rural (Rural 5 - 25 miles from city or 2.5 - 10 miles from town)</string>
+			<string>42</string>
+		</array>
+		<array>
+			<string>Remote Rural (Rural &gt; 25 miles from city and &gt; 10 miles from town)</string>
+			<string>43</string>
+		</array>
+	</array>
+	<key>religiousAffiliation</key>
+	<array>
+		<array>
+			<string>No Religious Affiliation</string>
+			<string>-2</string>
+		</array>
+		<array>
+			<string>Catholic Affiliation</string>
+			<string>30</string>
+		</array>
+		<array>
+			<string>Protestant Affiliation</string>
+			<string>69</string>
+		</array>
+		<array>
+			<string>Jewish Affiliation</string>
+			<string>80</string>
+		</array>
+	</array>
+	<key>studyAbroad</key>
+	<array>
+		<array>
+			<string>No Study Abroad Option</string>
+			<string>0</string>
+		</array>
+		<array>
+			<string>Has Study Abroad Options</string>
+			<string>1</string>
+		</array>
+	</array>
+	<key>football</key>
+	<array>
+		<array>
+			<string>No Team</string>
+			<string>0</string>
+		</array>
+		<array>
+			<string>Has Team</string>
+			<string>1</string>
+		</array>
+	</array>
+	<key>baseball</key>
+	<array>
+		<array>
+			<string>No Team</string>
+			<string>0</string>
+		</array>
+		<array>
+			<string>Has Team</string>
+			<string>1</string>
+		</array>
+	</array>
+	<key>basketball</key>
+	<array>
+		<array>
+			<string>No Team</string>
+			<string>0</string>
+		</array>
+		<array>
+			<string>Has Team</string>
+			<string>1</string>
+		</array>
+	</array>
+	<key>xCountryAndTrack</key>
+	<array>
+		<array>
+			<string>No Team</string>
+			<string>0</string>
+		</array>
+		<array>
+			<string>Has Team</string>
+			<string>1</string>
+		</array>
+	</array>
+	<key>dayCare</key>
+	<array>
+		<array>
+			<string>No Provided Daycare</string>
+			<string>0</string>
+		</array>
+		<array>
+			<string>Provides Daycare</string>
+			<string>1</string>
+		</array>
+	</array>
+	<key>degree</key>
+	<array>
+		<array>
+			<string>No Degree</string>
+			<string>0</string>
+		</array>
+		<array>
+			<string>Associate&apos;s Degree</string>
+			<string>40</string>
+		</array>
+		<array>
+			<string>Bachelor&apos;s Degree</string>
+			<string>30</string>
+		</array>
+		<array>
+			<string>Master&apos;s Degree</string>
+			<string>20</string>
+		</array>
+		<array>
+			<string>Doctor&apos;s Degree</string>
+			<string>11</string>
+		</array>
+	</array>
+</dict>
+</plist>

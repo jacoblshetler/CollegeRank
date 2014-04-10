@@ -11,6 +11,7 @@
 @interface AcceptableValueViewController : UIViewController<UIPickerViewDelegate>
 @property (nonatomic, retain) Preference* pref;
 @property NSString* prefName;
+@property NSMutableArray* institutionsMissingData;
 
 - (IBAction)canceled:(id)sender;
 

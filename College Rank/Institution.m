@@ -30,7 +30,6 @@
         //stick data into dictionary
         if (dataFromWeb){
             self.data = [dataFromWeb objectAtIndex:0][0];
-            NSLog(@"%@",[dataFromWeb objectAtIndex:0][0]);
             self.data = [[NSMutableDictionary alloc] initWithDictionary:self.data copyItems:true];
         }
         else{

@@ -39,6 +39,7 @@
 @implementation AcceptableValueViewController
 
 @synthesize prefName;
+@synthesize institutionsMissingData;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
