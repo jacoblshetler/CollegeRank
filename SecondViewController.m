@@ -161,7 +161,7 @@
             AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
             //[userPrefView setPref:pref];
             [self presentViewController:userPrefView animated:YES completion:nil];
-            userPrefView.prefName = @"Butt";
+            userPrefView.prefName = entry;
         }
         
         

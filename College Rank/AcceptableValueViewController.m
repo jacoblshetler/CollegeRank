@@ -115,6 +115,8 @@
     [self.imageArr addObject:[UIImage imageNamed:@"pointer1.png"]];
     [self.imageArr addObject:[UIImage imageNamed:@"pointer2.png"]];
 
+    
+    
     self.pref = [self.preferences getPreferenceForString:self.prefName];
     
     //for testing
