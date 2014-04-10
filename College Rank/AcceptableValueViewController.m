@@ -55,7 +55,7 @@
     self.imageArr = [[NSMutableArray alloc] init];
     self.lineX = self.view.bounds.size.width * .75;
     self.topLineY = self.view.bounds.size.height/5;
-    self.lineHeight = self.view.bounds.size.height*.75;
+    self.lineHeight = self.view.bounds.size.height*.5;
     self.markerHeight = 30;
     self.markerWidth = 150;
 	// Do any additional setup after loading the view.
@@ -66,7 +66,7 @@
              atPoint:(CGPoint)   point
 {
     
-    UIFont *font = [UIFont boldSystemFontOfSize:12];
+    //UIFont *font = [UIFont boldSystemFontOfSize:12];
     UIGraphicsBeginImageContext(image.size);
     [image drawInRect:CGRectMake(0,0,image.size.width,image.size.height)];
     CGRect rect = CGRectMake(point.x, point.y, image.size.width, image.size.height);
@@ -115,11 +115,19 @@
     [self.imageArr addObject:[UIImage imageNamed:@"pointer1.png"]];
     [self.imageArr addObject:[UIImage imageNamed:@"pointer2.png"]];
 
+    
+    
+    self.pref = [self.preferences getPreferenceForString:self.prefName];
+    
     //for testing
     //self.pref = [self.preferences getPreferenceAtIndex:0];
     
     
-    if(self.pref.getValues == nil)
+    if(self.pref == nil)
+    {
+        [self.preferences addPreferenceWithName:self.prefName andAcceptableValues:nil];
+    }
+    if(self.pref.acceptableValues == nil)
     {
         //load in the selector bar
         self.isNull = true;
@@ -181,6 +189,9 @@
 #warning IMPLEMENT AND TEST ME!!
 -(void) save
 {
+    //make a new user preference
+    [self.preferences addUserPref:self.pref withAcceptableValue:self.pickerSelection];
+    
     if(self.isNull)
     {
         //if it is a custom
@@ -189,16 +200,17 @@
         {
             if([self.view viewWithTag:i].center.x == self.lineX - self.markerWidth/2)
             {
-                [inst customValueForKey:[NSString stringWithFormat:@"%f", [self.view viewWithTag:i].center.y - self.topLineY]];
+                [inst setValue:[NSString stringWithFormat:@"%f", [self.view viewWithTag:i].center.y - self.topLineY] ForKeyInCustomDictionary:self.prefName];
             }
+            else
+            {
+                [inst setValue:@"<null>" forKey:self.prefName];
+            }
+            
         }
     }
-    else {
-        //if it isn't a custom
-        [[self.preferences getUserPreferenceForString:[self.pref getName]] setPrefVal:self.pickerSelection];
-        //Change to the new view
-        
-    }
+    //Change to the new view
+
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow: (NSInteger)row inComponent:(NSInteger)component {

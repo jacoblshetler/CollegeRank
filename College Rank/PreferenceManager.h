@@ -14,7 +14,7 @@
 
 @interface PreferenceManager : NSObject
 @property NSMutableArray* userPrefs;
-@property NSArray* allPrefs;
+@property NSMutableArray* allPrefs;
 
 + (id)sharedInstance;
 -(NSArray*) getAllPrefs;
@@ -22,6 +22,8 @@
 -(void) addUserPref: (UserPreference*) pref;
 -(void) addUserPref: (Preference*) pref withWeight: (float) weight;
 -(void) addUserPref: (Preference*) pref withWeight: (float) weight andPrefVal: (int) prefVal;
+-(void) addUserPref:(Preference*) pref withAcceptableValue: (int) prefVal;
+-(void) addPreferenceWithName: (NSString*) name andAcceptableValues: (NSArray*) vals;
 -(UserPreference*) getUserPreferenceAtIndex: (int) index;
 -(Preference*) getPreferenceAtIndex: (int) index;
 -(UserPreference*) getUserPreferenceForString: (NSString*) name;
