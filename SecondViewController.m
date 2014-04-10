@@ -154,14 +154,14 @@
         NSMutableArray * missingDataInst = [_institutions getMissingDataInstitutionsForPreference:entryDecoded];
         if ([missingDataInst count]!= 0) {
             MissingDataViewController* missingData = [self.storyboard instantiateViewControllerWithIdentifier:@"MissingDataView"];
-            [self presentViewController:missingData animated:YES completion:nil];
-            missingData.prefName = entryDecoded;
+            missingData.prefName = entry;
             missingData.missingInstitutions = missingDataInst;
+            [self presentViewController:missingData animated:YES completion:nil];
         } else {
             AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
             //[userPrefView setPref:pref];
             [self presentViewController:userPrefView animated:YES completion:nil];
-            userPrefView.prefName = entryDecoded;
+            userPrefView.prefName = entry;
         }
         
         

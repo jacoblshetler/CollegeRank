@@ -21,7 +21,7 @@
 - (IBAction)canceled:(id) sender;
 
 @property NSString* prefName;
-@property Preference* pref;
+//@property Preference* pref;
 @property NSMutableArray* prefKeysInDictionary;
 @property NSMutableArray* missingInstitutions;
 
