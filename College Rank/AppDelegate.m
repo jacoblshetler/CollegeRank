@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "DataRetreiver.h"
-#import "Institution.h"
 #import "PreferenceManager.h"
 #import "InstitutionManager.h"
 #import "Calculations.h"
@@ -21,9 +20,13 @@
     self.window.tintColor= [UIColor colorWithRed:255.0f/255.0f green:60.0f/255.0f blue:50.0f/255.0f alpha:1.0];
     
     InstitutionManager* testInst = [InstitutionManager sharedInstance];
+    PreferenceManager* testPref = [PreferenceManager sharedInstance];
     
     [testInst addInstitution:[[testInst searchInstitutions:@"Goshen"] objectAtIndex:0]];
     [testInst addInstitution:[[testInst searchInstitutions:@"System"] objectAtIndex:0]];
+    
+    [testPref addUserPref:[testPref getPreferenceAtIndex:1] withWeight:.5 andPrefVal:1];
+    [testPref addUserPref:[testPref getPreferenceAtIndex:2] withWeight:.5 andPrefVal:1];
     
     
     return YES;

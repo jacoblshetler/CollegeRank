@@ -131,16 +131,29 @@
     
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         cell.textLabel.text = [_searchResults objectAtIndex:indexPath.row];
-    } else {
+    } else if ([[_preferences userPrefs] count] < 2){
         UserPreference* usrPref = [[_preferences userPrefs] objectAtIndex:indexPath.row];
         cell.textLabel.text = usrPref.pref.name;
+    } else {
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"";
+        } else if (indexPath.row == 1) {
+            UISlider* slider = [UISlider new];
+            [cell.contentView addSubview:slider];
+            slider.bounds = CGRectMake(0, 0, cell.contentView.bounds.size.width - 30, slider.bounds.size.height);
+            slider.center = CGPointMake(CGRectGetMidX(cell.contentView.bounds), CGRectGetMidY(cell.contentView.bounds));
+            slider.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+        } else {
+            UserPreference* usrPref = [[_preferences userPrefs] objectAtIndex:indexPath.row - 2];
+            cell.textLabel.text = usrPref.pref.name;
+        }
     }
-    
     return cell;
 }
 #pragma Selection
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //Add code for normal table view, when > 1 preferences set the selected prefernces equal to a variable that gets edited
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         if ([[_preferences userPrefs] count] == 10)
         {
@@ -150,15 +163,9 @@
             [self.searchDisplayController setActive:NO animated:YES];
 
         }
-
+        [self preferenceNavigate:indexPath];
         //[self.tableView reloadData]; Run from Save button
         //[self canGoToTabs]; Run from Save button
-        [self preferenceNavigate:indexPath];
-      
-        
-       
-        
-        
     }
 }
 
@@ -200,19 +207,21 @@
 }
 
 
-/*
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        //[_preferences removeUserPreference:[[[_institutions userInstitutions] objectAtIndex:indexPath.row] name]];
+        //[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        //[self canGoToTabs];
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.
