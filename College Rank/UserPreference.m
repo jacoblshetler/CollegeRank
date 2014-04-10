@@ -39,6 +39,19 @@
     return nil;
 }
 
+-(id) initWithPreference:(Preference *)preference andPrefVal: (int) value
+{
+    self = [super init];
+    if (self)
+    {
+        self.pref = preference;
+        self.locked = false;
+        preferredPrefValue = value;
+        return self;
+    }
+    return nil;
+}
+
 -(void) setWeight:(float)wt
 {
     self->weight = wt;
