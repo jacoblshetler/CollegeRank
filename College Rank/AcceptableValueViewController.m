@@ -37,6 +37,9 @@
 @end
 
 @implementation AcceptableValueViewController
+
+@synthesize prefType;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -232,6 +235,12 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (IBAction)canceled:(id)sender
+{
+    UITabBarController* back = [self.storyboard instantiateViewControllerWithIdentifier:@"TabBarView"];
+    [self presentViewController:back animated:YES completion:nil];
+    [back setSelectedIndex:1];
 }
 
 @end

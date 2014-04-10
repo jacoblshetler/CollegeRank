@@ -38,6 +38,7 @@
     _institutions = [InstitutionManager sharedInstance];
     _preferences = [PreferenceManager sharedInstance];
     [self testCalculations];
+    [self canGoToTabs];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -197,14 +198,13 @@
 -(void) testCalculations
 {
     //PreferenceManager* myP = [PreferenceManager sharedInstance];
-    //InstitutionManager* myI = [InstitutionManager sharedInstance];
-    /*
-    [_institutions addInstitution:[[_institutions searchInstitutions:@"Goshen"] objectAtIndex:0]];
-    [_institutions addInstitution:[[_institutions searchInstitutions:@"DePauw"] objectAtIndex:0]];
-    [_institutions addInstitution:[[_institutions searchInstitutions:@"Mennonite"] objectAtIndex:1]];
-    [_institutions addInstitution:[[_institutions searchInstitutions:@"Commun"] objectAtIndex:0]];
-    [_institutions addInstitution:[[_institutions searchInstitutions:@"System"] objectAtIndex:0]];
     
+    [_institutions addInstitution:[[_institutions searchInstitutions:@"Goshen"] objectAtIndex:0]];
+    //[_institutions addInstitution:[[_institutions searchInstitutions:@"DePauw"] objectAtIndex:0]];
+    //[_institutions addInstitution:[[_institutions searchInstitutions:@"Mennonite"] objectAtIndex:1]];
+    //[_institutions addInstitution:[[_institutions searchInstitutions:@"Commun"] objectAtIndex:0]];
+    [_institutions addInstitution:[[_institutions searchInstitutions:@"System"] objectAtIndex:0]];
+    /*
     int i=0;
     for(Preference* newPref in [_preferences getAllPrefs])
     {

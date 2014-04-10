@@ -139,6 +139,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView == self.searchDisplayController.searchResultsTableView) {
+#warning The below comments need to be added
         //Check for number of preferences (Use alert from view controller 1)
         //Check for previously added institutions
         //[self.tableView reloadData];
@@ -150,19 +151,26 @@
         NSString *entry = [_searchResults objectAtIndex:[indexPath row]];
         NSString *entryDecoded = [[valuesDict valueForKeyPath:entry] objectAtIndex:0];
         
-        NSLog(entry);
-        Preference *pref = [self.preferences getPreferenceForString:entry];
+        NSMutableArray * missingDataInst = [_institutions getMissingDataInstitutionsForPreference:entryDecoded];
+        if ([missingDataInst count]!= 0) {
+            MissingDataViewController* missingData = [self.storyboard instantiateViewControllerWithIdentifier:@"MissingDataView"];
+            [self presentViewController:missingData animated:YES completion:nil];
+            missingData.prefType = entryDecoded;
+            missingData.missingInstitutions = missingDataInst;
+        } else {
+            AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
+            //[userPrefView setPref:pref];
+            [self presentViewController:userPrefView animated:YES completion:nil];
+            userPrefView.prefType = entryDecoded;
+        }
         
-        //[_institutions getValuesForPreference:entryDecoded];
-        /*
-        MissingDataViewController* missingData = [self.storyboard instantiateViewControllerWithIdentifier:@"MissingDataView"];
-        [self presentViewController:missingData animated:YES completion:nil];
-        missingData.test.text = @"Different";
-        */
         
-        AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
-        [userPrefView setPref:pref];
-        [self presentViewController:userPrefView animated:YES completion:nil];
+        //Preference *pref = [self.preferences getPreferenceForString:entryDecoded];
+        //NSLog(@"%@",pref.name);
+        
+       
+       
+        //missingData.test.text = @"Different";
         
     }
 }

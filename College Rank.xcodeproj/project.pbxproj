@@ -224,10 +224,10 @@
 				E3B04FEB18DFE28600D4BD7B /* SecondViewController.m */,
 				E3FA369F18F0ADE600FE14A9 /* MissingDataViewController.h */,
 				E3FA36A018F0ADE600FE14A9 /* MissingDataViewController.m */,
-				E3698A9618AD2ED800A54627 /* ThirdViewController.h */,
-				E3698A9718AD2ED800A54627 /* ThirdViewController.m */,
 				36957ABF18F32ED50021814B /* AcceptableValueViewController.h */,
 				36957AC018F32ED50021814B /* AcceptableValueViewController.m */,
+				E3698A9618AD2ED800A54627 /* ThirdViewController.h */,
+				E3698A9718AD2ED800A54627 /* ThirdViewController.m */,
 				3628C84C18F4B0E10077145B /* pointer1.png */,
 				3628C84D18F4B0E10077145B /* pointer2.png */,
 			);

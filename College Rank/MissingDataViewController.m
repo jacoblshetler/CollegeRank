@@ -19,6 +19,7 @@
 @synthesize missingInstitutions;
 @synthesize pref;
 @synthesize prefKeysInDictionary;
+@synthesize prefType;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -104,6 +105,7 @@
     for (int i=0; i<[prefKeysInDictionary count]; i++) {
         //update
         //TODO: do I need to update the Institutions directly in the Institution Manager? Or do I just pass the data along to the next view controller? What problems will this create when this view is called from the Preference tab without going on to the ChooseAnAcceptableValue?
+        //PHILIP - When the user hits NEXT add the data to the institutions, that way if the user presses cancel nothing happens. The only thing that gets passed on the next view is the name of the preference.
     }
     
     
@@ -132,5 +134,12 @@
     else{
         [self saveDataAndSegue];
     }
+}
+
+- (IBAction)canceled:(id)sender
+{
+    UITabBarController* back = [self.storyboard instantiateViewControllerWithIdentifier:@"TabBarView"];
+    [self presentViewController:back animated:YES completion:nil];
+    [back setSelectedIndex:1];
 }
 @end
