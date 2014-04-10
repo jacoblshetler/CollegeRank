@@ -32,6 +32,7 @@
 		8472BA0418E711720034C6D6 /* AcceptableValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84EBAEA618DB2F2F006CC653 /* AcceptableValues.plist */; };
 		84B9BD3918B2DC8700469696 /* Calculations.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B9BD3818B2DC8700469696 /* Calculations.m */; };
 		84EBAEA718DB2F2F006CC653 /* AcceptableValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84EBAEA618DB2F2F006CC653 /* AcceptableValues.plist */; };
+		84F0D37918F6E4E50081B855 /* nameToDataKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84F0D37818F6E4E50081B855 /* nameToDataKeys.plist */; };
 		E329800318D89A0A00DDE110 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E329800218D89A0A00DDE110 /* FirstViewController.m */; };
 		E3698A9818AD2ED800A54627 /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3698A9718AD2ED800A54627 /* ThirdViewController.m */; };
 		E3B04FEC18DFE28600D4BD7B /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B04FEB18DFE28600D4BD7B /* SecondViewController.m */; };
@@ -86,6 +87,7 @@
 		84B9BD3718B2DC8700469696 /* Calculations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Calculations.h; sourceTree = "<group>"; };
 		84B9BD3818B2DC8700469696 /* Calculations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Calculations.m; sourceTree = "<group>"; };
 		84EBAEA618DB2F2F006CC653 /* AcceptableValues.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AcceptableValues.plist; path = "College Rank/AcceptableValues.plist"; sourceTree = SOURCE_ROOT; };
+		84F0D37818F6E4E50081B855 /* nameToDataKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = nameToDataKeys.plist; sourceTree = "<group>"; };
 		E329800118D89A0A00DDE110 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
 		E329800218D89A0A00DDE110 /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		E3698A9618AD2ED800A54627 /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 		844E76FF18AD289100A6FC91 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				84F0D37818F6E4E50081B855 /* nameToDataKeys.plist */,
 				844E770018AD289100A6FC91 /* College Rank-Info.plist */,
 				844E770118AD289100A6FC91 /* InfoPlist.strings */,
 				844E770418AD289100A6FC91 /* main.m */,
@@ -310,6 +313,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84F0D37918F6E4E50081B855 /* nameToDataKeys.plist in Resources */,
 				3628C84F18F4B0E10077145B /* pointer2.png in Resources */,
 				8472BA0418E711720034C6D6 /* AcceptableValues.plist in Resources */,
 				844E771418AD289100A6FC91 /* Images.xcassets in Resources */,

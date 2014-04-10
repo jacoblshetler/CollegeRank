@@ -17,7 +17,7 @@
 @implementation MissingDataViewController
 
 @synthesize missingInstitutions;
-@synthesize pref; //actual preference to create
+//@synthesize pref; //actual preference to create
 @synthesize prefKeysInDictionary;
 @synthesize prefName; //name of the preference that we need to create
 
@@ -33,7 +33,18 @@
 - (void)putInSomeSampleData{
     NSArray *sampleDataArr = @[@"Goshen College, 46526",@"Bluffton University",@"Eastern Mennonite University",@"Goshen College, 46526",@"Bluffton University",@"Eastern Mennonite University",@"Goshen College, 46526",@"Bluffton University",@"Eastern Mennonite University",@"Goshen College, 46526"];
     missingInstitutions = [[NSMutableArray alloc] initWithArray:sampleDataArr copyItems:true];
-    pref = [[Preference alloc] initWithName:@"Student to Faculty Ratio" andAcceptableValues:@[@"Choice1",@"Choice2"]];
+    //pref = [[Preference alloc] initWithName:@"Student to Faculty Ratio" andAcceptableValues:@[@"Choice1",@"Choice2"]];
+}
+
+-(NSArray*) translatePrefTypeToKeys:(NSString*)prefType{
+    NSString *values = [[NSBundle mainBundle] pathForResource: @"nameToDataKeys" ofType: @"plist"];
+    NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
+    
+    return [valuesDict objectForKey:prefType];
+}
+
+-(void) setInputType:(NSString*)prefType{
+    //set type to pickerWheel or keyboard
 }
 
 - (void)viewDidLoad
@@ -41,6 +52,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     //[self putInSomeSampleData];
+    NSLog(@"%@",missingInstitutions);
+    NSLog(@"%@",prefName);
     
     //set each text field's delegate to self and show all of the ones we need to
     //also set the placeholder text for each of the inputs that we show
@@ -61,7 +74,12 @@
     }
     
     //set the header
-    self.header.text = [NSString stringWithFormat:@"Enter missing data for '%@'",[pref getName]];
+    self.header.text = [NSString stringWithFormat:@"Enter missing data for '%@'",prefName];
+    
+    //set the type of input based on the pref we're passed in
+    NSString *values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
+    NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
+    [self setInputType:[[valuesDict valueForKeyPath:prefName] objectAtIndex:0]];
 }
 
 -(BOOL) textFieldShouldReturn:(UITextField *)textField{
@@ -102,6 +120,7 @@
     /*
     Update all keys in the Institution from what the user generated and what keys were passed in
      */
+    
     for (int i=0; i<[prefKeysInDictionary count]; i++) {
         //update
         //TODO: do I need to update the Institutions directly in the Institution Manager? Or do I just pass the data along to the next view controller? What problems will this create when this view is called from the Preference tab without going on to the ChooseAnAcceptableValue?
@@ -113,7 +132,7 @@
      Segue to the Choose An Acceptable Value view controller once we have saved the data.
      */
     AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
-    [userPrefView setPref:pref];
+    [userPrefView setPref:prefName];
     [self presentViewController:userPrefView animated:YES completion:nil];
 }
 
