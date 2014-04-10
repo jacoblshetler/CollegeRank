@@ -212,6 +212,8 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+#warning Need removeUserPrefs.
+#warning When deleting user preference with edited missing data, need to keep track of it being edited
         // Delete the row from the data source
         //[_preferences removeUserPreference:[[[_institutions userInstitutions] objectAtIndex:indexPath.row] name]];
         //[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
