@@ -17,9 +17,9 @@
 @implementation MissingDataViewController
 
 @synthesize missingInstitutions;
-@synthesize pref;
+@synthesize pref; //actual preference to create
 @synthesize prefKeysInDictionary;
-@synthesize prefType;
+@synthesize prefName; //name of the preference that we need to create
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -40,7 +40,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self putInSomeSampleData];
+    //[self putInSomeSampleData];
     
     //set each text field's delegate to self and show all of the ones we need to
     //also set the placeholder text for each of the inputs that we show

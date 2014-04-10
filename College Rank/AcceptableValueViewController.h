@@ -10,7 +10,7 @@
 @class Preference;
 @interface AcceptableValueViewController : UIViewController<UIPickerViewDelegate>
 @property (nonatomic, retain) Preference* pref;
-@property NSString* prefType;
+@property NSString* prefName;
 
 - (IBAction)canceled:(id)sender;
 

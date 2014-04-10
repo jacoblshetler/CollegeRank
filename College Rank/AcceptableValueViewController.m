@@ -38,7 +38,7 @@
 
 @implementation AcceptableValueViewController
 
-@synthesize prefType;
+@synthesize prefName;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
