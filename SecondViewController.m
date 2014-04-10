@@ -154,50 +154,21 @@
         NSMutableArray * missingDataInst = [_institutions getMissingDataInstitutionsForPreference:entryDecoded];
         if ([missingDataInst count]!= 0) {
             MissingDataViewController* missingData = [self.storyboard instantiateViewControllerWithIdentifier:@"MissingDataView"];
-            [self presentViewController:missingData animated:YES completion:nil];
-            missingData.prefName = entryDecoded;
+            missingData.prefName = entry;
             missingData.missingInstitutions = missingDataInst;
+            [self presentViewController:missingData animated:YES completion:nil];
         } else {
             AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
             //[userPrefView setPref:pref];
+            userPrefView.prefName = entry;
             [self presentViewController:userPrefView animated:YES completion:nil];
-            userPrefView.prefName = entryDecoded;
         }
         
-        
-        //Preference *pref = [self.preferences getPreferenceForString:entryDecoded];
-        //NSLog(@"%@",pref.name);
-        
-       
-       
-        //missingData.test.text = @"Different";
         
     }
 }
 
-
-
-/*/This is for sending information to the detail view
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"missingData"]) {
-        NSIndexPath *indexPath = nil;
-        //Recipe *recipe = nil;
-        
-        if (self.searchDisplayController.active) {
-            indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
-            //recipe = [searchResults objectAtIndex:indexPath.row];
-        } else {
-            //indexPath = [self.tableView indexPathForSelectedRow];
-            //recipe = [recipes objectAtIndex:indexPath.row];
-        }
-        
-        //ViewController *view = segue.destinationViewController;
-        //RecipeDetailViewController *destViewController = segue.destinationViewController;
-        //destViewController.recipe = recipe;
-    }
-}*/
-
-
+#pragma editing
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
