@@ -20,6 +20,12 @@
     // Override point for customization after application launch.
     self.window.tintColor= [UIColor colorWithRed:255.0f/255.0f green:60.0f/255.0f blue:50.0f/255.0f alpha:1.0];
     
+    InstitutionManager* testInst = [InstitutionManager sharedInstance];
+    
+    [testInst addInstitution:[[testInst searchInstitutions:@"Goshen"] objectAtIndex:0]];
+    [testInst addInstitution:[[testInst searchInstitutions:@"System"] objectAtIndex:0]];
+    
+    
     return YES;
 }
 							
