@@ -29,6 +29,23 @@
     [testPref addUserPref:[testPref getPreferenceAtIndex:2] withWeight:.5 andPrefVal:1];
     
     
+    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"(^1600$|^(1?[0-5]?|[0-9]?)[0-9]?[0-9]$)" options:0 error:nil];
+    BOOL okay = true;
+    int bad = 0;
+    for (int i=0;i<2000; i++) {
+        NSString* val = [NSString stringWithFormat:@"%i",i];
+        int numMatches = [regex numberOfMatchesInString:val options:0 range:NSMakeRange(0, [val length])];
+        if(numMatches!=1){
+            okay = false;
+            bad = i;
+            NSLog(@"numMatches=%i",numMatches);
+            break;
+        }
+    }
+    
+    NSLog(@"everythingOkay=%d",okay);
+    NSLog(@"numberItWentWrong=%i",bad);
+        
     return YES;
 }
 							
