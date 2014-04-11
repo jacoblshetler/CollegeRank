@@ -102,26 +102,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YCQ-Ca-Vyz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1924" y="-569"/>
-        </scene>
-        <!--Third View Controller - Rank-->
-        <scene sceneID="Ojt-g9-HQ6">
-            <objects>
-                <viewController title="Rank" id="OeI-6D-nyC" customClass="ThirdViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="VkR-HS-NZy"/>
-                        <viewControllerLayoutGuide type="bottom" id="9eg-kW-N3m"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="uWh-Jg-KZu">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Rank" image="second" id="l2y-aQ-Zz8"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xOG-rZ-gYZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="725" y="953"/>
+            <point key="canvasLocation" x="1927" y="-502"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
@@ -138,7 +119,7 @@
                     <connections>
                         <segue destination="Kpa-85-mMW" kind="relationship" relationship="viewControllers" id="Q7w-7j-Shy"/>
                         <segue destination="7TW-cU-rcO" kind="relationship" relationship="viewControllers" id="M8t-EP-wfW"/>
-                        <segue destination="OeI-6D-nyC" kind="relationship" relationship="viewControllers" id="Ftg-ms-UQc"/>
+                        <segue destination="fiP-dZ-jTD" kind="relationship" relationship="viewControllers" id="6gp-QX-9b2"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNP-y4-bzi" sceneMemberID="firstResponder"/>
@@ -225,10 +206,10 @@
                                 <rect key="frame" x="282" y="11" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <connections>
+                                    <segue destination="6jN-Hu-J2L" kind="push" id="vDj-YD-0jN"/>
+                                </connections>
                             </button>
-                            <connections>
-                                <segue destination="6jN-Hu-J2L" kind="push" id="xKL-F4-93B"/>
-                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -247,6 +228,49 @@
                 </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1261" y="194"/>
+        </scene>
+        <!--Third View Controller - Rankings-->
+        <scene sceneID="kTt-5r-Xdc">
+            <objects>
+                <tableViewController id="HPz-S6-Y0Z" customClass="ThirdViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Ahh-8g-PY4">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="I45-K5-bMr">
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I45-K5-bMr" id="khC-G0-Fl4">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="HPz-S6-Y0Z" id="jLX-id-nAi"/>
+                            <outlet property="delegate" destination="HPz-S6-Y0Z" id="hYg-yc-x3q"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Rankings" id="Lad-Yw-8aN">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="h8C-pj-mFD">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" id="lmE-oD-B8X">
+                                <rect key="frame" x="282" y="11" width="22" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="6jN-Hu-J2L" kind="push" id="uID-Eo-KIp"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LXR-6p-SLD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1245" y="897"/>
         </scene>
         <!--Missing Data View Controller - test-->
         <scene sceneID="m6c-Ti-1q8">
@@ -383,7 +407,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tgw-KK-J6E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1339" y="917"/>
+            <point key="canvasLocation" x="1865" y="917"/>
         </scene>
         <!--Acceptable Value View Controller-->
         <scene sceneID="Kch-6t-Tl0">
@@ -451,6 +475,25 @@
             </objects>
             <point key="canvasLocation" x="1886" y="200"/>
         </scene>
+        <!--Navigation Controller - Rank-->
+        <scene sceneID="8OB-S4-VsV">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fiP-dZ-jTD" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Rank" id="WSF-AO-itj"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="LfI-S3-l4B">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="HPz-S6-Y0Z" kind="relationship" relationship="rootViewController" id="ign-2f-rbB"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="stI-xW-rh9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="719" y="897"/>
+        </scene>
     </scenes>
     <resources>
         <image name="first" width="30" height="30"/>
@@ -463,6 +506,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="xKL-F4-93B"/>
+        <segue reference="vDj-YD-0jN"/>
     </inferredMetricsTieBreakers>
 </document>
