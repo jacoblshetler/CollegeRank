@@ -17,6 +17,9 @@
 @property NSMutableArray* arrayOfTextFields;
 @property NSMutableArray* choices;
 @property NSMutableArray* translations;
+@property UITextField* currentEditingTextField;
+@property UIGestureRecognizer *tapper;
+@property BOOL usingKeyboard;
 
 @end
 
@@ -24,7 +27,7 @@
 
 @synthesize missingInstitutions;
 @synthesize prefKeysInDictionary;
-@synthesize prefName; //name of the preference that we need to create
+@synthesize prefName; //long name of the preference
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -42,14 +45,68 @@
     prefKeysInDictionary = [valuesDict objectForKey:prefType];
 }
 
+-(BOOL) value:(NSString*)val EnteredByKeyboardIsOkayForPrefType:(NSString*)prefType{
+    //TODO: use regular expressions, etc. to check the value the user typed in with the keyboard. Most will be checking to see if it is number.
+    NSRegularExpression *regex;
+    NSString* errorMsg;
+    
+    if ([prefType isEqualToString:@"location"]) {
+        //TODO: must be a zip code
+        
+        //TODO: this can't really be rigorously "checked". Even if we do use the location finder. I think if they enter 5 digits, that's good enough
+        //if they're dumb enough to enter a zip code that doesn't exist, then good for them!
+        //Also see: http://stackoverflow.com/questions/578406/what-is-the-ultimate-postal-code-and-zip-regex/12453440#12453440
+    }
+    else if ([prefType isEqualToString:@"size"]) {
+        //must be a positive number
+        regex = [[NSRegularExpression alloc] initWithPattern:@"^[1-9]\\d*$" options:0 error:nil];
+        errorMsg = @"Must be a postitive integer";
+    }
+    else if ([prefType isEqualToString:@"cost"]) {
+        //must be positive number
+        regex = [[NSRegularExpression alloc] initWithPattern:@"^[1-9]\\d*$" options:0 error:nil];
+        errorMsg = @"Must be a postitive integer";
+    }
+    else if ([prefType isEqualToString:@"selectivity"]) {
+        //must be between 0 and 100
+        regex = [[NSRegularExpression alloc] initWithPattern:@"^(100)|(0*\\d{1,2})$" options:0 error:nil];
+        errorMsg = @"Must be an integer between 0 and 100";
+    }
+    else if ([prefType isEqualToString:@"sat"]) {
+        //must be between 0 and 1600
+        regex = [[NSRegularExpression alloc] initWithPattern:@"(^1600$|^(1?[0-5]?|[0-9]?)[0-9]?[0-9]$)" options:0 error:nil];
+        errorMsg = @"Must be an integer between 0 and 1600";
+    }
+    else if ([prefType isEqualToString:@"studentFacultyRatio"]) {
+        //must be a postitive number
+        regex = [[NSRegularExpression alloc] initWithPattern:@"^[1-9]\\d*$" options:0 error:nil];
+        errorMsg = @"Must be a postitive integer";
+    }
+    else if ([prefType isEqualToString:@"femaleRatio"]) {
+        //must be between 0 and 100
+        regex = [[NSRegularExpression alloc] initWithPattern:@"^(100)|(0*\\d{1,2})$" options:0 error:nil];
+        errorMsg = @"Must be an integer between 0 and 100";
+    }
+    
+    int numMatches = [regex numberOfMatchesInString:val options:0 range:NSMakeRange(0, [val length])];
+    return numMatches==1;
+}
+
+#pragma mark - Picker Wheel Functions
+
 -(void) setInputType:(NSString*)prefType{
-    //TODO: set type to pickerWheel or keyboard
+    //Set type to pickerWheel or keyboard
     NSArray* useKeyboard = @[@"location",@"size",@"cost",@"selectivity",@"sat",@"studentFacultyRatio",@"femaleRatio"];
     
     if ([useKeyboard containsObject:prefType]) {
         //keep keyboard. aka don't make any changes.
+        for (UITextField* text in _arrayOfTextFields){
+            text.inputView = nil;
+        }
+        _usingKeyboard = true;
         return;
     }
+    _usingKeyboard = false;
     
     //if we're not using the keyboard, then we need to set up a pickerWheel to do input.
     //First read in the options for the picker from the missingDataOptions plist
@@ -82,11 +139,12 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     //handle selecting a row
-    /*TODO: handle selecting a row with the picker.
-            make the keyboard disappear
-            set the value in the textfield to the appropriate choice
-    */
-    NSLog(@"Choice made: %@",[_choices objectAtIndex:row]);
+    NSString* selection = [_choices objectAtIndex:row];
+    NSLog(@"Choice made: %@",selection);
+    _currentEditingTextField.text = selection;
+    
+    //make the picker disappear
+    [_currentEditingTextField resignFirstResponder];
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
@@ -112,6 +170,20 @@
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return 1;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    _currentEditingTextField = textField;
+}
+
+- (IBAction)selection:(id)sender {
+    NSLog(@"HERE");
+    [self resignFirstResponder];
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view resignFirstResponder];
 }
 
 #pragma mark - View Events
@@ -156,10 +228,22 @@
     self.header.text = [NSString stringWithFormat:@"Enter missing data for '%@'",prefName];
     
     //set the input type based on the preference type
-    //prefDecoded = @"religiousAffiliation"; //uncomment to see picker wheel
+    prefDecoded = @"religiousAffiliation"; //uncomment to see picker wheel
     [self setInputType:prefDecoded];
     //set the keys to update later
     [self translatePrefTypeToKeys:[[valuesDict valueForKeyPath:prefName] objectAtIndex:0]];
+    
+    //set up the gesture recognizer. this dismisses keyboard when they click away from the text field
+    _tapper = [[UITapGestureRecognizer alloc]
+              initWithTarget:self action:@selector(handleSingleTap:)];
+    _tapper.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:_tapper];
+}
+
+//dismiss keyboard when clicking on the background
+- (void)handleSingleTap:(UITapGestureRecognizer *) sender
+{
+    [self.view endEditing:YES];
 }
 
 
@@ -195,9 +279,6 @@
 }
 
 - (void) saveDataAndSegue{
-    //do that stuff
-    NSLog(@"Save Data and Segue!!");
-    
     /*
     Update all keys in the Institution from what the user generated and what keys were passed in
      */
@@ -206,11 +287,19 @@
         //get ahold of the Institutions in the InstitutionManager that need to change and change them
         Institution* curInst = [institutionManager getUserInstitutionForString:[missingInstitutions objectAtIndex:i]];
         for (NSString* curKey in prefKeysInDictionary) {
-            //change each key
+            NSString* updateString = [[NSString alloc] init];
+            
+            //if using the keyboard, then just put in whatever they typed in
             UITextField* curText = [_arrayOfTextFields objectAtIndex:i];
-            [curInst setValue:curText.text  ForKeyInDataDictionary:curKey];
+            updateString = curText.text;
+            //if we're using a picker and need to translate what's in the text field
+            if (!_usingKeyboard) {
+                updateString = [_translations objectAtIndex:[_choices indexOfObject:updateString]];
+            }
+            
+            //update the value
+            [curInst setValue:updateString ForKeyInDataDictionary:curKey];
         }
-        NSLog(@"%@",curInst.data);
     }
     
     /*
