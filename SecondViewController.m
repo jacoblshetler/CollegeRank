@@ -20,6 +20,7 @@
 @property InstitutionManager* institutions;
 @property PreferenceManager* preferences;
 @property NSArray* searchResults;
+@property NSArray* colors;
 
 - (void) preferenceNavigate: (NSIndexPath *) indexPath;
 
@@ -43,6 +44,19 @@
     _institutions = [InstitutionManager sharedInstance];
     _preferences = [PreferenceManager sharedInstance];
     //[self canGoToTabs];
+    
+    NSString* colorFile = [[NSBundle mainBundle] pathForResource: @"Colors" ofType: @"plist"];
+    NSArray* colorRGB = [[NSArray alloc] initWithContentsOfFile:colorFile];
+    
+    NSMutableArray* tempArray = [NSMutableArray new];
+    CGFloat r, g, b;
+    for (NSArray* rgb in colorRGB) {
+        r = [[rgb objectAtIndex:0] floatValue]/255;
+        g = [[rgb objectAtIndex:1] floatValue]/255;
+        b = [[rgb objectAtIndex:2] floatValue]/255;
+        [tempArray addObject:[UIColor colorWithRed:r green:g blue:b alpha:1.0]];
+    }
+    _colors = [[NSArray alloc] initWithArray:tempArray];
 
 
     // Uncomment the following line to preserve selection between presentations.
@@ -146,6 +160,7 @@
         } else {
             UserPreference* usrPref = [[_preferences userPrefs] objectAtIndex:indexPath.row - 2];
             cell.textLabel.text = usrPref.pref.name;
+            cell.textLabel.textColor = [_colors objectAtIndex:indexPath.row - 2];
         }
     }
     return cell;
@@ -171,6 +186,7 @@
 
 - (void) preferenceNavigate: (NSIndexPath *) indexPath
 {
+#warning certain preferences aren't being selected
     NSString *values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
     NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
     

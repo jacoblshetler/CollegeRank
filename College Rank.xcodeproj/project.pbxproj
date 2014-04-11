@@ -39,6 +39,7 @@
 		E3B04FEC18DFE28600D4BD7B /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B04FEB18DFE28600D4BD7B /* SecondViewController.m */; };
 		E3C5CD6D18CF68B800C5DBA2 /* Institution.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5CD6C18CF68B800C5DBA2 /* Institution.m */; };
 		E3C5CD7018CF692700C5DBA2 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5CD6F18CF692700C5DBA2 /* Reachability.m */; };
+		E3DB562B18F7929300128027 /* Colors.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3DB562A18F7929300128027 /* Colors.plist */; };
 		E3FA36A118F0ADE600FE14A9 /* MissingDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FA36A018F0ADE600FE14A9 /* MissingDataViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +101,7 @@
 		E3C5CD6C18CF68B800C5DBA2 /* Institution.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Institution.m; sourceTree = "<group>"; };
 		E3C5CD6E18CF692700C5DBA2 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		E3C5CD6F18CF692700C5DBA2 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		E3DB562A18F7929300128027 /* Colors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Colors.plist; sourceTree = "<group>"; };
 		E3FA369F18F0ADE600FE14A9 /* MissingDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MissingDataViewController.h; sourceTree = "<group>"; };
 		E3FA36A018F0ADE600FE14A9 /* MissingDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MissingDataViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -168,13 +170,12 @@
 				844E770718AD289100A6FC91 /* AppDelegate.h */,
 				844E770818AD289100A6FC91 /* AppDelegate.m */,
 				844E770A18AD289100A6FC91 /* Main.storyboard */,
+				E30BB90F18D265B5001DFC05 /* Views */,
+				E3C5CD6B18CF68B800C5DBA2 /* Institution.h */,
 				84B9BD3718B2DC8700469696 /* Calculations.h */,
 				84B9BD3818B2DC8700469696 /* Calculations.m */,
 				3697488418B2DBCA001EE530 /* DataRetreiver.h */,
 				3697488518B2DBCA001EE530 /* DataRetreiver.m */,
-				E30BB90F18D265B5001DFC05 /* Views */,
-				844E771318AD289100A6FC91 /* Images.xcassets */,
-				E3C5CD6B18CF68B800C5DBA2 /* Institution.h */,
 				E3C5CD6C18CF68B800C5DBA2 /* Institution.m */,
 				8445148418D1FBB4000472DA /* InstitutionManager.h */,
 				8445148518D1FBB4000472DA /* InstitutionManager.m */,
@@ -184,6 +185,7 @@
 				365A9CD418D7B18100978516 /* UserPreference.m */,
 				365A9CD618D7B4F000978516 /* PreferenceManager.h */,
 				365A9CD718D7B4F000978516 /* PreferenceManager.m */,
+				844E771318AD289100A6FC91 /* Images.xcassets */,
 				844E76FF18AD289100A6FC91 /* Supporting Files */,
 			);
 			path = "College Rank";
@@ -192,12 +194,13 @@
 		844E76FF18AD289100A6FC91 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				844E770018AD289100A6FC91 /* College Rank-Info.plist */,
+				E3DB562A18F7929300128027 /* Colors.plist */,
 				84F0D37818F6E4E50081B855 /* nameToDataKeys.plist */,
 				8409E7DC18F749FB00A07BDA /* missingDataOptions.plist */,
-				844E770018AD289100A6FC91 /* College Rank-Info.plist */,
+				84EBAEA618DB2F2F006CC653 /* AcceptableValues.plist */,
 				844E770118AD289100A6FC91 /* InfoPlist.strings */,
 				844E770418AD289100A6FC91 /* main.m */,
-				84EBAEA618DB2F2F006CC653 /* AcceptableValues.plist */,
 				844E770618AD289100A6FC91 /* College Rank-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -316,6 +319,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3DB562B18F7929300128027 /* Colors.plist in Resources */,
 				84F0D37918F6E4E50081B855 /* nameToDataKeys.plist in Resources */,
 				3628C84F18F4B0E10077145B /* pointer2.png in Resources */,
 				8409E7DD18F749FB00A07BDA /* missingDataOptions.plist in Resources */,
