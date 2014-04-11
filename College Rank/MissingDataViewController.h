@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class Preference;
 
-@interface MissingDataViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource>
+@interface MissingDataViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
 //Possibly add a poopup that explains this page's function.
 //When user hit the "Next" button, give a pop-up warning saying that leaving data empty will skew the data.
 

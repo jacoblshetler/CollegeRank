@@ -12,6 +12,8 @@
 #import "Institution.h"
 #import "InstitutionManager.h"
 
+#pragma mark - Declarations, Definitions
+
 @interface MissingDataViewController ()
 
 @property NSMutableArray* arrayOfTextFields;
@@ -38,6 +40,8 @@
     return self;
 }
 
+#pragma mark - Translations
+
 -(void) translatePrefTypeToKeys:(NSString*)prefType{
     NSString *values = [[NSBundle mainBundle] pathForResource: @"nameToDataKeys" ofType: @"plist"];
     NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
@@ -45,51 +49,84 @@
     prefKeysInDictionary = [valuesDict objectForKey:prefType];
 }
 
--(BOOL) value:(NSString*)val EnteredByKeyboardIsOkayForPrefType:(NSString*)prefType{
-    //TODO: use regular expressions, etc. to check the value the user typed in with the keyboard. Most will be checking to see if it is number.
+# pragma mark - Keyboard Entry Verification
+
+-(NSString*) value:(NSString*)val EnteredByKeyboardIsOkayForPrefType:(NSString*)prefType{
+    //Use regular expressions, etc. to check the value the user typed in with the keyboard. Most will be checking to see if it is number.
     NSRegularExpression *regex;
-    NSString* errorMsg;
+    NSString* errorMsg = @"Entry must be a";
+    NSString* appendString;
     
     if ([prefType isEqualToString:@"location"]) {
-        //TODO: must be a zip code
-        
-        //TODO: this can't really be rigorously "checked". Even if we do use the location finder. I think if they enter 5 digits, that's good enough
+        //must be a zip code
+        regex = [[NSRegularExpression alloc] initWithPattern:@"(^$|^\\d{5}$)" options:0 error:nil];
+        appendString = @" valid 5-digit zip code";
+        //TODO: this can't really be rigorously "checked," even if we do use the location finder. I think if they enter 5 digits, that's good enough
         //if they're dumb enough to enter a zip code that doesn't exist, then good for them!
-        //Also see: http://stackoverflow.com/questions/578406/what-is-the-ultimate-postal-code-and-zip-regex/12453440#12453440
+        //See also: http://stackoverflow.com/questions/578406/what-is-the-ultimate-postal-code-and-zip-regex/12453440#12453440
     }
     else if ([prefType isEqualToString:@"size"]) {
         //must be a positive number
-        regex = [[NSRegularExpression alloc] initWithPattern:@"^[1-9]\\d*$" options:0 error:nil];
-        errorMsg = @"Must be a postitive integer";
+        regex = [[NSRegularExpression alloc] initWithPattern:@"(^$|^[1-9]\\d*$)" options:0 error:nil];
+        appendString = @" postitive integer";
     }
     else if ([prefType isEqualToString:@"cost"]) {
         //must be positive number
-        regex = [[NSRegularExpression alloc] initWithPattern:@"^[1-9]\\d*$" options:0 error:nil];
-        errorMsg = @"Must be a postitive integer";
+        regex = [[NSRegularExpression alloc] initWithPattern:@"(^$|^[1-9]\\d*$)" options:0 error:nil];
+        appendString = @" postitive integer";
     }
     else if ([prefType isEqualToString:@"selectivity"]) {
         //must be between 0 and 100
-        regex = [[NSRegularExpression alloc] initWithPattern:@"^(100)|(0*\\d{1,2})$" options:0 error:nil];
-        errorMsg = @"Must be an integer between 0 and 100";
+        regex = [[NSRegularExpression alloc] initWithPattern:@"(^$|^100$|^\\d{1,2}$)" options:0 error:nil];
+        appendString = @"n integer between 0 and 100";
     }
     else if ([prefType isEqualToString:@"sat"]) {
         //must be between 0 and 1600
-        regex = [[NSRegularExpression alloc] initWithPattern:@"(^1600$|^(1?[0-5]?|[0-9]?)[0-9]?[0-9]$)" options:0 error:nil];
-        errorMsg = @"Must be an integer between 0 and 1600";
+        regex = [[NSRegularExpression alloc] initWithPattern:@"(^$|^1600$|^(1?[0-5]?|[0-9]?)[0-9]?[0-9]$)" options:0 error:nil];
+        appendString = @"n integer between 0 and 1600";
     }
     else if ([prefType isEqualToString:@"studentFacultyRatio"]) {
         //must be a postitive number
-        regex = [[NSRegularExpression alloc] initWithPattern:@"^[1-9]\\d*$" options:0 error:nil];
-        errorMsg = @"Must be a postitive integer";
+        regex = [[NSRegularExpression alloc] initWithPattern:@"(^$|^[1-9]\\d*$)" options:0 error:nil];
+        appendString = @" postitive integer";
     }
     else if ([prefType isEqualToString:@"femaleRatio"]) {
         //must be between 0 and 100
-        regex = [[NSRegularExpression alloc] initWithPattern:@"^(100)|(0*\\d{1,2})$" options:0 error:nil];
-        errorMsg = @"Must be an integer between 0 and 100";
+        regex = [[NSRegularExpression alloc] initWithPattern:@"(^$|^100$|^\\d{1,2}$)" options:0 error:nil];
+        appendString = @"n integer between 0 and 100";
     }
+    errorMsg = [errorMsg stringByAppendingString:appendString];
     
     int numMatches = [regex numberOfMatchesInString:val options:0 range:NSMakeRange(0, [val length])];
-    return numMatches==1;
+    if (numMatches!=1) {
+        return errorMsg;
+    }
+    return @"";
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if(!_usingKeyboard){
+        return;
+    }
+    //get decoded name of the preference
+    NSString *values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
+    NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
+    NSString *prefDecoded = [[valuesDict valueForKeyPath:prefName] objectAtIndex:0];
+
+    //check it against the apprpriate regex
+    NSString* error = [self value:textField.text EnteredByKeyboardIsOkayForPrefType:prefDecoded];
+    if (![error isEqualToString:@""]) {
+        //then we do not have entry that is okay.
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Invalid Data" message:error delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        alert.tag = 2;
+        [alert show];
+        [textField becomeFirstResponder];
+    }
+    else{
+        //if there's no error, get rid of the keyboard
+        [textField resignFirstResponder];
+    }
 }
 
 #pragma mark - Picker Wheel Functions
@@ -270,11 +307,20 @@
 }
 */
 
+#pragma mark - Closing Form, Saving Data
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 0)
-    {
-        [self saveDataAndSegue];
+    if(alertView.tag == 1){ //Alert coming from missing data
+        if (buttonIndex == 0)
+        {
+            [self saveDataAndSegue];
+        }
+    }
+    
+    else if (alertView.tag == 2){ //Alert coming from invalid data entry
+        //Do nothing
+        [self.view resignFirstResponder];
     }
 }
 
@@ -297,7 +343,7 @@
                 updateString = [_translations objectAtIndex:[_choices indexOfObject:updateString]];
             }
             
-            //update the value
+            //update the value. don't have to worry about custom data, since customs won't ever come to this screen
             [curInst setValue:updateString ForKeyInDataDictionary:curKey];
         }
     }
@@ -323,6 +369,7 @@
     if (!allFilled){
         //show warning to say that they need to enter all data. Then stop
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Missing Data" message:@"You are still missing data. Continuing will skew end results. Are you sure you want to continue?" delegate:self cancelButtonTitle:@"Continue" otherButtonTitles:@"Go Back", nil];
+        alert.tag = 1;
         [alert show];
     }
     else{
