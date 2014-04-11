@@ -12,6 +12,7 @@
 @interface ThirdViewController ()
 
 @property NSMutableDictionary* calculationResults;
+@property NSArray* orderedKeys;
 @property NSArray* colors;
 
 @end
@@ -46,7 +47,17 @@
     _colors = [[NSArray alloc] initWithArray:tempArray];
     
     //calculate the rankings
-    _calculationResults = generateRankings();
+    _calculationResults = [[NSMutableDictionary alloc] initWithDictionary:generateRankings()];
+    
+    //generate the ordered keys
+    _orderedKeys = [[NSArray alloc] initWithArray:[_calculationResults keysSortedByValueUsingComparator:^NSComparisonResult(id obj1, id obj2){
+        return obj1 < obj2;
+    }]];
+    
+    NSLog(@"Calculation Results:\r\n%@",_calculationResults);
+    NSLog(@"College Names in Order:\r\n%@",_orderedKeys);
+    
+    self.tableView.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,9 +76,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return [_orderedKeys count]+1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -81,29 +91,31 @@
     
     //if cell==1, then show the bar chart
     //if cell > 1, then show the _listOfInstitutions[row-1]
-    /*
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        cell.textLabel.text = [_searchResults objectAtIndex:indexPath.row];
-    } else if ([[_preferences userPrefs] count] < 2){
-        UserPreference* usrPref = [[_preferences userPrefs] objectAtIndex:indexPath.row];
-        cell.textLabel.text = usrPref.pref.name;
-    } else {
-        if (indexPath.row == 0) {
-            cell.textLabel.text = @"";
-        } else if (indexPath.row == 1) {
-            UISlider* slider = [UISlider new];
-            [cell.contentView addSubview:slider];
-            slider.bounds = CGRectMake(0, 0, cell.contentView.bounds.size.width - 30, slider.bounds.size.height);
-            slider.center = CGPointMake(CGRectGetMidX(cell.contentView.bounds), CGRectGetMidY(cell.contentView.bounds));
-            slider.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-        } else {
-            UserPreference* usrPref = [[_preferences userPrefs] objectAtIndex:indexPath.row - 2];
-            cell.textLabel.text = usrPref.pref.name;
-            cell.textLabel.textColor = [_colors objectAtIndex:indexPath.row - 2];
-        }
+    if (indexPath.row == 0) {
+        [cell.contentView addSubview:[self createBarChart]];
+        //[cell.contentView
     }
-     */
+    else {
+        cell.textLabel.text = [NSString stringWithFormat:@"%i. %@",indexPath.row,[_orderedKeys objectAtIndex:indexPath.row-1]];
+        cell.textLabel.textColor = [_colors objectAtIndex:indexPath.row - 1];
+    }
+    
     return cell;
+}
+
+- (UIView*) createBarChart{
+    
+    return [[UIView alloc] init];
+}
+         
+ - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row==0){
+        return 200;
+    }
+    else{
+        return 45;
+    }
 }
 
 /*
