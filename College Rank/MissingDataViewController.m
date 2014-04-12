@@ -158,9 +158,6 @@
         [_translations addObject:[curArr objectAtIndex:1]];
     }
     
-    NSLog(@"Choices: %@",_choices);
-    NSLog(@"Translations: %@",_translations);
-    
     //use the choices array to set up the picker
     UIPickerView* picker = [[UIPickerView alloc]init];
     [picker setDataSource:self];
@@ -177,7 +174,6 @@
 {
     //handle selecting a row
     NSString* selection = [_choices objectAtIndex:row];
-    NSLog(@"Choice made: %@",selection);
     _currentEditingTextField.text = selection;
     
     //make the picker disappear
@@ -214,7 +210,6 @@
 }
 
 - (IBAction)selection:(id)sender {
-    NSLog(@"HERE");
     [self resignFirstResponder];
 }
 

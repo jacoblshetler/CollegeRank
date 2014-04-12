@@ -73,7 +73,6 @@
     NSLog(@"ordered keys: %@",_orderedKeys);
     
     //redraw the table
-    
     [self.tableView reloadData];
 }
 
