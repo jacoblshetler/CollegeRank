@@ -51,6 +51,35 @@ NSMutableArray * normalize(NSMutableArray * prefValues){
     return returnArray;
 }
 
+NSMutableArray * orderDictKeysDescending(NSDictionary* inDict){
+    NSMutableArray* keys = [[NSMutableArray alloc] initWithArray:[inDict allKeys]];
+    NSMutableArray* vals = [[NSMutableArray alloc] initWithArray:[inDict allValues]];
+    
+    //sort the values
+    NSArray *sorted = [vals sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        if ([obj1 floatValue] < [obj2 floatValue]) return NSOrderedDescending;
+        else return NSOrderedAscending;
+    }];
+    
+    //look thru each key and see if its value is the current value, if it is, then add to list and remove
+    NSMutableArray* sortedKeys = [[NSMutableArray alloc] init];
+    for (int i = 0; i<[vals count]; i++) {
+        float currentValue = [[sorted objectAtIndex:i] floatValue];
+        
+        NSString* stringDelete;
+        for (NSString* key in keys) {
+            if ([[inDict valueForKey:key] floatValue] == currentValue) {
+                stringDelete = key;
+            }
+        }
+        
+        [sortedKeys addObject:stringDelete];
+        [keys removeObject:stringDelete];
+    }
+    
+    return sortedKeys;
+}
+
 #pragma mark - Distance Calculations
 
 CLLocation *didCalculateDistance(NSString* zipCode) {
@@ -793,7 +822,7 @@ NSMutableDictionary * generateRankings(){
         }
         else{
         }
-        NSLog(@"%@ - %@",[userPref getName],value);
+   //     NSLog(@"%@ - %@",[userPref getName],value);
         [weightArr addObject:[NSNumber numberWithFloat:[userPref getWeight]]];
         [normalizedPrefs addObject: value];
     }

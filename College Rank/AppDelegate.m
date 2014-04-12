@@ -28,7 +28,7 @@
     [testPref addUserPref:[testPref getPreferenceAtIndex:1] withWeight:.5 andPrefVal:1];
     [testPref addUserPref:[testPref getPreferenceAtIndex:2] withWeight:.5 andPrefVal:1];
     
-    
+    /*
     NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"(^1600$|^(1?[0-5]?|[0-9]?)[0-9]?[0-9]$)" options:0 error:nil];
     BOOL okay = true;
     int bad = 0;
@@ -45,7 +45,8 @@
     
     NSLog(@"everythingOkay=%d",okay);
     NSLog(@"numberItWentWrong=%i",bad);
-        
+        */
+    
     return YES;
 }
 							

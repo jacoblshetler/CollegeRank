@@ -15,6 +15,8 @@
  @return NSMutableArray of normalized NSDecimalNumbers representing preference values
  */
 NSMutableArray * normalize(NSMutableArray * prefValues);
+NSMutableArray * orderDictKeysDescending(NSDictionary* inDict);
+
 double geoDistance(NSString * zip1, NSString * zip2);
 NSMutableDictionary * generateRankings();
 NSMutableDictionary * calculatePreferences(NSMutableArray * incomingInstitutions, NSMutableArray* weights);

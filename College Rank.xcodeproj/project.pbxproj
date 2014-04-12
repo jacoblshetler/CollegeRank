@@ -33,6 +33,7 @@
 		8457DC3318F8674600F0EFCC /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8457DC3218F8674600F0EFCC /* ThirdViewController.m */; };
 		8472BA0418E711720034C6D6 /* AcceptableValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84EBAEA618DB2F2F006CC653 /* AcceptableValues.plist */; };
 		84B9BD3918B2DC8700469696 /* Calculations.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B9BD3818B2DC8700469696 /* Calculations.m */; };
+		84BE3A5D18F983DE00E9B1EF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84BE3A5C18F983DE00E9B1EF /* QuartzCore.framework */; };
 		84EBAEA718DB2F2F006CC653 /* AcceptableValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84EBAEA618DB2F2F006CC653 /* AcceptableValues.plist */; };
 		84F0D37918F6E4E50081B855 /* nameToDataKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84F0D37818F6E4E50081B855 /* nameToDataKeys.plist */; };
 		E329800318D89A0A00DDE110 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E329800218D89A0A00DDE110 /* FirstViewController.m */; };
@@ -91,6 +92,7 @@
 		8457DC3218F8674600F0EFCC /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
 		84B9BD3718B2DC8700469696 /* Calculations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Calculations.h; sourceTree = "<group>"; };
 		84B9BD3818B2DC8700469696 /* Calculations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Calculations.m; sourceTree = "<group>"; };
+		84BE3A5C18F983DE00E9B1EF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		84EBAEA618DB2F2F006CC653 /* AcceptableValues.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AcceptableValues.plist; path = "College Rank/AcceptableValues.plist"; sourceTree = SOURCE_ROOT; };
 		84F0D37818F6E4E50081B855 /* nameToDataKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = nameToDataKeys.plist; sourceTree = "<group>"; };
 		E329800118D89A0A00DDE110 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84BE3A5D18F983DE00E9B1EF /* QuartzCore.framework in Frameworks */,
 				8445148318D1F7D3000472DA /* SystemConfiguration.framework in Frameworks */,
 				844E76FB18AD289100A6FC91 /* CoreGraphics.framework in Frameworks */,
 				844E76FD18AD289100A6FC91 /* UIKit.framework in Frameworks */,
@@ -153,6 +156,7 @@
 		844E76F718AD289100A6FC91 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84BE3A5C18F983DE00E9B1EF /* QuartzCore.framework */,
 				8445148218D1F7D3000472DA /* SystemConfiguration.framework */,
 				844E76F818AD289100A6FC91 /* Foundation.framework */,
 				844E76FA18AD289100A6FC91 /* CoreGraphics.framework */,

@@ -8,14 +8,18 @@
 
 #import "ThirdViewController.h"
 #import "Calculations.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface ThirdViewController ()
 
 @property NSMutableDictionary* calculationResults;
 @property NSArray* orderedKeys;
 @property NSArray* colors;
+@property int barChartHeight;
+@property int screenWidth;
 
 @end
+
 
 @implementation ThirdViewController
 
@@ -31,6 +35,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //define the height of the barchart and the width of the screen
+    _barChartHeight = 200;
+    _screenWidth = 320;
     
     //load in the colors
     NSString* colorFile = [[NSBundle mainBundle] pathForResource: @"Colors" ofType: @"plist"];
@@ -50,14 +57,24 @@
     _calculationResults = [[NSMutableDictionary alloc] initWithDictionary:generateRankings()];
     
     //generate the ordered keys
-    _orderedKeys = [[NSArray alloc] initWithArray:[_calculationResults keysSortedByValueUsingComparator:^NSComparisonResult(id obj1, id obj2){
-        return obj1 < obj2;
-    }]];
-    
-    NSLog(@"Calculation Results:\r\n%@",_calculationResults);
-    NSLog(@"College Names in Order:\r\n%@",_orderedKeys);
+    _orderedKeys = orderDictKeysDescending(_calculationResults);
     
     self.tableView.delegate = self;
+     
+}
+
+- (void) viewDidAppear:(BOOL)animated{
+    //calculate the rankings
+    _calculationResults = [[NSMutableDictionary alloc] initWithDictionary:generateRankings()];
+    NSLog(@"calcResults: %@",_calculationResults);
+    
+    //generate the ordered keys
+    _orderedKeys = orderDictKeysDescending(_calculationResults);
+    NSLog(@"ordered keys: %@",_orderedKeys);
+    
+    //redraw the table
+    
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -83,17 +100,18 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier]; //forIndexPath:indexPath];
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     //if cell==1, then show the bar chart
     //if cell > 1, then show the _listOfInstitutions[row-1]
     if (indexPath.row == 0) {
         [cell.contentView addSubview:[self createBarChart]];
-        //[cell.contentView
     }
     else {
         cell.textLabel.text = [NSString stringWithFormat:@"%i. %@",indexPath.row,[_orderedKeys objectAtIndex:indexPath.row-1]];
@@ -104,14 +122,78 @@
 }
 
 - (UIView*) createBarChart{
+    //create the UIView to contain everything else
+    UIView* containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _screenWidth, _barChartHeight)];
     
-    return [[UIView alloc] init];
+    //create the x-axis and y-axis variables
+    int xAxisX = _screenWidth * .05;
+    int xAxisY = _barChartHeight*.90;
+    int xAxisLength = _screenWidth * .9;
+    int lineWidth = 2;
+    
+    //actually draw the xaxis and yaxis
+    UIView *xAxis = [[UIView alloc] initWithFrame:CGRectMake(xAxisX, xAxisY, xAxisLength, lineWidth)];
+    xAxis.backgroundColor = [UIColor blackColor];
+    xAxis.layer.masksToBounds = YES;
+    [self.view addSubview:xAxis];
+    UIView *yAxis = [[UIView alloc] initWithFrame:CGRectMake(xAxisX, _barChartHeight*.05, lineWidth, xAxisY*.95)];
+    yAxis.backgroundColor = [UIColor blackColor];
+    yAxis.layer.masksToBounds = YES;
+    [self.view addSubview:yAxis];
+    
+    
+    //Create the labels for the axes
+    UILabel *xAxisLabel = [[UILabel alloc] initWithFrame:CGRectMake(_screenWidth*.5-50,_barChartHeight*.95-11, 70, 20)];
+    xAxisLabel.text = @"Institution";
+    xAxisLabel.adjustsFontSizeToFitWidth = YES;
+    [self.view addSubview:xAxisLabel];
+    
+    UILabel *yAxisLabel = [[UILabel alloc] initWithFrame:CGRectMake(-30, _barChartHeight*.5, 70, 20)];
+    yAxisLabel.text = @"Cardinal Utility"; //TODO: we should think of a more user-friendly name for this axis
+    yAxisLabel.adjustsFontSizeToFitWidth = YES;
+    [yAxisLabel setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
+    [self.view addSubview:yAxisLabel];
+    
+    //determine the variables for the size of the working area of the bar chart
+    int barChartWidth = xAxisLength;
+    int barChartHeight = xAxisY*.95;
+    int barChartX = xAxisX;
+    int barChartY = _barChartHeight*.05;
+    int barSpacing = 8;
+    
+    //determine how wide the bars need to be
+    int barWidth = (barChartWidth-(barSpacing*[_orderedKeys count]))/[_orderedKeys count];
+    
+    //start drawing the bars!
+    UIView *barView;
+    int nextX = barChartX + barSpacing;
+    for (int i=0; i < [_orderedKeys count]; i++) {
+        //get the value of the institution and its corresponding bar chart height
+        NSString* stringValue = [_calculationResults objectForKey:[_orderedKeys objectAtIndex:i]];
+        float utility = [stringValue floatValue];
+        int barHeight = barChartHeight * utility;
+        if (barHeight==0) {
+            barHeight = barChartHeight * .01;
+        }
+        
+        //create the bar
+        barView = [[UIView alloc] initWithFrame:CGRectMake(nextX, barChartY+((barChartHeight-barChartY)-barHeight)+8, barWidth, barHeight)];
+        nextX = nextX + barWidth + barSpacing;
+        
+        //set its color
+        barView.backgroundColor = [_colors objectAtIndex:i];
+        
+        //add it to the view
+        [containerView addSubview:barView];
+    }
+    
+    return containerView;
 }
          
  - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row==0){
-        return 200;
+        return _barChartHeight;
     }
     else{
         return 45;
