@@ -265,7 +265,6 @@
     self.header.text = [NSString stringWithFormat:@"Enter missing data for '%@'",prefName];
     
     //set the input type based on the preference type
-    prefDecoded = @"religiousAffiliation"; //uncomment to see picker wheel
     [self setInputType:prefDecoded];
     //set the keys to update later
     [self translatePrefTypeToKeys:[[valuesDict valueForKeyPath:prefName] objectAtIndex:0]];
