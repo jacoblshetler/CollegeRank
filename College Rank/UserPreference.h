@@ -16,6 +16,7 @@
 
 }
 @property (nonatomic, retain) Preference* pref;
+@property (nonatomic, retain) NSMutableArray* missingInstData;
 @property bool locked;
 
 //index of the preferred list value in the Preference
@@ -23,6 +24,8 @@
 -(id) initWithPreference: (Preference*) preference andWeight: (float) wt;
 -(id) initWithPreference: (Preference*) preference andWeight: (float) wt andPrefVal: (int) value;
 -(id) initWithPreference:(Preference *)preference andPrefVal: (int) value;
+-(id) initWithPreference:(Preference *)preference andPrefVal: (int) value andMissingData: (NSMutableArray*) instData;
+
 -(void) setWeight:(float)wt;
 -(void) changeLock;
 -(bool) getLock;
@@ -31,5 +34,7 @@
 -(void) setPrefVal: (int) prf;
 -(NSString*) getName;
 -(Preference*) getPref;
+-(void) setMissingInstData:(NSMutableArray *)missingInstData;
+-(NSMutableArray*) getMissingInstData;
 
 @end

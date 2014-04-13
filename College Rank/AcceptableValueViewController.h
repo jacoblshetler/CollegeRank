@@ -10,10 +10,13 @@
 @class Preference;
 @interface AcceptableValueViewController : UIViewController<UIPickerViewDelegate>
 @property (nonatomic, retain) Preference* pref;
+@property (nonatomic, retain) UIButton* save;
+@property (nonatomic, retain) UIButton* cancel;
+@property (nonatomic, retain) UIButton* missingData;
+
 @property NSString* prefName;
 @property NSMutableArray* institutionsMissingData;
 
-- (IBAction)canceled:(id)sender;
 
 
 @end

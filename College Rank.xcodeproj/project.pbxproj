@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3628C84E18F4B0E10077145B /* pointer1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3628C84C18F4B0E10077145B /* pointer1.png */; };
-		3628C84F18F4B0E10077145B /* pointer2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3628C84D18F4B0E10077145B /* pointer2.png */; };
 		3659A79118D79DBB00E975E5 /* Preference.m in Sources */ = {isa = PBXBuildFile; fileRef = 3659A79018D79DBB00E975E5 /* Preference.m */; };
 		365A9CD518D7B18100978516 /* UserPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 365A9CD418D7B18100978516 /* UserPreference.m */; };
 		365A9CD818D7B4F000978516 /* PreferenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 365A9CD718D7B4F000978516 /* PreferenceManager.m */; };
@@ -56,7 +55,6 @@
 
 /* Begin PBXFileReference section */
 		3628C84C18F4B0E10077145B /* pointer1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pointer1.png; sourceTree = "<group>"; };
-		3628C84D18F4B0E10077145B /* pointer2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pointer2.png; sourceTree = "<group>"; };
 		3659A78F18D79DBB00E975E5 /* Preference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preference.h; sourceTree = "<group>"; };
 		3659A79018D79DBB00E975E5 /* Preference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preference.m; sourceTree = "<group>"; };
 		365A9CD318D7B18100978516 /* UserPreference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPreference.h; sourceTree = "<group>"; };
@@ -175,11 +173,11 @@
 				844E770818AD289100A6FC91 /* AppDelegate.m */,
 				844E770A18AD289100A6FC91 /* Main.storyboard */,
 				E30BB90F18D265B5001DFC05 /* Views */,
-				E3C5CD6B18CF68B800C5DBA2 /* Institution.h */,
 				84B9BD3718B2DC8700469696 /* Calculations.h */,
 				84B9BD3818B2DC8700469696 /* Calculations.m */,
 				3697488418B2DBCA001EE530 /* DataRetreiver.h */,
 				3697488518B2DBCA001EE530 /* DataRetreiver.m */,
+				E3C5CD6B18CF68B800C5DBA2 /* Institution.h */,
 				E3C5CD6C18CF68B800C5DBA2 /* Institution.m */,
 				8445148418D1FBB4000472DA /* InstitutionManager.h */,
 				8445148518D1FBB4000472DA /* InstitutionManager.m */,
@@ -242,7 +240,6 @@
 				36957ABF18F32ED50021814B /* AcceptableValueViewController.h */,
 				36957AC018F32ED50021814B /* AcceptableValueViewController.m */,
 				3628C84C18F4B0E10077145B /* pointer1.png */,
-				3628C84D18F4B0E10077145B /* pointer2.png */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -325,7 +322,6 @@
 			files = (
 				E3DB562B18F7929300128027 /* Colors.plist in Resources */,
 				84F0D37918F6E4E50081B855 /* nameToDataKeys.plist in Resources */,
-				3628C84F18F4B0E10077145B /* pointer2.png in Resources */,
 				8409E7DD18F749FB00A07BDA /* missingDataOptions.plist in Resources */,
 				8472BA0418E711720034C6D6 /* AcceptableValues.plist in Resources */,
 				844E771418AD289100A6FC91 /* Images.xcassets in Resources */,

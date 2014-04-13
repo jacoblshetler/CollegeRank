@@ -52,6 +52,20 @@
     return nil;
 }
 
+-(id) initWithPreference:(Preference *)preference andPrefVal: (int) value andMissingData: (NSMutableArray*) instData;
+{
+    self = [super init];
+    if (self)
+    {
+        self.missingInstData = instData;
+        self.pref = preference;
+        self.locked = false;
+        preferredPrefValue = value;
+        return self;
+    }
+    return nil;
+}
+
 -(void) setWeight:(float)wt
 {
     self->weight = wt;
@@ -90,6 +104,16 @@
 -(void) setPrefVal: (int) prf
 {
     preferredPrefValue = prf;
+}
+
+-(void) setMissingInstData:(NSMutableArray *)missingInstData
+{
+    _missingInstData = missingInstData;
+}
+
+-(NSMutableArray*) getMissingInstData
+{
+    return self.missingInstData;
 }
 
 @end

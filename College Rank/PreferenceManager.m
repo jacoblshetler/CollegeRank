@@ -81,6 +81,11 @@
     [self.userPrefs addObject:[[UserPreference alloc] initWithPreference:pref andPrefVal:prefVal]];
 }
 
+-(void) addUserPref:(Preference*) pref withAcceptableValue: (int) prefVal andMissingData: (NSMutableArray*) instData
+{
+    [self.userPrefs addObject:[[UserPreference alloc] initWithPreference:pref andPrefVal:prefVal andMissingData:instData]];
+}
+
 -(void) addPreferenceWithName: (NSString*) name andAcceptableValues: (NSArray*) vals
 {
     [self.allPrefs addObject:[[Preference alloc] initWithName:name andAcceptableValues:vals]];

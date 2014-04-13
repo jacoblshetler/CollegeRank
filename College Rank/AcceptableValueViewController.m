@@ -12,6 +12,9 @@
 #import "UserPreference.h"
 #import "InstitutionManager.h"
 #import "PreferenceManager.h"
+#import "MissingDataViewController.h"
+
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 /* NOTE:
     When seguing to this view controller, we need to set pref to whatever preference we want to be operating on.  We had to 
     do this in one of the homeworks.
@@ -31,9 +34,7 @@
 @property int lineHeight;
 @property int markerHeight;
 @property int markerWidth;
-
-@property (nonatomic, strong) NSMutableArray* imageArr;
-
+@property NSMutableArray* colorArr;
 @end
 
 @implementation AcceptableValueViewController
@@ -53,31 +54,47 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.imageArr = [[NSMutableArray alloc] init];
     self.lineX = self.view.bounds.size.width * .75;
     self.topLineY = self.view.bounds.size.height/5;
     self.lineHeight = self.view.bounds.size.height*.5;
     self.markerHeight = 30;
     self.markerWidth = 150;
+    self.colorArr = [[NSMutableArray alloc] init];
+    NSString* colorFile = [[NSBundle mainBundle] pathForResource: @"Colors" ofType: @"plist"];
+    NSArray* colorRGB = [[NSArray alloc] initWithContentsOfFile:colorFile];
+    CGFloat r, g, b;
+    for (NSArray* rgb in colorRGB) {
+        r = [[rgb objectAtIndex:0] floatValue]/255;
+        g = [[rgb objectAtIndex:1] floatValue]/255;
+        b = [[rgb objectAtIndex:2] floatValue]/255;
+        [self.colorArr addObject:[UIColor colorWithRed:r green:g blue:b alpha:1.0]];
+    }
+
+
 	// Do any additional setup after loading the view.
 }
 
--(UIImage*) drawText:(NSString*) text
-             inImage:(UIImage*)  image
-             atPoint:(CGPoint)   point
-{
+-(UIImage *)colorizeImage:(UIImage *)baseImage color:(UIColor *)theColor {
+    UIGraphicsBeginImageContext(baseImage.size);
     
-    //UIFont *font = [UIFont boldSystemFontOfSize:12];
-    UIGraphicsBeginImageContext(image.size);
-    [image drawInRect:CGRectMake(0,0,image.size.width,image.size.height)];
-    CGRect rect = CGRectMake(point.x, point.y, image.size.width, image.size.height);
-    [[UIColor whiteColor] set];
-    [text drawInRect:CGRectIntegral(rect) withAttributes:Nil];
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGRect area = CGRectMake(0, 0, baseImage.size.width, baseImage.size.height);
+    
+    CGContextScaleCTM(ctx, 1, -1);
+    CGContextTranslateCTM(ctx, 0, -area.size.height);
+    CGContextSaveGState(ctx);
+    CGContextClipToMask(ctx, area, baseImage.CGImage);
+    [theColor set];
+    CGContextFillRect(ctx, area);
+    CGContextRestoreGState(ctx);
+    CGContextSetBlendMode(ctx, kCGBlendModeMultiply);
+    CGContextDrawImage(ctx, area, baseImage.CGImage);
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
     return newImage;
 }
+
+
 
 
 - (void) handlePanGestures:(UIPanGestureRecognizer*)paramSender{
@@ -113,11 +130,38 @@
     [super viewDidAppear:animated];
     self.institutions = [InstitutionManager sharedInstance];
     self.preferences = [PreferenceManager sharedInstance];
-    [self.imageArr addObject:[UIImage imageNamed:@"pointer1.png"]];
-    [self.imageArr addObject:[UIImage imageNamed:@"pointer2.png"]];
-
     
+    /*Add the buttons at the bottom*/
     
+    //save button
+    self.save = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [self.save addTarget:self
+               action:@selector(save:)
+     forControlEvents:UIControlEventTouchUpInside];
+    [self.save setTitle:@"Save" forState:UIControlStateNormal];
+    self.save.frame = CGRectMake(10, self.view.bounds.size.height-40, 80, 40.0);
+    [self.view addSubview:self.save];
+    
+    //cancel button
+    self.cancel = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [self.cancel addTarget:self
+                  action:@selector(cancel:)
+        forControlEvents:UIControlEventTouchUpInside];
+    [self.cancel setTitle:@"Cancel" forState:UIControlStateNormal];
+    self.cancel.frame = CGRectMake(10, 20, 80, 40.0);
+    [self.view addSubview:self.cancel];
+    
+    //missing data (if data is missing)
+    if(self.institutionsMissingData != nil)
+    {
+        self.missingData = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [self.missingData addTarget:self
+                        action:@selector(missingData:)
+              forControlEvents:UIControlEventTouchUpInside];
+        [self.missingData setTitle:@"Missing Data" forState:UIControlStateNormal];
+        self.missingData.frame = CGRectMake(self.view.bounds.size.width-100, self.view.bounds.size.height - 40, 100, 40.0);
+        [self.view addSubview:self.missingData];
+    }
     self.pref = [self.preferences getPreferenceForString:self.prefName];
     
     //for testing
@@ -134,7 +178,7 @@
         self.isNull = true;
 #warning Change me to change the properties of the vertical line!
         //add the line to snap to
- 
+
         UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.lineX - self.markerHeight/2, self.topLineY - 20, 30, 20)];
         topLabel.text = @"Best";
         topLabel.adjustsFontSizeToFitWidth = YES;
@@ -151,9 +195,12 @@
         for(Institution *inst in [self.institutions getAllUserInstitutions])
         {
             CGRect boundingBox = CGRectMake(5, height, self.markerWidth, self.markerHeight);
-            UIImage* pointer = [self.imageArr objectAtIndex:i];
+            UIImage* basePoint = [UIImage imageNamed:@"pointer1.png"];
+            UIImage* pointer = [self colorizeImage:basePoint color:[self.colorArr objectAtIndex:i]];
             UIImageView* imgView = [[UIImageView alloc] initWithFrame:boundingBox];
-            [imgView setTintColor:[UIColor redColor]];
+            UILabel* textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.markerWidth - 10, self.markerHeight)];
+            textLabel.text = [inst name];
+            textLabel.adjustsFontSizeToFitWidth = YES;
             imgView.userInteractionEnabled=YES;
             UIPanGestureRecognizer* pan = [[UIPanGestureRecognizer alloc]
                                            initWithTarget:self action:@selector(handlePanGestures:)];
@@ -161,10 +208,11 @@
             pan.minimumNumberOfTouches = 1;
             [imgView addGestureRecognizer:pan];
             [imgView setImage:pointer];
-            imgView.image = [self drawText:[inst name]  inImage:imgView.image atPoint:CGPointMake(0, 0)];
+            [imgView addSubview:textLabel];
+            //imgView.image = [self drawText:[inst name]  inImage:imgView.image atPoint:CGPointMake(0, 0)];
             if([inst customValueForKey:[self.pref getName]] != nil)
             {
-                imgView.center = CGPointMake(self.lineX, self.topLineY + [[inst customValueForKey:[self.pref getName]] integerValue]);
+                imgView.center = CGPointMake(self.lineX - self.markerWidth/2, self.topLineY + [[inst customValueForKey:[self.pref getName]] integerValue]);
             }
             
             imgView.tag = i;
@@ -187,15 +235,32 @@
 }
 
 
-#warning IMPLEMENT AND TEST ME!!
--(void) save
+-(IBAction)save:(id)sender
 {
-    //make a new user preference
-    [self.preferences addUserPref:self.pref withAcceptableValue:self.pickerSelection];
-    
+    //if the user preference already exists, update the data
+    UserPreference* userPref = [self.preferences getUserPreferenceForString:self.prefName];
+    if(userPref != nil)
+    {
+        [userPref setPrefVal:self.pickerSelection];
+        [userPref setMissingInstData:self.institutionsMissingData];
+    }
+    else{
+        //make a new user preference with missing data (if there is missing data)
+
+        if(self.institutionsMissingData != nil)
+        {
+            [self.preferences addUserPref:self.pref withAcceptableValue:self.pickerSelection andMissingData:self.institutionsMissingData];
+
+        }
+        else
+        {
+            [self.preferences addUserPref:self.pref withAcceptableValue:self.pickerSelection];
+
+        }
+    }
     if(self.isNull)
     {
-        //if it is a custom
+        //if it is a custom, update the data in the institutions.  The userPrefence object has already been created.
         int i = 0;
         for(Institution* inst in [self.institutions getAllUserInstitutions])
         {
@@ -205,13 +270,31 @@
             }
             else
             {
-                [inst setValue:@"<null>" forKey:self.prefName];
+                [inst setValue:@"<null>" ForKeyInCustomDictionary:self.prefName];
             }
             
         }
     }
-    //Change to the new view
+    UITabBarController* back = [self.storyboard instantiateViewControllerWithIdentifier:@"TabBarView"];
+    [self presentViewController:back animated:YES completion:nil];
+    [back setSelectedIndex:1];
 
+}
+
+-(IBAction) cancel: (id) sender
+{
+    UITabBarController* back = [self.storyboard instantiateViewControllerWithIdentifier:@"TabBarView"];
+    [self presentViewController:back animated:YES completion:nil];
+    [back setSelectedIndex:1];
+}
+
+-(IBAction) missingData: (id) sender
+{
+    MissingDataViewController* missingData = [self.storyboard instantiateViewControllerWithIdentifier:@"MissingDataView"];
+    missingData.prefName = self.prefName;
+    missingData.missingInstitutions = self.institutionsMissingData;
+    [self presentViewController:missingData animated:YES completion:nil];
+    
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow: (NSInteger)row inComponent:(NSInteger)component {
