@@ -236,6 +236,7 @@
         if(text.tag ==1){
             text.delegate = self;
             
+            
             if (counter<[missingInstitutions count]) {
 #warning can't test the prepping of text fields until we get the edit functionality working.
                 [_arrayOfTextFields addObject:text];
@@ -335,6 +336,12 @@
             //if we're using a picker and need to translate what's in the text field
             if (!_usingKeyboard) {
                 updateString = [_translations objectAtIndex:[_choices indexOfObject:updateString]];
+            }
+            if ([curKey rangeOfString:@"sat_math"].location !=NSNotFound) { //store odd part in math
+                updateString = [NSString stringWithFormat:@"%f",ceil([updateString floatValue]/2)];
+            }
+            if ([curKey rangeOfString:@"sat_read"].location !=NSNotFound) { //store even part in read
+                updateString = [NSString stringWithFormat:@"%f",ceil([updateString intValue]/2)];
             }
             
             //update the value. don't have to worry about custom data, since customs won't ever come to this screen

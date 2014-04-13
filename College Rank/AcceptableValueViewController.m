@@ -54,9 +54,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.lineX = self.view.bounds.size.width * .75;
+    self.lineX = self.view.bounds.size.width * .9;
     self.topLineY = self.view.bounds.size.height/5;
-    self.lineHeight = self.view.bounds.size.height*.5;
+    self.lineHeight = self.view.bounds.size.height*.6;
     self.markerHeight = 30;
     self.markerWidth = 150;
     self.colorArr = [[NSMutableArray alloc] init];
@@ -171,6 +171,7 @@
     if(self.pref == nil)
     {
         [self.preferences addPreferenceWithName:self.prefName andAcceptableValues:nil];
+        self.pref = [self.preferences getPreferenceForString:self.prefName];
     }
     if(self.pref.acceptableValues == nil)
     {
@@ -190,13 +191,13 @@
         [self.view addSubview:topLabel];
         //add the markers
         int height = self.view.bounds.size.height/5;
-        int i = 0;
+        int i = 1;
 
         for(Institution *inst in [self.institutions getAllUserInstitutions])
         {
             CGRect boundingBox = CGRectMake(5, height, self.markerWidth, self.markerHeight);
             UIImage* basePoint = [UIImage imageNamed:@"pointer1.png"];
-            UIImage* pointer = [self colorizeImage:basePoint color:[self.colorArr objectAtIndex:i]];
+            UIImage* pointer = [self colorizeImage:basePoint color:[self.colorArr objectAtIndex:i-1]];
             UIImageView* imgView = [[UIImageView alloc] initWithFrame:boundingBox];
             UILabel* textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.markerWidth - 10, self.markerHeight)];
             textLabel.text = [inst name];
@@ -209,8 +210,7 @@
             [imgView addGestureRecognizer:pan];
             [imgView setImage:pointer];
             [imgView addSubview:textLabel];
-            //imgView.image = [self drawText:[inst name]  inImage:imgView.image atPoint:CGPointMake(0, 0)];
-            if([inst customValueForKey:[self.pref getName]] != nil)
+            if([inst customValueForKey:[self.pref getName]] != nil && ![[inst customValueForKey:[self.pref getName]] isEqualToString:@"<null>"])
             {
                 imgView.center = CGPointMake(self.lineX - self.markerWidth/2, self.topLineY + [[inst customValueForKey:[self.pref getName]] integerValue]);
             }
@@ -255,16 +255,17 @@
         else
         {
             [self.preferences addUserPref:self.pref withAcceptableValue:self.pickerSelection];
-
         }
     }
     if(self.isNull)
     {
         //if it is a custom, update the data in the institutions.  The userPrefence object has already been created.
-        int i = 0;
+        int i = 1;
         for(Institution* inst in [self.institutions getAllUserInstitutions])
         {
-            if([self.view viewWithTag:i].center.x == self.lineX - self.markerWidth/2)
+            NSLog(@"Name: %@", [inst name]);
+
+            if([self.view viewWithTag:i].frame.origin.x != 5)
             {
                 [inst setValue:[NSString stringWithFormat:@"%f", [self.view viewWithTag:i].center.y - self.topLineY] ForKeyInCustomDictionary:self.prefName];
             }
@@ -272,6 +273,7 @@
             {
                 [inst setValue:@"<null>" ForKeyInCustomDictionary:self.prefName];
             }
+            i++;
             
         }
     }

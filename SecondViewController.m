@@ -46,6 +46,10 @@
     [super viewDidLoad];
     _institutions = [InstitutionManager sharedInstance];
     _preferences = [PreferenceManager sharedInstance];
+    for(UserPreference* pref in [_preferences getAllUserPrefs])
+    {
+        NSLog(@"%@", [pref getName]);
+    }
     //[self canGoToTabs];
     
     _chartHeight = 200;
@@ -215,6 +219,7 @@
             [self presentViewController:missingData animated:YES completion:nil];
         } else {
             AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
+            //userPrefView.prefName = @"CustomPref";
             userPrefView.prefName = entry;
             [self presentViewController:userPrefView animated:YES completion:nil];
         }
