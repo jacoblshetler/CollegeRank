@@ -21,8 +21,11 @@
 @property PreferenceManager* preferences;
 @property NSArray* searchResults;
 @property NSArray* colors;
+@property int chartHeight;
+@property int screenWidth;
 
 - (void) preferenceNavigate: (NSIndexPath *) indexPath;
+-(UIImage*) drawPieChart:(NSArray*) weights;
 
 @end
 
@@ -44,6 +47,9 @@
     _institutions = [InstitutionManager sharedInstance];
     _preferences = [PreferenceManager sharedInstance];
     //[self canGoToTabs];
+    
+    _chartHeight = 200;
+    _screenWidth = self.view.frame.size.width;
     
     NSString* colorFile = [[NSBundle mainBundle] pathForResource: @"Colors" ofType: @"plist"];
     NSArray* colorRGB = [[NSArray alloc] initWithContentsOfFile:colorFile];
@@ -150,9 +156,12 @@
         cell.textLabel.text = usrPref.pref.name;
     } else {
         if (indexPath.row == 0) {
-            cell.textLabel.text = @"";
+            NSArray* weights = @[@.3,@.4,@.3];
+            UIImageView* pieChart = [[UIImageView alloc] initWithImage:[self drawPieChart:weights]];
+            [cell.contentView addSubview:pieChart];
         } else if (indexPath.row == 1) {
             UISlider* slider = [UISlider new];
+            //[slider addTarget:self action:@selector(sliderTouchDragInsideAction:) forControlEvents:UIControlEventTouchDragInside];
             [cell.contentView addSubview:slider];
             slider.bounds = CGRectMake(0, 0, cell.contentView.bounds.size.width - 30, slider.bounds.size.height);
             slider.center = CGPointMake(CGRectGetMidX(cell.contentView.bounds), CGRectGetMidY(cell.contentView.bounds));
@@ -165,6 +174,8 @@
     }
     return cell;
 }
+
+
 #pragma Selection
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -186,7 +197,7 @@
 
 - (void) preferenceNavigate: (NSIndexPath *) indexPath
 {
-#warning certain preferences aren't being selected
+#warning need to hide selected preferences
     NSString *values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
     NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
     
@@ -222,7 +233,15 @@
     }
 }
 
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row==0 && tableView != self.searchDisplayController.searchResultsTableView){
+        return _chartHeight;
+    }
+    else{
+        return 45;
+    }
+}
 
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -240,6 +259,43 @@
     }   
 }
 
+-(UIImage*) drawPieChart:(NSArray*) weights
+{
+    //Get image size and location
+    CGFloat width = _screenWidth;
+    CGFloat height = _chartHeight;
+    CGFloat radius = MIN(width, height)/2.1;
+    CGPoint center = CGPointMake(width/2, height/2);
+    
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(width, height), FALSE, 1.f);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
+    
+    //Create the bezier path for each wedge
+    CGFloat startAngle = 3*M_PI/2.0;
+    for (int i=0; i < [weights count]; i++)
+    {
+        CGContextSetFillColorWithColor(context, [[_colors objectAtIndex:i] CGColor]);
+        
+        //Draw Wedge
+        UIBezierPath *wedge = [UIBezierPath bezierPath];
+        wedge.lineWidth = 2;
+        
+        [wedge moveToPoint:center];
+        CGFloat endAngle = startAngle + 2*M_PI*[[weights objectAtIndex:i] floatValue];
+        [wedge addArcWithCenter:center radius:radius startAngle:startAngle endAngle:endAngle clockwise:YES];
+        startAngle = endAngle;
+        [wedge closePath];
+        
+        [wedge fill];
+        [wedge stroke];
+    }
+    
+    UIImage *bezierImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return bezierImage;
+}
 
 /*
 // Override to support rearranging the table view.

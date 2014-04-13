@@ -29,7 +29,9 @@
 -(UserPreference*) getUserPreferenceForString: (NSString*) name;
 -(Preference*) getPreferenceForString: (NSString*) name;
 -(NSMutableArray*) getAllPrefNames;
+-(NSMutableArray*) getAllPrefWeights;
 -(BOOL) canGoToRank;
+#warning needs a removePreference function
 
 
 

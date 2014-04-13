@@ -15,7 +15,7 @@
 @property NSMutableDictionary* calculationResults;
 @property NSArray* orderedKeys;
 @property NSArray* colors;
-@property int barChartHeight;
+@property int chartHeight;
 @property int screenWidth;
 
 @end
@@ -36,8 +36,9 @@
 {
     [super viewDidLoad];
     //define the height of the barchart and the width of the screen
-    _barChartHeight = 200;
-    _screenWidth = 320;
+    _chartHeight = 200;
+#warning we should have this update when the screen is rotated
+    _screenWidth = self.view.frame.size.width;
     
     //load in the colors
     NSString* colorFile = [[NSBundle mainBundle] pathForResource: @"Colors" ofType: @"plist"];
@@ -122,11 +123,11 @@
 
 - (UIView*) createBarChart{
     //create the UIView to contain everything else
-    UIView* containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _screenWidth, _barChartHeight)];
+    UIView* containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _screenWidth, _chartHeight)];
     
     //create the x-axis and y-axis variables
     int xAxisX = _screenWidth * .05;
-    int xAxisY = _barChartHeight*.90;
+    int xAxisY = _chartHeight*.90;
     int xAxisLength = _screenWidth * .9;
     int lineWidth = 2;
     
@@ -135,19 +136,19 @@
     xAxis.backgroundColor = [UIColor blackColor];
     xAxis.layer.masksToBounds = YES;
     [self.view addSubview:xAxis];
-    UIView *yAxis = [[UIView alloc] initWithFrame:CGRectMake(xAxisX, _barChartHeight*.05, lineWidth, xAxisY*.95)];
+    UIView *yAxis = [[UIView alloc] initWithFrame:CGRectMake(xAxisX, _chartHeight*.05, lineWidth, xAxisY*.95)];
     yAxis.backgroundColor = [UIColor blackColor];
     yAxis.layer.masksToBounds = YES;
     [self.view addSubview:yAxis];
     
     
     //Create the labels for the axes
-    UILabel *xAxisLabel = [[UILabel alloc] initWithFrame:CGRectMake(_screenWidth*.5-50,_barChartHeight*.95-11, 70, 20)];
+    UILabel *xAxisLabel = [[UILabel alloc] initWithFrame:CGRectMake(_screenWidth*.5-50,_chartHeight*.95-11, 70, 20)];
     xAxisLabel.text = @"Institution";
     xAxisLabel.adjustsFontSizeToFitWidth = YES;
     [self.view addSubview:xAxisLabel];
     
-    UILabel *yAxisLabel = [[UILabel alloc] initWithFrame:CGRectMake(-30, _barChartHeight*.5, 70, 20)];
+    UILabel *yAxisLabel = [[UILabel alloc] initWithFrame:CGRectMake(-30, _chartHeight*.5, 70, 20)];
     yAxisLabel.text = @"Cardinal Utility"; //TODO: we should think of a more user-friendly name for this axis
     yAxisLabel.adjustsFontSizeToFitWidth = YES;
     [yAxisLabel setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
@@ -155,9 +156,9 @@
     
     //determine the variables for the size of the working area of the bar chart
     int barChartWidth = xAxisLength;
-    int barChartHeight = xAxisY*.95;
+    int chartHeight = xAxisY*.95;
     int barChartX = xAxisX;
-    int barChartY = _barChartHeight*.05;
+    int barChartY = _chartHeight*.05;
     int barSpacing = 8;
     
     //determine how wide the bars need to be
@@ -170,13 +171,13 @@
         //get the value of the institution and its corresponding bar chart height
         NSString* stringValue = [_calculationResults objectForKey:[_orderedKeys objectAtIndex:i]];
         float utility = [stringValue floatValue];
-        int barHeight = barChartHeight * utility;
+        int barHeight = chartHeight * utility;
         if (barHeight==0) {
-            barHeight = barChartHeight * .01;
+            barHeight = chartHeight * .01;
         }
         
         //create the bar
-        barView = [[UIView alloc] initWithFrame:CGRectMake(nextX, barChartY+((barChartHeight-barChartY)-barHeight)+8, barWidth, barHeight)];
+        barView = [[UIView alloc] initWithFrame:CGRectMake(nextX, barChartY+((chartHeight-barChartY)-barHeight)+8, barWidth, barHeight)];
         nextX = nextX + barWidth + barSpacing;
         
         //set its color
@@ -192,7 +193,7 @@
  - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row==0){
-        return _barChartHeight;
+        return _chartHeight;
     }
     else{
         return 45;

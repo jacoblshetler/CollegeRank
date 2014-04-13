@@ -132,6 +132,7 @@
 
 -(NSMutableArray*) getAllPrefNames
 {
+#warning does not include the name of custom preferences!
     NSMutableArray* tempArr = [NSMutableArray new];
     for(Preference *curPref in self.allPrefs)
     {
@@ -139,5 +140,16 @@
     }
     return tempArr;
 }
+
+-(NSMutableArray*) getAllPrefWeights
+{
+    NSMutableArray* tempArr = [NSMutableArray new];
+    for(UserPreference *curPref in self.userPrefs)
+    {
+        [tempArr addObject:[NSNumber numberWithFloat:[curPref getWeight]]];
+    }
+    return tempArr;
+}
+
 
 @end
