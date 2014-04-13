@@ -144,19 +144,21 @@
     
     //Create the labels for the axes
     UILabel *xAxisLabel = [[UILabel alloc] initWithFrame:CGRectMake(_screenWidth*.5-50,_chartHeight*.95-11, 70, 20)];
-    xAxisLabel.text = @"Institution";
+    xAxisLabel.text = @"Colleges";
     xAxisLabel.adjustsFontSizeToFitWidth = YES;
     [self.view addSubview:xAxisLabel];
     
+    /*
     UILabel *yAxisLabel = [[UILabel alloc] initWithFrame:CGRectMake(-30, _chartHeight*.5, 70, 20)];
     yAxisLabel.text = @"Cardinal Utility"; //TODO: we should think of a more user-friendly name for this axis
     yAxisLabel.adjustsFontSizeToFitWidth = YES;
     [yAxisLabel setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
     [self.view addSubview:yAxisLabel];
-    
+    */
+     
     //determine the variables for the size of the working area of the bar chart
     int barChartWidth = xAxisLength;
-    int chartHeight = xAxisY*.95;
+    int barChartHeight = xAxisY*.95;
     int barChartX = xAxisX;
     int barChartY = _chartHeight*.05;
     int barSpacing = 8;
@@ -167,17 +169,24 @@
     //start drawing the bars!
     UIView *barView;
     int nextX = barChartX + barSpacing;
+    int firstHeight = 0;
     for (int i=0; i < [_orderedKeys count]; i++) {
         //get the value of the institution and its corresponding bar chart height
         NSString* stringValue = [_calculationResults objectForKey:[_orderedKeys objectAtIndex:i]];
         float utility = [stringValue floatValue];
-        int barHeight = chartHeight * utility;
+        int barHeight = barChartHeight * utility;
         if (barHeight==0) {
-            barHeight = chartHeight * .01;
+            barHeight = barChartHeight * .01;
+        }
+        if (firstHeight==0) {
+            firstHeight=barHeight;
         }
         
+        //make the first height the total height and scale all others accordingly
+        barHeight = (float)barHeight * ((float)barChartHeight/(float)firstHeight);
+        
         //create the bar
-        barView = [[UIView alloc] initWithFrame:CGRectMake(nextX, barChartY+((chartHeight-barChartY)-barHeight)+8, barWidth, barHeight)];
+        barView = [[UIView alloc] initWithFrame:CGRectMake(nextX, barChartY+((barChartHeight-barChartY)-barHeight)+8, barWidth, barHeight)];
         nextX = nextX + barWidth + barSpacing;
         
         //set its color
