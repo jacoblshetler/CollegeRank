@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "DataRetreiver.h"
 #import "PreferenceManager.h"
+#import "UserPreference.h"
 #import "InstitutionManager.h"
 #import "Calculations.h"
 
@@ -25,8 +26,15 @@
     [testInst addInstitution:[[testInst searchInstitutions:@"Goshen"] objectAtIndex:0]];
     [testInst addInstitution:[[testInst searchInstitutions:@"System"] objectAtIndex:0]];
     
-    [testPref addUserPref:[testPref getPreferenceAtIndex:1] withWeight:.5 andPrefVal:1];
-    [testPref addUserPref:[testPref getPreferenceAtIndex:2] withWeight:.5 andPrefVal:1];
+    [testPref addUserPref:[testPref getPreferenceAtIndex:1] withWeight:.3 andPrefVal:1];
+    [testPref addUserPref:[testPref getPreferenceAtIndex:2] withWeight:.3 andPrefVal:1];
+    [testPref addUserPref:[testPref getPreferenceAtIndex:3] withWeight:.4 andPrefVal:1];
+    //[[[testPref userPrefs] objectAtIndex:2] changeLock];
+    //[[[testPref userPrefs] objectAtIndex:1] changeLock];
+    
+    
+    //updateWeights(0, .4);
+    //NSLog(@"%f",[[[testPref userPrefs] objectAtIndex:1] getWeight]);
     
     /*
     NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"(^1600$|^(1?[0-5]?|[0-9]?)[0-9]?[0-9]$)" options:0 error:nil];

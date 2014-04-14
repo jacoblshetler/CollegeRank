@@ -9,10 +9,11 @@
 #import "SecondViewController.h"
 #import "InstitutionManager.h"
 #import "PreferenceManager.h"
+#import "Calculations.h"
 #import "UserPreference.h"
 #import "Preference.h"
 #import "DataRetreiver.h"
-#import "MissingDataViewController.h"
+#import "MissingDataViewController.h"//Do we need these two?
 #import "AcceptableValueViewController.h"
 
 @interface SecondViewController ()
@@ -208,7 +209,10 @@
         //[self.tableView reloadData]; Run from Save button
         //[self canGoToTabs]; Run from Save button
     } else if (indexPath.row >= 2) {
+        NSArray* range = weightToWorkWith(indexPath.row - 2);
         _slider.value = [[[_preferences userPrefs] objectAtIndex:indexPath.row - 2] getWeight];
+        _slider.minimumValue = [[range objectAtIndex:0] floatValue];
+        _slider.maximumValue = [[range objectAtIndex:1] floatValue];
     }
 }
 
@@ -242,15 +246,21 @@
 {
     //Check if a Preference is selected, if one isn't, select one.
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-    if (indexPath == nil) {
-        NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:[[_preferences userPrefs] count]+1 inSection:0];
+    if (indexPath == nil || indexPath.row < 2) {
+        indexPath = [NSIndexPath indexPathForRow:[[_preferences userPrefs] count]+1 inSection:0];
         [self.tableView
-         selectRowAtIndexPath:newIndexPath
+         selectRowAtIndexPath:indexPath
          animated:NO
-         scrollPosition:UITableViewScrollPositionNone
-         ];
+         scrollPosition:UITableViewScrollPositionNone];
     }
+    //Update Weights
+    updateWeights(indexPath.row - 2, _slider.value);
     
+    //Update Pie Chart
+    NSArray* weights = [_preferences getAllPrefWeights];
+    NSIndexPath *chartPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [[[[[self.tableView cellForRowAtIndexPath:0] contentView] subviews] objectAtIndex:0] setImage:[self drawPieChart:weights]];
+    [self.tableView reloadRowsAtIndexPaths:@[chartPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 -(UIImage*) drawPieChart:(NSArray*) weights

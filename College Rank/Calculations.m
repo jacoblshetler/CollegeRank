@@ -108,9 +108,8 @@ double geoDistance(NSString * zip1, NSString * zip2){
 #pragma mark - Weight Calculations
 #warning Need to test all weight manipulators.
 
-//Function to update the weights in the PreferenceManager for the UserPrefs.
-//Will be called with the index of the preference to update in UserPrefs along
-//with the new weight for that preference.
+
+/*
 void updateWeights(int index, float newWeight){
     PreferenceManager *prefMan = [PreferenceManager sharedInstance];
     NSMutableArray* userPrefs = [prefMan getAllUserPrefs];
@@ -141,7 +140,42 @@ void updateWeights(int index, float newWeight){
     
     //set the user preferences in the preference manager
     prefMan.userPrefs = newPrefs;
+}*/
+
+//Function to update the weights in the PreferenceManager for the UserPrefs.
+//Will be called with the index of the preference to update in UserPrefs along
+//with the new weight for that preference.
+void updateWeights(int index, float newWeight)
+{
+    PreferenceManager *prefMan = [PreferenceManager sharedInstance];
+    NSMutableArray* userPrefs = [prefMan getAllUserPrefs];
+    
+    //Search for unlocked preferences
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"getLock == No"];
+    NSArray* unlockedPrefs = [userPrefs filteredArrayUsingPredicate:resultPredicate];
+    CGFloat totalChangeableSpace = [[unlockedPrefs valueForKeyPath:@"@sum.getWeight"] floatValue];
+    CGFloat oldWeight = [[userPrefs objectAtIndex:index] getWeight];
+    
+    //Warning, if there is no room for editing
+    if (totalChangeableSpace <= oldWeight) {
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"All Preferences Locked" message:@"You need to unlock some of your preferences to have space to edit more." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert setAlertViewStyle:UIAlertViewStyleDefault];
+        [alert show];
+    }else {
+        //Calculate new wieghts
+        for (UserPreference* uP in unlockedPrefs)
+        {
+            if (uP != [userPrefs objectAtIndex:index]) {
+                CGFloat curWeight = [uP getWeight];
+                CGFloat update = (totalChangeableSpace-newWeight)*(curWeight/(totalChangeableSpace-oldWeight));
+                [uP setWeight:update];
+            }
+        }
+        [[userPrefs objectAtIndex:index] setWeight:newWeight];
+    }
 }
+
+#warning need to check "add new weight"
 
 //function will calculate the range of how much weight a certain preference
 //has to work with in the pie chart. The range of weights is between 0 and 1,
