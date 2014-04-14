@@ -214,6 +214,7 @@ NSArray * weightToWorkWith(int index){
 //Pre-Condition 1: New Preference must be added to the PreferenceManager
 //Pre-Condition 2: New Preference's weight must be set as "unlocked"
 //Pre-Condition 3: New Preference's weight must be 0.0
+/*
 void setANewWeight(int justAddedIndex){
     //find total unlocked area
     PreferenceManager *prefMan = [PreferenceManager sharedInstance];
@@ -243,8 +244,30 @@ void setANewWeight(int justAddedIndex){
             [curPref setWeight:(oldWeight-subtractWeight)];
         }
     }
-}
+}*/
 
+//Calculates the weight for a new preference. Returns the weight as a float
+//Pre-Condition: New Preference must be added to the PreferenceManager
+void updateWeightsForNewPreference()
+{
+    PreferenceManager *prefMan = [PreferenceManager sharedInstance];
+    NSMutableArray* userPrefs = [prefMan getAllUserPrefs];
+    int prefCount = [userPrefs count];
+    
+    CGFloat newWeight = 1.0/prefCount;
+    UserPreference* newPref = [userPrefs objectAtIndex:prefCount-1];
+    
+    //Calculate new wieghts
+    for (UserPreference* uP in userPrefs)
+    {
+        if (uP != newPref) {
+            CGFloat curWeight = [uP getWeight];
+            CGFloat update = (1-newWeight)*(curWeight);
+            [uP setWeight:update];
+        }
+    }
+    [newPref setWeight:newWeight];
+}
 #pragma mark - Null Manipulations
 
 NSMutableDictionary * takeOutNulls(NSMutableArray* inArray){

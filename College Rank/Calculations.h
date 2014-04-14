@@ -81,5 +81,6 @@ NSMutableArray * normalizeFromContinuum(NSMutableArray * yValues);
  Index of the newly added UserPreference in the list of UserPrefs in the PreferenceManager
  @return None.
  */
-void setANewWeight(int justAddedIndex);
+//void setANewWeight(int justAddedIndex);
+void updateWeightsForNewPreference();
 

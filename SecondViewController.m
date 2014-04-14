@@ -106,8 +106,9 @@
     //If the user has not entered anything, show all the possible results
     if ([searchText isEqualToString:@"\n"])
     {
-#warning needs to filter already selected results
-        _searchResults = [_preferences getAllPrefNames];
+        NSArray* userPrefNames = [[_preferences userPrefs] valueForKeyPath:@"@unionOfObjects.getName"];
+        NSPredicate *memberPredicate = [NSPredicate predicateWithFormat:@"NOT (Self IN %@)",userPrefNames];
+        _searchResults = [[_preferences getAllPrefNames] filteredArrayUsingPredicate:memberPredicate];
     } else
     {
         NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"Self contains[c] %@", searchText];
@@ -224,21 +225,17 @@
     NSString *entry = [_searchResults objectAtIndex:[indexPath row]];
     NSString *entryDecoded = [[valuesDict valueForKeyPath:entry] objectAtIndex:0];
     
-    NSPredicate *memberPredicate = [NSPredicate predicateWithFormat:@"name matches %@", entry];
-    if ([[[_preferences userPrefs] filteredArrayUsingPredicate:memberPredicate] count] < 1) {
-    
-        NSMutableArray * missingDataInst = [_institutions getMissingDataInstitutionsForPreference:entryDecoded];
-        if ([missingDataInst count]!= 0) {
-            MissingDataViewController* missingData = [self.storyboard instantiateViewControllerWithIdentifier:@"MissingDataView"];
-            missingData.prefName = entry;
-            missingData.missingInstitutions = missingDataInst;
-            [self presentViewController:missingData animated:YES completion:nil];
-        } else {
-            AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
-            //userPrefView.prefName = @"CustomPref";
-            userPrefView.prefName = entry;
-            [self presentViewController:userPrefView animated:YES completion:nil];
-        }
+    NSMutableArray * missingDataInst = [_institutions getMissingDataInstitutionsForPreference:entryDecoded];
+    if ([missingDataInst count]!= 0) {
+        MissingDataViewController* missingData = [self.storyboard instantiateViewControllerWithIdentifier:@"MissingDataView"];
+        missingData.prefName = entry;
+        missingData.missingInstitutions = missingDataInst;
+        [self presentViewController:missingData animated:YES completion:nil];
+    } else {
+        AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
+        //userPrefView.prefName = @"CustomPref";
+        userPrefView.prefName = entry;
+        [self presentViewController:userPrefView animated:YES completion:nil];
     }
 }
 #pragma Pie Chart and Controllers

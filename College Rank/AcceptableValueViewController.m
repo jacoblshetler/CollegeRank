@@ -256,6 +256,7 @@
         {
             [self.preferences addUserPref:self.pref withAcceptableValue:self.pickerSelection];
         }
+        updateWeightsForNewPreference();
     }
     if(self.isNull)
     {
