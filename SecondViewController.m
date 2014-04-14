@@ -31,6 +31,8 @@
 - (void) preferenceNavigate: (NSIndexPath *) indexPath;
 -(UIImage*) drawPieChart:(NSArray*) weights;
 - (IBAction)sliderDragAction:(id)sender;
+- (IBAction)lockPressAction:(id)sender;
+- (void)buttonImage:(BOOL)lockState;
 
 @end
 
@@ -79,12 +81,16 @@
     _slider.center = CGPointMake((_screenWidth/2)*.7 + 15, _cellHeight/2);
     _slider.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     
-
+    //Define UIButton
+    _button = [UIButton new];
+    [_button addTarget:self action:@selector(lockPressAction:) forControlEvents:UIControlEventTouchUpInside];
+    _button.bounds = CGRectMake(0,0, _slider.bounds.size.height,_slider.bounds.size.height);
+    _button.center = CGPointMake(_screenWidth - (_slider.bounds.size.height/2 + 15), _cellHeight/2);
+    _button.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    [self buttonImage:FALSE];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
  
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // Display an Edit button in the navigation bar for this view controller.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 }
 
@@ -183,6 +189,7 @@
             [cell.contentView addSubview:pieChart];
         } else if (indexPath.row == 1) {
             [cell.contentView addSubview:_slider];
+            [cell.contentView addSubview:_button];
         } else {
             UserPreference* usrPref = [[_preferences userPrefs] objectAtIndex:indexPath.row - 2];
             cell.textLabel.text = usrPref.pref.name;
@@ -210,10 +217,14 @@
         //[self.tableView reloadData]; Run from Save button
         //[self canGoToTabs]; Run from Save button
     } else if (indexPath.row >= 2) {
+        //Update slider data and lock button to match data for select preference
         NSArray* range = weightToWorkWith(indexPath.row - 2);
-        _slider.value = [[[_preferences userPrefs] objectAtIndex:indexPath.row - 2] getWeight];
+        UserPreference* selectedPref = [[_preferences userPrefs] objectAtIndex:indexPath.row - 2];
+        _slider.value = [selectedPref getWeight];
         _slider.minimumValue = [[range objectAtIndex:0] floatValue];
         _slider.maximumValue = [[range objectAtIndex:1] floatValue];
+        
+        [self buttonImage:[selectedPref getLock]];
     }
 }
 
@@ -254,10 +265,36 @@
     updateWeights(indexPath.row - 2, _slider.value);
     
     //Update Pie Chart
-    NSArray* weights = [_preferences getAllPrefWeights];
     NSIndexPath *chartPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [[[[[self.tableView cellForRowAtIndexPath:0] contentView] subviews] objectAtIndex:0] setImage:[self drawPieChart:weights]];
     [self.tableView reloadRowsAtIndexPaths:@[chartPath] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+- (IBAction)lockPressAction:(id)sender
+{
+    NSLog(@"Pressed");
+    //Check if a Preference is selected, if one isn't, select one.
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    if (indexPath == nil || indexPath.row < 2) {
+        indexPath = [NSIndexPath indexPathForRow:[[_preferences userPrefs] count]+1 inSection:0];
+        [self.tableView
+         selectRowAtIndexPath:indexPath
+         animated:NO
+         scrollPosition:UITableViewScrollPositionNone];
+    }
+    //Update Preference Lock
+    UserPreference* selectedPref = [[_preferences userPrefs] objectAtIndex:indexPath.row - 2];
+    [selectedPref changeLock];
+    [self buttonImage:[selectedPref getLock]];
+}
+
+//Returns locked image if the input is true, otherwise an unlocked image
+- (void)buttonImage:(BOOL)lockState
+{
+    if (lockState) {
+        [_button setImage:[UIImage imageNamed:@"lockImage"] forState:UIControlStateNormal];
+    }else {
+        [_button setImage:[UIImage imageNamed:@"unlockImage"] forState:UIControlStateNormal];
+    }
 }
 
 -(UIImage*) drawPieChart:(NSArray*) weights
