@@ -19,13 +19,17 @@
 
 @property InstitutionManager* institutions;
 @property PreferenceManager* preferences;
+@property UISlider* slider;
+@property UIButton* button;
 @property NSArray* searchResults;
 @property NSArray* colors;
 @property int chartHeight;
+@property int cellHeight;
 @property int screenWidth;
 
 - (void) preferenceNavigate: (NSIndexPath *) indexPath;
 -(UIImage*) drawPieChart:(NSArray*) weights;
+- (IBAction)sliderDragAction:(id)sender;
 
 @end
 
@@ -46,15 +50,14 @@
     [super viewDidLoad];
     _institutions = [InstitutionManager sharedInstance];
     _preferences = [PreferenceManager sharedInstance];
-    for(UserPreference* pref in [_preferences getAllUserPrefs])
-    {
-        NSLog(@"%@", [pref getName]);
-    }
     //[self canGoToTabs];
     
+    //Define graphic dimensions
     _chartHeight = 200;
+    _cellHeight = 45;
     _screenWidth = self.view.frame.size.width;
     
+    //Define Graphic Colors
     NSString* colorFile = [[NSBundle mainBundle] pathForResource: @"Colors" ofType: @"plist"];
     NSArray* colorRGB = [[NSArray alloc] initWithContentsOfFile:colorFile];
     
@@ -68,7 +71,15 @@
     }
     _colors = [[NSArray alloc] initWithArray:tempArray];
 
+    //Define UISlider
+    _slider = [UISlider new];
+    [_slider addTarget:self action:@selector(sliderDragAction:) forControlEvents:UIControlEventTouchDragInside];
+    _slider.bounds = CGRectMake(0, 0, _screenWidth*.7, _slider.bounds.size.height);
+    _slider.center = CGPointMake((_screenWidth/2)*.7 + 15, _cellHeight/2);
+    _slider.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    
 
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -85,14 +96,16 @@
 #pragma mark - Search Results
 
 - (void) searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller {
-    
+    //Inserts a carriage return to activate the UISearchDisplayController
     self.searchDisplayController.searchBar.text = @"\n";
 }
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
+    //If the user has not entered anything, show all the possible results
     if ([searchText isEqualToString:@"\n"])
     {
+#warning needs to filter already selected results
         _searchResults = [_preferences getAllPrefNames];
     } else
     {
@@ -101,13 +114,16 @@
     }
 }
 
--(void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView {
+-(void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView
+{
+    //Inserts a carriage return to activate the UISearchDisplayController after user cancels the results
     self.searchDisplayController.searchBar.text = @"\n";
 }
 
 
 -(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
+    //If the search was activated with carriage return, remove it so the user input is not skewed
     if ([searchString isEqualToString:@"\n"])
     {
         self.searchDisplayController.searchBar.text = @"";
@@ -160,16 +176,11 @@
         cell.textLabel.text = usrPref.pref.name;
     } else {
         if (indexPath.row == 0) {
-            NSArray* weights = @[@.3,@.4,@.3];
+            NSArray* weights = [_preferences getAllPrefWeights];
             UIImageView* pieChart = [[UIImageView alloc] initWithImage:[self drawPieChart:weights]];
             [cell.contentView addSubview:pieChart];
         } else if (indexPath.row == 1) {
-            UISlider* slider = [UISlider new];
-            //[slider addTarget:self action:@selector(sliderTouchDragInsideAction:) forControlEvents:UIControlEventTouchDragInside];
-            [cell.contentView addSubview:slider];
-            slider.bounds = CGRectMake(0, 0, cell.contentView.bounds.size.width - 30, slider.bounds.size.height);
-            slider.center = CGPointMake(CGRectGetMidX(cell.contentView.bounds), CGRectGetMidY(cell.contentView.bounds));
-            slider.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+            [cell.contentView addSubview:_slider];
         } else {
             UserPreference* usrPref = [[_preferences userPrefs] objectAtIndex:indexPath.row - 2];
             cell.textLabel.text = usrPref.pref.name;
@@ -196,12 +207,13 @@
         [self preferenceNavigate:indexPath];
         //[self.tableView reloadData]; Run from Save button
         //[self canGoToTabs]; Run from Save button
+    } else if (indexPath.row >= 2) {
+        _slider.value = [[[_preferences userPrefs] objectAtIndex:indexPath.row - 2] getWeight];
     }
 }
 
 - (void) preferenceNavigate: (NSIndexPath *) indexPath
 {
-#warning need to hide selected preferences
     NSString *values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
     NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
     
@@ -225,43 +237,20 @@
         }
     }
 }
-
-#pragma Extra
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+#pragma Pie Chart and Controllers
+-(IBAction)sliderDragAction:(id)sender
 {
-    if ([[_preferences userPrefs] count] > 1 && indexPath.row < 2) {
-        return NO;
+    //Check if a Preference is selected, if one isn't, select one.
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    if (indexPath == nil) {
+        NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:[[_preferences userPrefs] count]+1 inSection:0];
+        [self.tableView
+         selectRowAtIndexPath:newIndexPath
+         animated:NO
+         scrollPosition:UITableViewScrollPositionNone
+         ];
     }
-    else {
-        return YES;
-    }
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row==0 && tableView != self.searchDisplayController.searchResultsTableView){
-        return _chartHeight;
-    }
-    else{
-        return 45;
-    }
-}
-
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-#warning Need removeUserPrefs.
-#warning When deleting user preference with edited missing data, need to keep track of it being edited
-        // Delete the row from the data source
-        //[_preferences removeUserPreference:[[[_institutions userInstitutions] objectAtIndex:indexPath.row] name]];
-        //[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        //[self canGoToTabs];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    
 }
 
 -(UIImage*) drawPieChart:(NSArray*) weights
@@ -300,6 +289,44 @@
     UIGraphicsEndImageContext();
     
     return bezierImage;
+}
+
+#pragma Extra
+// Override to support conditional editing of the table view.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([[_preferences userPrefs] count] > 1 && indexPath.row < 2) {
+        return NO;
+    }
+    else {
+        return YES;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row==0 && tableView != self.searchDisplayController.searchResultsTableView){
+        return _chartHeight;
+    }
+    else{
+        return _cellHeight;
+    }
+}
+
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+#warning Need removeUserPrefs.
+#warning When deleting user preference with edited missing data, need to keep track of it being edited
+        // Delete the row from the data source
+        //[_preferences removeUserPreference:[[[_institutions userInstitutions] objectAtIndex:indexPath.row] name]];
+        //[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        //[self canGoToTabs];
+    }   
+    else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }   
 }
 
 /*
