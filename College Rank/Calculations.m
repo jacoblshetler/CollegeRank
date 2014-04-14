@@ -80,6 +80,51 @@ NSMutableArray * orderDictKeysDescending(NSDictionary* inDict){
     return sortedKeys;
 }
 
+//takes dictionary and array and generates what the rank of the index should be based on
+//what's before and after it
+//the key of the return dictionary will be the index
+//the value will be the string of what the ordinal rank of the college is in the cell
+NSMutableDictionary * createOrdinalDictionary(NSMutableDictionary* inDict,NSArray* inArray){
+    NSMutableDictionary* returnDict = [[NSMutableDictionary alloc] init];
+    for (int i=0; i<[inArray count]; i++) {
+        //get the current institution and its value
+        NSString* curInst = inArray[i];
+        NSString* curValue = [NSString stringWithFormat:@"%@",[inDict objectForKey:curInst]];
+        
+        //get the other value to check
+        //if the first index, check if the one after it has the same value
+        //if not the first index, check if the one before it has the same value
+        NSString* otherValue = [[NSString alloc] init];
+        if (i==0) {
+            NSString* otherInst = inArray[i+1];
+            otherValue = [NSString stringWithFormat:@"%@",[inDict objectForKey:otherInst]];
+        }
+        else{
+            NSString* otherInst = inArray[i-1];
+            otherValue = [NSString stringWithFormat:@"%@",[inDict objectForKey:otherInst]];
+        }
+        
+        //check it and set the value in the dictionary
+        NSString* ordinalRank = [[NSString alloc]init];
+        if ([curValue isEqualToString:otherValue]) {
+            if (i==0) {
+                ordinalRank = @"1. ";
+            }
+            else{
+                ordinalRank = [returnDict objectForKey:[NSString stringWithFormat:@"%i",i-1]];
+                [returnDict setValue:ordinalRank forKey:[NSString stringWithFormat:@"%i",i-1]];
+            }
+        }
+        else{
+            ordinalRank = [NSString stringWithFormat:@"%i. ",i+1];
+        }
+        
+        [returnDict setValue:ordinalRank forKey:[NSString stringWithFormat:@"%i",i]];
+    }
+    
+    return returnDict;
+}
+
 #pragma mark - Distance Calculations
 
 CLLocation *didCalculateDistance(NSString* zipCode) {

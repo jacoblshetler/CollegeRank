@@ -13,6 +13,7 @@
 @interface ThirdViewController ()
 
 @property NSMutableDictionary* calculationResults;
+@property NSMutableDictionary* indexToOrdinal;
 @property NSArray* orderedKeys;
 @property NSArray* colors;
 @property int chartHeight;
@@ -60,6 +61,10 @@
     //generate the ordered keys
     _orderedKeys = orderDictKeysDescending(_calculationResults);
     
+    //generate the index->ordinal dictionary
+    _indexToOrdinal = createOrdinalDictionary(_calculationResults,_orderedKeys);
+    NSLog(@"%@",_indexToOrdinal);
+    
     self.tableView.delegate = self;
      
 }
@@ -72,6 +77,10 @@
     //generate the ordered keys
     _orderedKeys = orderDictKeysDescending(_calculationResults);
     NSLog(@"ordered keys: %@",_orderedKeys);
+    
+    //generate the index->ordinal dictionary
+    _indexToOrdinal = createOrdinalDictionary(_calculationResults,_orderedKeys);
+    NSLog(@"%@",_indexToOrdinal);
     
     //redraw the table
     [self.tableView reloadData];
@@ -114,7 +123,7 @@
         [cell.contentView addSubview:[self createBarChart]];
     }
     else {
-        cell.textLabel.text = [NSString stringWithFormat:@"%i. %@",indexPath.row,[_orderedKeys objectAtIndex:indexPath.row-1]];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@%@",[_indexToOrdinal objectForKey:[NSString stringWithFormat:@"%ld",indexPath.row-1]],[_orderedKeys objectAtIndex:indexPath.row-1]];
         cell.textLabel.textColor = [_colors objectAtIndex:indexPath.row - 1];
     }
     
