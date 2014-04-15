@@ -15,10 +15,6 @@
 
 - (id)init {
     if (self = [super init]) {
-        //we need to create the list of Preference objects here
-        //Should we use preference ojbects, or a list of strings pulled from data retreiver?
-        //When a preference was selected the object could be created then, this would keep the view controllers similar.
-        //Also, would it make sense to have the preference class inherit from UIViewController?
         NSString *values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
         NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
         _userPrefs = [NSMutableArray new];
@@ -134,6 +130,34 @@
 -(BOOL) canGoToRank
 {
     return [self.userPrefs count] > 1;
+}
+-(NSMutableArray*) newPreferenceChoices
+{
+    //Predicate to filter out already selected preferences
+    NSArray* userPrefNames = [[self userPrefs] valueForKeyPath:@"@unionOfObjects.getName"];
+    NSPredicate* memberPredicate = [NSPredicate predicateWithFormat:@"NOT (Self IN %@)",userPrefNames];
+    
+    //Include all the current preference names
+    NSMutableArray* prefChoices =[[NSMutableArray alloc] initWithArray:[[self getAllPrefNames] filteredArrayUsingPredicate:memberPredicate]];
+    
+    //Add Custom
+    NSPredicate* customPredicate = [NSPredicate predicateWithFormat:@"Self LIKE[cd] 'Custom'"];
+    NSString* name;
+    if ([[userPrefNames filteredArrayUsingPredicate:customPredicate] count] == 0) {
+        name = @"Custom";
+    } else {                                            //Search for unused custom name
+        BOOL unique = FALSE;
+        int iter = 1;
+        while (!unique && iter <= 10) {
+            name = [NSString stringWithFormat:@"Custom %i",iter];
+            NSPredicate* customXPredicate = [NSPredicate predicateWithFormat:@"Self LIKE[cd] %@",name];
+            unique = ([[userPrefNames filteredArrayUsingPredicate:customXPredicate] count] == 0);
+            iter ++;
+        }
+    }
+    [prefChoices addObject:name];
+    
+    return prefChoices;
 }
 
 -(NSMutableArray*) getAllPrefNames

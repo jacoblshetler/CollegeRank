@@ -110,19 +110,13 @@
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
-    //Predicate to filter out already selected preferences
-    NSArray* userPrefNames = [[_preferences userPrefs] valueForKeyPath:@"@unionOfObjects.getName"];
-    NSPredicate *memberPredicate = [NSPredicate predicateWithFormat:@"NOT (Self IN %@)",userPrefNames];
-    
-    //Predicate to filter out search results
-    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"Self contains[c] %@", searchText];
-
-    //If the user has not entered anything, show all the possible results
+    //If the user has not entered anything, show all unselected preference options
     if ([searchText isEqualToString:@"\n"]){
-        _searchResults = [[_preferences getAllPrefNames] filteredArrayUsingPredicate:memberPredicate];
+        _searchResults = [_preferences newPreferenceChoices];
     } else {
-        NSPredicate* compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[memberPredicate, resultPredicate]];
-        _searchResults = [[_preferences getAllPrefNames] filteredArrayUsingPredicate:compoundPredicate];
+        //Predicate to filter out search results
+        NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"Self contains[c] %@", searchText];
+        _searchResults = [[_preferences newPreferenceChoices] filteredArrayUsingPredicate:resultPredicate];
     }
 }
 
@@ -228,10 +222,20 @@
 
 - (void) preferenceNavigate: (NSIndexPath *) indexPath
 {
-    NSString *values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
+    NSString* values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
     NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
     
-    NSString *entry = [_searchResults objectAtIndex:[indexPath row]];
+    NSString* entry = [_searchResults objectAtIndex:[indexPath row]];
+    
+    //If the entry is a custom preference, skip the rest of the function
+    NSPredicate* memberPredicate = [NSPredicate predicateWithFormat:@"Self Like[cd] %@",entry];
+    if ([[[_preferences getAllPrefNames] filteredArrayUsingPredicate:memberPredicate] count] == 0) {
+        AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
+        userPrefView.prefName = entry;
+        [self presentViewController:userPrefView animated:YES completion:nil];
+    }
+    else {
+    
     NSString *entryDecoded = [[valuesDict valueForKeyPath:entry] objectAtIndex:0];
     
     NSMutableArray * missingDataInst = [_institutions getMissingDataInstitutionsForPreference:entryDecoded];
@@ -242,9 +246,10 @@
         [self presentViewController:missingData animated:YES completion:nil];
     } else {
         AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
-        userPrefView.prefName = @"CustomPref";
-        //userPrefView.prefName = entry;
+        //userPrefView.prefName = @"CustomPref";
+        userPrefView.prefName = entry;
         [self presentViewController:userPrefView animated:YES completion:nil];
+    }
     }
 }
 #pragma Pie Chart and Controllers
