@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 @class Preference;
-@interface AcceptableValueViewController : UIViewController<UIPickerViewDelegate>
+@interface AcceptableValueViewController : UIViewController<UIPickerViewDelegate, UITextFieldDelegate, UIAlertViewDelegate>
 @property (nonatomic, retain) Preference* pref;
 @property (nonatomic, retain) UIButton* save;
 @property (nonatomic, retain) UIButton* cancel;
 @property (nonatomic, retain) UIButton* missingData;
+@property (nonatomic, retain) IBOutlet UITextField* dumbField;
+@property (nonatomic, retain) IBOutlet UINavigationBar* stupidBar;
 
 @property NSString* prefName;
 @property NSMutableArray* institutionsMissingData;

@@ -244,8 +244,8 @@
         [self presentViewController:missingData animated:YES completion:nil];
     } else {
         AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
-        //userPrefView.prefName = @"CustomPref";
-        userPrefView.prefName = entry;
+        userPrefView.prefName = @"CustomPref";
+        //userPrefView.prefName = entry;
         [self presentViewController:userPrefView animated:YES completion:nil];
     }
 }

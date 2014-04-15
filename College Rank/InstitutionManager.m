@@ -128,5 +128,16 @@
     return self.userInstitutions;
 }
 
+-(NSMutableArray*) getCustomValuesForPreference: (NSString*) pref
+{
+    NSMutableArray* tempArr = [NSMutableArray new];
+    for (Institution* curInst in userInstitutions)
+    {
+        [tempArr addObject:[curInst customValueForKey:pref]];
+    }
+    return tempArr;
+    
+}
+
 
 @end
