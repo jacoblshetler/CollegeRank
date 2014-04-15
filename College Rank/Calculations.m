@@ -151,41 +151,6 @@ double geoDistance(NSString * zip1, NSString * zip2){
 }
 
 #pragma mark - Weight Calculations
-#warning Need to test all weight manipulators.
-
-
-/*
-void updateWeights(int index, float newWeight){
-    PreferenceManager *prefMan = [PreferenceManager sharedInstance];
-    NSMutableArray* userPrefs = [prefMan getAllUserPrefs];
-    
-    //build list of all user preferences that are not locked.
-    NSMutableArray* changeablePrefs = [[NSMutableArray alloc] init];
-    for (int i=0; i<[userPrefs count]; i++) {
-        UserPreference *p = [userPrefs objectAtIndex:i];
-        if (!p.getLock){
-            [changeablePrefs addObject:p];
-        }
-    }
-    
-    //find out how much we need to subtract from each changeablePreference
-    float oldWeight = [(UserPreference*)[userPrefs objectAtIndex:index] getWeight];
-    float difference = newWeight - oldWeight;
-    float subtractFromEach = difference/(float)[changeablePrefs count];
-    
-    //Go through each changeablePref and update it
-    NSMutableArray* newPrefs = [[NSMutableArray alloc] init];
-    for (int i = 0; i < [userPrefs count]; i++ ){
-        UserPreference *p = [userPrefs objectAtIndex:i];
-        if (!p.getLock){
-            [p setWeight:[p getWeight]-subtractFromEach];
-        }
-        [newPrefs addObject:p];
-    }
-    
-    //set the user preferences in the preference manager
-    prefMan.userPrefs = newPrefs;
-}*/
 
 //Function to update the weights in the PreferenceManager for the UserPrefs.
 //Will be called with the index of the preference to update in UserPrefs along
@@ -225,40 +190,6 @@ void updateWeights(int index, float newWeight)
         [[userPrefs objectAtIndex:index] setWeight:newWeight];
     }
 }
-
-//function will calculate the range of how much weight a certain preference
-//has to work with in the pie chart. The range of weights is between 0 and 1,
-//so this will return two numbers, both between 0 and 1.
-/*
-NSArray * weightToWorkWith(int index){
-    //figure out how much is locked.
-    PreferenceManager *prefMan = [PreferenceManager sharedInstance];
-    NSMutableArray* userPrefs = [prefMan getAllUserPrefs];
-    
-    //build float for max weight. Starts at 1.0 and subtracts for each locked weight
-    //standardize that no weight can go below 1%, so subtract .01 for each non-locked weight
-    float maxWeight = 1.0;
-    int countOfLocked = 0;
-    for (UserPreference *p in userPrefs) {
-        if (p.getLock){
-            maxWeight -= [p getWeight];
-            countOfLocked++;
-        }
-        else{
-            maxWeight -= 0.01;
-        }
-    }
-    
-    //Now that we have the max weight, need to have minimum weight
-    //If the number of locked items is total-1, then min=max. Else min = .01
-    float minWeight = 0.01;
-    if (countOfLocked == [userPrefs count]-1){
-        minWeight = maxWeight;
-    }
-    
-    //return minWeight, maxWeight wrapped in NSNumbers.
-    return [[NSArray alloc] initWithObjects:[NSNumber numberWithFloat:minWeight], [NSNumber numberWithFloat:maxWeight], nil];
-}*/
 
 NSArray * weightToWorkWith(int index)
 {
@@ -300,42 +231,6 @@ NSArray * weightToWorkWith(int index)
     //return minWeight, maxWeight wrapped in NSNumbers.
     return [[NSArray alloc] initWithObjects:[NSNumber numberWithFloat:minWeight], [NSNumber numberWithFloat:maxWeight], nil];
 }
-
-//Calculates the weight for a new preference. Returns the weight as a float
-//Pre-Condition 1: New Preference must be added to the PreferenceManager
-//Pre-Condition 2: New Preference's weight must be set as "unlocked"
-//Pre-Condition 3: New Preference's weight must be 0.0
-/*
-void setANewWeight(int justAddedIndex){
-    //find total unlocked area
-    PreferenceManager *prefMan = [PreferenceManager sharedInstance];
-    NSMutableArray* userPrefs = [prefMan getAllUserPrefs];
-    float unlockedWeight = 0.0;
-    int countUnlocked = 0;
-    for (UserPreference *p in userPrefs) {
-        if (!p.getLock){
-            countUnlocked++;
-            unlockedWeight += [p getWeight];
-        }
-    }
-    
-    //Multiply area by 1/countUnlocked to get area for newly added
-    float newWeight = unlockedWeight * (1.0/countUnlocked);
-    
-    //Subtract proportionate amounts from each of the other wedges so that their proportions stay the same.
-    for (int i=0; i<[userPrefs count]; i++) {
-        UserPreference* curPref = [userPrefs objectAtIndex:i];
-        //If unlocked, subtract a proportionate amount
-        if(i==justAddedIndex){
-            [curPref setWeight:newWeight];
-        }
-        else if(!curPref.getLock){
-            float subtractWeight = ([curPref getWeight]/unlockedWeight)*newWeight;
-            float oldWeight = [curPref getWeight];
-            [curPref setWeight:(oldWeight-subtractWeight)];
-        }
-    }
-}*/
 
 //Calculates the weight for a new preference. Returns the weight as a float
 //Pre-Condition: New Preference must be added to the PreferenceManager

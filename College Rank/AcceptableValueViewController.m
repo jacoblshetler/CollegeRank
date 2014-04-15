@@ -276,6 +276,11 @@
             
         }
     }
+#warning look here
+    for (NSString* i in [_preferences getAllPrefNames])
+    {
+        NSLog(@"%@",i);
+    }
     UITabBarController* back = [self.storyboard instantiateViewControllerWithIdentifier:@"TabBarView"];
     [self presentViewController:back animated:YES completion:nil];
     [back setSelectedIndex:1];

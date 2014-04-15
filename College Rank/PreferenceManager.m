@@ -8,6 +8,8 @@
 
 #import "PreferenceManager.h"
 #import "Preference.h"
+#import "InstitutionManager.h"
+#import "Institution.h"
 #import "UserPreference.h"
 #import "DataRetreiver.h"
 #import "Calculations.h"
@@ -90,15 +92,23 @@
     [self.allPrefs addObject:[[Preference alloc] initWithName:name andAcceptableValues:vals]];
 }
 
+#warning Need to test removing custom interface
 -(void) removeUserPrefAtIndex:(int) index
 {
-    #warning might divide by 0
+    UserPreference* prefToRemove = [[self userPrefs] objectAtIndex:index];
+    
+    //Remove from user preferences and update all the weights
     updateWeights(index, 0);
     [[self userPrefs] removeObjectAtIndex:index];
-#warning Deal with removing Custom Preferences
-    //Remove From userPrefs
-    //allPrefs
-    //Custom Data Dictionary in each inst
+    
+    //If it was a custom preference, remove it from its other locations
+    if ([[prefToRemove pref] getValues]==nil) {
+        [[self allPrefs] removeObject:[prefToRemove pref]];
+        for (Institution* inst in [[InstitutionManager sharedInstance] userInstitutions])
+        {
+            [inst deleteKeyValuePairForKey:[prefToRemove getName]];
+        }
+    }
 }
 
 

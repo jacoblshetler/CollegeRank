@@ -70,7 +70,7 @@
     [testPref addUserPref:[testPref getPreferenceAtIndex:1] withWeight:.3 andPrefVal:1];
     [testPref addUserPref:[testPref getPreferenceAtIndex:2] withWeight:.5 andPrefVal:1];
     [testPref addUserPref:[testPref getPreferenceAtIndex:3] withWeight:.2 andPrefVal:1];
-    [testPref removeUserPrefAtIndex:1];
+    //[testPref removeUserPrefAtIndex:1];
     
     
     //updateWeights(0, .4);
