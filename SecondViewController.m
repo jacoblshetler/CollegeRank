@@ -231,8 +231,10 @@
     NSPredicate* memberPredicate = [NSPredicate predicateWithFormat:@"Self Like[cd] %@",entry];
     if ([[[_preferences getAllPrefNames] filteredArrayUsingPredicate:memberPredicate] count] == 0) {
         AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
+        UINavigationController* userPrefViewNav = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsViewNav"];
         userPrefView.prefName = entry;
-        [self presentViewController:userPrefView animated:YES completion:nil];
+        [userPrefViewNav setViewControllers:@[userPrefView]];
+        [self presentViewController:userPrefViewNav animated:YES completion:nil];
     }
     else {
     
