@@ -133,7 +133,7 @@
 
 -(BOOL) canGoToRank
 {
-    return [_userPrefs count] > 1;
+    return [self.userPrefs count] > 1;
 }
 
 -(NSMutableArray*) getAllPrefNames
@@ -155,6 +155,25 @@
         [tempArr addObject:[NSNumber numberWithFloat:[curPref getWeight]]];
     }
     return tempArr;
+}
+
+#pragma mark - Serialization Code
+//get ready for serialization
+- (void)encodeWithCoder:(NSCoder *)coder {
+    [coder encodeObject:self.userPrefs forKey:@"userPrefs"];
+    [coder encodeObject:self.allPrefs forKey:@"allPrefs"];
+    [coder encodeObject:self.missingInstitutionsForPreferenceShortNameDictionary forKey:@"missing"];
+}
+
+//init with serialized data
+- (id)initWithCoder:(NSCoder *)coder {
+    self = [PreferenceManager sharedInstance];
+    if (self) {
+        self.userPrefs = [coder decodeObjectForKey:@"userPrefs"];
+        self.allPrefs = [coder decodeObjectForKey:@"allPrefs"];
+        self.missingInstitutionsForPreferenceShortNameDictionary = [coder decodeObjectForKey:@"missing"];
+    }
+    return self;
 }
 
 

@@ -9,11 +9,10 @@
 #import <Foundation/Foundation.h>
 @class Preference;
 
-@interface UserPreference : NSObject
+@interface UserPreference : NSObject <NSCoding>
 {
     float weight;
     int preferredPrefValue;
-
 }
 @property (nonatomic, retain) Preference* pref;
 @property (nonatomic, retain) NSMutableArray* missingInstData;

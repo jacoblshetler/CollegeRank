@@ -128,5 +128,21 @@
     return self.userInstitutions;
 }
 
+#pragma mark - Serialization Code
+//get ready for serialization
+- (void)encodeWithCoder:(NSCoder *)coder {
+    [coder encodeObject:self.allInstitutions forKey:@"all"];
+    [coder encodeObject:self.userInstitutions forKey:@"user"];
+}
+
+//init with serialized data
+- (id)initWithCoder:(NSCoder *)coder {
+    self = [InstitutionManager sharedInstance];
+    if (self) {
+        self.allInstitutions = [coder decodeObjectForKey:@"all"];
+        self.userInstitutions = [coder decodeObjectForKey:@"user"];
+    }
+    return self;
+}
 
 @end

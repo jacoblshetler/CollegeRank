@@ -186,5 +186,24 @@
 - (void) deleteKeyValuePairForKey: (NSString*) key{
     [self.customData removeObjectForKey:key];
 }
+
+#pragma mark - Serialization Code
+//get ready for serialization
+- (void)encodeWithCoder:(NSCoder *)coder {
+    [coder encodeObject:self.name forKey:@"name"];
+    [coder encodeObject:self.data forKey:@"data"];
+    [coder encodeObject:self.customData forKey:@"cdata"];
+}
+
+//init with serialized data
+- (id)initWithCoder:(NSCoder *)coder {
+    self = [super init];
+    if (self) {
+        self.name = [coder decodeObjectForKey:@"name"];
+        self.data = [coder decodeObjectForKey:@"data"];
+        self.customData = [coder decodeObjectForKey:@"cdata"];
+    }
+    return self;
+}
 @end
 

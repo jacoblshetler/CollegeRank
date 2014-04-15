@@ -35,5 +35,22 @@
     return self.acceptableValues;
 }
 
+#pragma mark - Serialization Code
+//get ready for serialization
+- (void)encodeWithCoder:(NSCoder *)coder {
+    [coder encodeObject:self.name forKey:@"name"];
+    [coder encodeObject:self.acceptableValues forKey:@"values"];
+}
+
+//init with serialized data
+- (id)initWithCoder:(NSCoder *)coder {
+    self = [super init];
+    if (self) {
+        self.name = [coder decodeObjectForKey:@"name"];
+        self.acceptableValues = [coder decodeObjectForKey:@"values"];
+    }
+    return self;
+}
+
 
 @end
