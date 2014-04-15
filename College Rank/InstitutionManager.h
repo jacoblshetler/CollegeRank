@@ -23,6 +23,7 @@
 -(NSMutableArray*) getUserInstitutionNames;
 - (NSMutableArray*) getMissingDataInstitutionsForPreference: (NSString*) prefName;
 -(NSMutableArray*) getAllUserInstitutions;
+-(NSMutableArray*) getCustomValuesForPreference: (NSString*) pref;
 + (id)sharedInstance;
 
 @end

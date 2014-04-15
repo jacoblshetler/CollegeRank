@@ -110,7 +110,7 @@
 {
     for(UserPreference* pref in self.userPrefs)
     {
-        if([pref getName] == name)
+        if([[pref getName] isEqualToString:name])
         {
             return pref;
         }
@@ -123,7 +123,7 @@
 {
     for(Preference* pref in self.allPrefs)
     {
-        if([pref getName] == name)
+        if([[pref getName] isEqualToString:name])
         {
             return pref;
         }

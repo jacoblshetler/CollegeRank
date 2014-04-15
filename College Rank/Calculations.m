@@ -923,6 +923,7 @@ NSMutableDictionary * generateRankings(){
             value = normalizeFromReligion([instMan getValuesForPreference:@"religiousAffiliation"], [userPref getPrefVal]);
         }
         else{
+            value = normalizeFromContinuum([instMan getCustomValuesForPreference:[userPref getName]]);
         }
    //     NSLog(@"%@ - %@",[userPref getName],value);
         [weightArr addObject:[NSNumber numberWithFloat:[userPref getWeight]]];
