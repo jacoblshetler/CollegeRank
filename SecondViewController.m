@@ -110,16 +110,19 @@
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
+    //Predicate to filter out already selected preferences
+    NSArray* userPrefNames = [[_preferences userPrefs] valueForKeyPath:@"@unionOfObjects.getName"];
+    NSPredicate *memberPredicate = [NSPredicate predicateWithFormat:@"NOT (Self IN %@)",userPrefNames];
+    
+    //Predicate to filter out search results
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"Self contains[c] %@", searchText];
+
     //If the user has not entered anything, show all the possible results
-    if ([searchText isEqualToString:@"\n"])
-    {
-        NSArray* userPrefNames = [[_preferences userPrefs] valueForKeyPath:@"@unionOfObjects.getName"];
-        NSPredicate *memberPredicate = [NSPredicate predicateWithFormat:@"NOT (Self IN %@)",userPrefNames];
+    if ([searchText isEqualToString:@"\n"]){
         _searchResults = [[_preferences getAllPrefNames] filteredArrayUsingPredicate:memberPredicate];
-    } else
-    {
-        NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"Self contains[c] %@", searchText];
-        _searchResults = [[_preferences getAllPrefNames] filteredArrayUsingPredicate:resultPredicate];
+    } else {
+        NSPredicate* compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[memberPredicate, resultPredicate]];
+        _searchResults = [[_preferences getAllPrefNames] filteredArrayUsingPredicate:compoundPredicate];
     }
 }
 
