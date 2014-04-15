@@ -16,13 +16,44 @@
 @implementation AppDelegate
 
 - (void)saveManagers{
-    //save institution manager
-    NSString* path = [[NSBundle mainBundle] pathForResource:@"IM" ofType:@"plist"];
-    [NSKeyedArchiver archiveRootObject:[InstitutionManager sharedInstance] toFile:path];
+    //save institution manager and preference manager
+    NSString *path = @"~/Documents/data.out";
+    path = [path stringByExpandingTildeInPath];
     
-    //save preference manager
-    path = [[NSBundle mainBundle] pathForResource:@"PM" ofType:@"plist"];
-    [NSKeyedArchiver archiveRootObject:[PreferenceManager sharedInstance] toFile:path];
+    NSMutableDictionary *rootObject;
+    rootObject = [NSMutableDictionary dictionary];
+    
+    [rootObject setValue:[InstitutionManager sharedInstance] forKey:@"IM"];
+    [rootObject setValue:[PreferenceManager sharedInstance] forKey:@"PM"];
+    
+    [NSKeyedArchiver archiveRootObject:rootObject toFile:path];
+    
+    
+    NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString* foofile = [documentsPath stringByAppendingPathComponent:@"data.out"];
+    NSLog(@"%d",[[NSFileManager defaultManager] fileExistsAtPath:foofile]);
+}
+
+- (void)loadManagers {
+    NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString* foofile = [documentsPath stringByAppendingPathComponent:@"data.out"];
+    NSLog(@"%d",[[NSFileManager defaultManager] fileExistsAtPath:foofile]);
+    
+    NSString *path = @"~/Documents/data.out";
+    path = [path stringByExpandingTildeInPath];
+    
+    NSMutableDictionary *rootObject;
+    rootObject = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    
+    InstitutionManager* im = [InstitutionManager sharedInstance];
+    PreferenceManager* pm = [PreferenceManager sharedInstance];
+    
+    if ([rootObject valueForKey:@"IM"]) {
+        im = [rootObject valueForKey:@"IM"];
+    }
+    if ([rootObject valueForKey:@"PM"]) {
+        pm = [rootObject valueForKey:@"PM"];
+    }
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -45,41 +76,12 @@
     //updateWeights(0, .4);
     //NSLog(@"%f",[[[testPref userPrefs] objectAtIndex:1] getWeight]);
     
-    /*
-    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"(^1600$|^(1?[0-5]?|[0-9]?)[0-9]?[0-9]$)" options:0 error:nil];
-    BOOL okay = true;
-    int bad = 0;
-    for (int i=0;i<2000; i++) {
-        NSString* val = [NSString stringWithFormat:@"%i",i];
-        int numMatches = [regex numberOfMatchesInString:val options:0 range:NSMakeRange(0, [val length])];
-        if(numMatches!=1){
-            okay = false;
-            bad = i;
-            NSLog(@"numMatches=%i",numMatches);
-            break;
-        }
-    }
     
-    NSLog(@"everythingOkay=%d",okay);
-    NSLog(@"numberItWentWrong=%i",bad);
-        */
+    
     
     //unarchive the stored instman and prefman
-    /*
-    NSString* path = [[NSBundle mainBundle] pathForResource:@"IM" ofType:@"plist"];
-    @try{
-        id instMan = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-        InstitutionManager* im = [InstitutionManager sharedInstance];
-        im.allInstitutions = ((InstitutionManager*)instMan).allInstitutions;
-        NSLog(@"%@",im.allInstitutions);
-    }
-    @catch (NSException* e){
-        
-    }
-    
-    path = [[NSBundle mainBundle] pathForResource:@"PM" ofType:@"plist"];
-    id prefMan = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-    */
+    //TODO: UNCOMMENT THIS TO READ DATA BACK IN
+    //[self loadManagers];
      
     return YES;
 }
@@ -94,7 +96,11 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
- //   [self saveManagers];
+    
+
+    //archive instman and prefman
+    //TODO: UNCOMMENT THIS TO SAVE DATA TO FILE
+    //[self saveManagers];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -111,6 +117,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+//    [self saveManagers];
 }
 
 

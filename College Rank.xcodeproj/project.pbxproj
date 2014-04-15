@@ -35,8 +35,6 @@
 		8491593618FC55FD00CFBD1B /* help.html in Resources */ = {isa = PBXBuildFile; fileRef = 8491593518FC55FD00CFBD1B /* help.html */; };
 		84B9BD3918B2DC8700469696 /* Calculations.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B9BD3818B2DC8700469696 /* Calculations.m */; };
 		84BE3A5D18F983DE00E9B1EF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84BE3A5C18F983DE00E9B1EF /* QuartzCore.framework */; };
-		84D7955F18FCC21D001584E3 /* IM.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84D7955E18FCC21D001584E3 /* IM.plist */; };
-		84D7956118FCC229001584E3 /* PM.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84D7956018FCC229001584E3 /* PM.plist */; };
 		84EBAEA718DB2F2F006CC653 /* AcceptableValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84EBAEA618DB2F2F006CC653 /* AcceptableValues.plist */; };
 		84F0D37918F6E4E50081B855 /* nameToDataKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84F0D37818F6E4E50081B855 /* nameToDataKeys.plist */; };
 		E329800318D89A0A00DDE110 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E329800218D89A0A00DDE110 /* FirstViewController.m */; };
@@ -98,8 +96,6 @@
 		84B9BD3718B2DC8700469696 /* Calculations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Calculations.h; sourceTree = "<group>"; };
 		84B9BD3818B2DC8700469696 /* Calculations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Calculations.m; sourceTree = "<group>"; };
 		84BE3A5C18F983DE00E9B1EF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		84D7955E18FCC21D001584E3 /* IM.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = IM.plist; sourceTree = "<group>"; };
-		84D7956018FCC229001584E3 /* PM.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PM.plist; sourceTree = "<group>"; };
 		84EBAEA618DB2F2F006CC653 /* AcceptableValues.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AcceptableValues.plist; path = "College Rank/AcceptableValues.plist"; sourceTree = SOURCE_ROOT; };
 		84F0D37818F6E4E50081B855 /* nameToDataKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = nameToDataKeys.plist; sourceTree = "<group>"; };
 		E329800118D89A0A00DDE110 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
@@ -180,8 +176,6 @@
 				E3C5CD6F18CF692700C5DBA2 /* Reachability.m */,
 				844E770718AD289100A6FC91 /* AppDelegate.h */,
 				844E770818AD289100A6FC91 /* AppDelegate.m */,
-				84D7955E18FCC21D001584E3 /* IM.plist */,
-				84D7956018FCC229001584E3 /* PM.plist */,
 				844E770A18AD289100A6FC91 /* Main.storyboard */,
 				E30BB90F18D265B5001DFC05 /* Views */,
 				84B9BD3718B2DC8700469696 /* Calculations.h */,
@@ -338,12 +332,10 @@
 				8491593618FC55FD00CFBD1B /* help.html in Resources */,
 				84F0D37918F6E4E50081B855 /* nameToDataKeys.plist in Resources */,
 				8409E7DD18F749FB00A07BDA /* missingDataOptions.plist in Resources */,
-				84D7955F18FCC21D001584E3 /* IM.plist in Resources */,
 				8472BA0418E711720034C6D6 /* AcceptableValues.plist in Resources */,
 				844E771418AD289100A6FC91 /* Images.xcassets in Resources */,
 				844E770318AD289100A6FC91 /* InfoPlist.strings in Resources */,
 				3628C84E18F4B0E10077145B /* pointer1.png in Resources */,
-				84D7956118FCC229001584E3 /* PM.plist in Resources */,
 				844E770C18AD289100A6FC91 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

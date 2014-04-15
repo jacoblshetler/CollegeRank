@@ -44,7 +44,6 @@
 @implementation AcceptableValueViewController
 
 @synthesize prefName;
-@synthesize institutionsMissingData;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -78,6 +77,97 @@
                initWithTarget:self action:@selector(handleSingleTap:)];
     _tapper.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:_tapper];
+
+    self.institutions = [InstitutionManager sharedInstance];
+    self.preferences = [PreferenceManager sharedInstance];
+    self.stupidBar.title = self.prefName;
+    /*Add the buttons at the bottom*/
+    //missing data (if data is missing)
+    
+    self.dumbField.text = self.prefName;
+    
+    self.pref = [self.preferences getPreferenceForString:self.prefName];
+    
+    //for testing
+    //self.pref = [self.preferences getPreferenceAtIndex:0];
+    
+    NSString *values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
+    NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
+    NSString *prefDecoded = [[valuesDict valueForKeyPath:self.prefName] objectAtIndex:0];
+    
+    
+    if([[self.preferences missingInstitutionsForPreferenceShortNameDictionary] objectForKey:prefDecoded] == nil)
+    {
+        self.missingData.hidden = YES;
+    }
+    
+    if(self.pref.acceptableValues == nil)
+    {
+        //load in the selector bar
+        self.isNull = true;
+#warning Change me to change the properties of the vertical line!
+        //add the line to snap to
+        
+        UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.lineX - self.markerHeight/2, self.topLineY - 20, 30, 20)];
+        topLabel.text = @"Best";
+        topLabel.adjustsFontSizeToFitWidth = YES;
+        
+        UILabel *worstLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.lineX - self.markerHeight/2, self.topLineY + self.lineHeight, 30, 20)];
+        worstLabel.text = @"Worst";
+        worstLabel.adjustsFontSizeToFitWidth = YES;
+        
+        
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(self.lineX, self.topLineY, 5, self.lineHeight)];
+        lineView.backgroundColor = [UIColor blackColor];
+        lineView.layer.cornerRadius = 5.0;
+        lineView.layer.masksToBounds = YES;
+        [self.view addSubview:lineView];
+        [self.view addSubview:topLabel];
+        [self.view addSubview:worstLabel];
+        //add the markers
+        int height = self.view.bounds.size.height/5;
+        int i = 1;
+        
+        for(Institution *inst in [self.institutions getAllUserInstitutions])
+        {
+            CGRect boundingBox = CGRectMake(5, height, self.markerWidth, self.markerHeight);
+            UIImage* basePoint = [UIImage imageNamed:@"pointer1.png"];
+            UIImage* pointer = [self colorizeImage:basePoint color:[self.colorArr objectAtIndex:i-1]];
+            UIImageView* imgView = [[UIImageView alloc] initWithFrame:boundingBox];
+            UILabel* textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.markerWidth - 10, self.markerHeight)];
+            textLabel.text = [inst name];
+            textLabel.adjustsFontSizeToFitWidth = YES;
+            imgView.userInteractionEnabled=YES;
+            UIPanGestureRecognizer* pan = [[UIPanGestureRecognizer alloc]
+                                           initWithTarget:self action:@selector(handlePanGestures:)];
+            pan.maximumNumberOfTouches = 1;
+            pan.minimumNumberOfTouches = 1;
+            [imgView addGestureRecognizer:pan];
+            [imgView setImage:pointer];
+            [imgView addSubview:textLabel];
+            if([inst customValueForKey:[self.pref getName]] != nil && ![[inst customValueForKey:[self.pref getName]] isEqualToString:@"<null>"])
+            {
+                imgView.center = CGPointMake(self.lineX - self.markerWidth/2, self.topLineY + [[inst customValueForKey:self.prefName] integerValue]);
+            }
+            
+            imgView.tag = i;
+            [self.view addSubview:imgView];
+            height += self.markerHeight + 5;
+            i++;
+            
+        }
+    }
+    else{
+        //load in the picker
+        self.dumbField.hidden = YES;
+        UIPickerView* pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 200, 320, 200)];
+        pickerView.delegate = self;
+        pickerView.showsSelectionIndicator = YES;
+        pickerView.tag = 0;
+        [self.view addSubview:pickerView];
+        self.isNull = false;
+    }
+    
 
 
 	// Do any additional setup after loading the view.
@@ -137,120 +227,6 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    self.institutions = [InstitutionManager sharedInstance];
-    self.preferences = [PreferenceManager sharedInstance];
-    
-    /*Add the buttons at the bottom*/
-    
-    //save button
-    self.save = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [self.save addTarget:self
-               action:@selector(save:)
-     forControlEvents:UIControlEventTouchUpInside];
-    [self.save setTitle:@"Save" forState:UIControlStateNormal];
-    self.save.frame = CGRectMake(10, self.view.bounds.size.height-40, 80, 40.0);
-    [self.view addSubview:self.save];
-    
-    //cancel button
-    self.cancel = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [self.cancel addTarget:self
-                  action:@selector(cancel:)
-        forControlEvents:UIControlEventTouchUpInside];
-    [self.cancel setTitle:@"Cancel" forState:UIControlStateNormal];
-    self.cancel.frame = CGRectMake(10, 20, 80, 40.0);
-    [self.view addSubview:self.cancel];
-    
-    //missing data (if data is missing)
-    if(self.institutionsMissingData != nil)
-    {
-        self.missingData = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [self.missingData addTarget:self
-                        action:@selector(missingData:)
-              forControlEvents:UIControlEventTouchUpInside];
-        [self.missingData setTitle:@"Missing Data" forState:UIControlStateNormal];
-        self.missingData.frame = CGRectMake(self.view.bounds.size.width-100, self.view.bounds.size.height - 40, 100, 40.0);
-        [self.view addSubview:self.missingData];
-    }
-    self.dumbField.text = self.prefName;
-    
-    self.pref = [self.preferences getPreferenceForString:self.prefName];
-    for(NSString* pref in [self.preferences getAllPrefNames])
-    {
-        NSLog(@"%@", pref);
-    }
-    NSLog(@"%@", [self.pref getName]);
-    //for testing
-    //self.pref = [self.preferences getPreferenceAtIndex:0];
-    
-    
-
-    if(self.pref.acceptableValues == nil)
-    {
-        //load in the selector bar
-        self.isNull = true;
-#warning Change me to change the properties of the vertical line!
-        //add the line to snap to
-
-        UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.lineX - self.markerHeight/2, self.topLineY - 20, 30, 20)];
-        topLabel.text = @"Best";
-        topLabel.adjustsFontSizeToFitWidth = YES;
-
-        UILabel *worstLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.lineX - self.markerHeight/2, self.topLineY + self.lineHeight, 30, 20)];
-        worstLabel.text = @"Worst";
-        worstLabel.adjustsFontSizeToFitWidth = YES;
-
-        
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(self.lineX, self.topLineY, 5, self.lineHeight)];
-        lineView.backgroundColor = [UIColor blackColor];
-        lineView.layer.cornerRadius = 5.0;
-        lineView.layer.masksToBounds = YES;
-        [self.view addSubview:lineView];
-        [self.view addSubview:topLabel];
-        [self.view addSubview:worstLabel];
-        //add the markers
-        int height = self.view.bounds.size.height/5;
-        int i = 1;
-
-        for(Institution *inst in [self.institutions getAllUserInstitutions])
-        {
-            CGRect boundingBox = CGRectMake(5, height, self.markerWidth, self.markerHeight);
-            UIImage* basePoint = [UIImage imageNamed:@"pointer1.png"];
-            UIImage* pointer = [self colorizeImage:basePoint color:[self.colorArr objectAtIndex:i-1]];
-            UIImageView* imgView = [[UIImageView alloc] initWithFrame:boundingBox];
-            UILabel* textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.markerWidth - 10, self.markerHeight)];
-            textLabel.text = [inst name];
-            textLabel.adjustsFontSizeToFitWidth = YES;
-            imgView.userInteractionEnabled=YES;
-            UIPanGestureRecognizer* pan = [[UIPanGestureRecognizer alloc]
-                                           initWithTarget:self action:@selector(handlePanGestures:)];
-            pan.maximumNumberOfTouches = 1;
-            pan.minimumNumberOfTouches = 1;
-            [imgView addGestureRecognizer:pan];
-            [imgView setImage:pointer];
-            [imgView addSubview:textLabel];
-            if([inst customValueForKey:[self.pref getName]] != nil && ![[inst customValueForKey:[self.pref getName]] isEqualToString:@"<null>"])
-            {
-                imgView.center = CGPointMake(self.lineX - self.markerWidth/2, self.topLineY + [[inst customValueForKey:self.prefName] integerValue]);
-            }
-            
-            imgView.tag = i;
-            [self.view addSubview:imgView];
-            height += self.markerHeight + 5;
-            i++;
-
-        }
-    }
-    else{
-        //load in the picker
-        self.dumbField.hidden = YES;
-        UIPickerView* pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 200, 320, 200)];
-        pickerView.delegate = self;
-        pickerView.showsSelectionIndicator = YES;
-        pickerView.tag = 0;
-        [self.view addSubview:pickerView];
-        self.isNull = false;
-    }
-
 }
 
 
@@ -270,22 +246,13 @@
     if(userPref != nil)
     {
         [userPref setPrefVal:self.pickerSelection];
-        [userPref setMissingInstData:self.institutionsMissingData];
     }
     else{
         NSLog(@"Creating new user preference...");
 
         //make a new user preference with missing data (if there is missing data)
 
-        if(self.institutionsMissingData != nil)
-        {
-            [self.preferences addUserPref:self.pref withAcceptableValue:self.pickerSelection andMissingData:self.institutionsMissingData];
-
-        }
-        else
-        {
-            [self.preferences addUserPref:self.pref withAcceptableValue:self.pickerSelection];
-        }
+        [self.preferences addUserPref:self.pref withAcceptableValue:self.pickerSelection];
         updateWeightsForNewPreference();
     }
     if(self.isNull)
@@ -324,12 +291,13 @@
 
 -(IBAction) missingData: (id) sender
 {
-    MissingDataViewController* missingData = [self.storyboard instantiateViewControllerWithIdentifier:@"MissingDataView"];
-    missingData.prefName = self.prefName;
-    missingData.missingInstitutions = self.institutionsMissingData;
-    [self presentViewController:missingData animated:YES completion:nil];
-    
+    AcceptableValueViewController* missingDataView = [self.storyboard instantiateViewControllerWithIdentifier:@"MissingDataView"];
+    UINavigationController* missingDataViewNav = [self.storyboard instantiateViewControllerWithIdentifier:@"MissingDataViewNav"];
+    missingDataView.prefName = self.prefName;
+    [missingDataViewNav setViewControllers:@[missingDataView]];
+    [self presentViewController:missingDataViewNav animated:YES completion:nil];
 }
+
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow: (NSInteger)row inComponent:(NSInteger)component {
     // Handle the selection
@@ -401,10 +369,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (alertView.tag == 2){ //Alert coming from invalid data entry
-        //Do nothing
         [self.view resignFirstResponder];
-    }
 }
 
 

@@ -10,14 +10,13 @@
 @class Preference;
 @interface AcceptableValueViewController : UIViewController<UIPickerViewDelegate, UITextFieldDelegate, UIAlertViewDelegate>
 @property (nonatomic, retain) Preference* pref;
-@property (nonatomic, retain) UIButton* save;
-@property (nonatomic, retain) UIButton* cancel;
-@property (nonatomic, retain) UIButton* missingData;
+@property (nonatomic, retain) IBOutlet UIButton* save;
+@property (nonatomic, retain) IBOutlet UIButton* cancel;
+@property (nonatomic, retain) IBOutlet UIButton* missingData;
 @property (nonatomic, retain) IBOutlet UITextField* dumbField;
-@property (nonatomic, retain) IBOutlet UINavigationBar* stupidBar;
+@property (nonatomic, retain) IBOutlet UINavigationItem* stupidBar;
 
 @property NSString* prefName;
-@property NSMutableArray* institutionsMissingData;
 
 
 

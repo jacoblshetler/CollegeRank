@@ -7,7 +7,10 @@
 //
 
 #import "ThirdViewController.h"
+#import "InstitutionManager.h"
+#import "PreferenceManager.h"
 #import "Calculations.h"
+#import "FirstViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface ThirdViewController ()
@@ -38,7 +41,6 @@
     [super viewDidLoad];
     //define the height of the barchart and the width of the screen
     _chartHeight = 200;
-#warning we should have this update when the screen is rotated
     _screenWidth = self.view.frame.size.width;
     
     //load in the colors
@@ -264,5 +266,16 @@
 }
 
  */
+#warning I'm getting lunch, fix this later.
+-(IBAction)reset:(id)sender
+{
+    InstitutionManager* inst = [InstitutionManager sharedInstance];
+    inst = [[InstitutionManager alloc] init];
+    
+    PreferenceManager* pref = [PreferenceManager sharedInstance];
+    pref = [[PreferenceManager alloc] init];
+    
+    [self.tabBarController setSelectedIndex:0];
+}
 
 @end
