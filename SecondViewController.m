@@ -34,6 +34,8 @@
 - (IBAction)lockPressAction:(id)sender;
 - (void)buttonImage:(BOOL)lockState;
 -(void) updateInputControllers:(int) row;
+-(void)goToAcceptableValues:(NSString*)entry;
+-(void)goToMissingData:(NSString*)entry;
 
 @end
 
@@ -219,7 +221,7 @@
         [self updateInputControllers:indexPath.row - 2];
     }
 }
-
+#pragma Navigate
 - (void) preferenceNavigate: (NSIndexPath *) indexPath
 {
     NSString* values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
@@ -230,30 +232,37 @@
     //If the entry is a custom preference, skip the rest of the function
     NSPredicate* memberPredicate = [NSPredicate predicateWithFormat:@"Self Like[cd] %@",entry];
     if ([[[_preferences getAllPrefNames] filteredArrayUsingPredicate:memberPredicate] count] == 0) {
-        AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
-        UINavigationController* userPrefViewNav = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsViewNav"];
-        userPrefView.prefName = entry;
-        [userPrefViewNav setViewControllers:@[userPrefView]];
-        [self presentViewController:userPrefViewNav animated:YES completion:nil];
+        [self goToAcceptableValues:entry];
     }
     else {
     
-    NSString *entryDecoded = [[valuesDict valueForKeyPath:entry] objectAtIndex:0];
+        NSString *entryDecoded = [[valuesDict valueForKeyPath:entry] objectAtIndex:0];
     
-    NSMutableArray * missingDataInst = [_institutions getMissingDataInstitutionsForPreference:entryDecoded];
-    if ([missingDataInst count]!= 0) {
-        MissingDataViewController* missingData = [self.storyboard instantiateViewControllerWithIdentifier:@"MissingDataView"];
-        missingData.prefName = entry;
-       // missingData.missingInstitutions = missingDataInst;
-        [self presentViewController:missingData animated:YES completion:nil];
-    } else {
-        AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
-        //userPrefView.prefName = @"CustomPref";
-        userPrefView.prefName = entry;
-        [self presentViewController:userPrefView animated:YES completion:nil];
-    }
+        NSMutableArray * missingDataInst = [_institutions getMissingDataInstitutionsForPreference:entryDecoded];
+        if ([missingDataInst count]!= 0) {
+            [self goToMissingData:entry];
+        } else {
+            [self goToAcceptableValues:entry];
+        }
     }
 }
+-(void)goToAcceptableValues:(NSString*)entry
+{
+    AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
+    UINavigationController* userPrefViewNav = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsViewNav"];
+    userPrefView.prefName = entry;
+    [userPrefViewNav setViewControllers:@[userPrefView]];
+    [self presentViewController:userPrefViewNav animated:YES completion:nil];
+}
+-(void)goToMissingData:(NSString*)entry
+{
+    AcceptableValueViewController* missingDataView = [self.storyboard instantiateViewControllerWithIdentifier:@"MissingDataView"];
+    UINavigationController* missingDataViewNav = [self.storyboard instantiateViewControllerWithIdentifier:@"MissingDataViewNav"];
+    missingDataView.prefName = entry;
+    [missingDataViewNav setViewControllers:@[missingDataView]];
+    [self presentViewController:missingDataViewNav animated:YES completion:nil];
+}
+
 #pragma Pie Chart and Controllers
 -(IBAction)sliderDragAction:(id)sender
 {

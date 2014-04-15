@@ -372,10 +372,12 @@
     /*
      Segue to the Choose An Acceptable Value view controller once we have saved the data.
      */
+    
     AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
+    UINavigationController* userPrefViewNav = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsViewNav"];
     userPrefView.prefName = prefName;
-    userPrefView.institutionsMissingData = missingInstitutions;
-    [self presentViewController:userPrefView animated:YES completion:nil];
+    [userPrefViewNav setViewControllers:@[userPrefView]];
+    [self presentViewController:userPrefViewNav animated:YES completion:nil];
 }
 
 - (IBAction)pressedNext:(id)sender {
