@@ -23,6 +23,7 @@
         NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
         _userPrefs = [NSMutableArray new];
         _allPrefs = [[NSMutableArray alloc] init];
+        _missingInstitutionsForPreferenceShortNameDictionary = [[NSMutableDictionary alloc] init];
         for(NSString *key in valuesDict)
         {
             NSMutableArray* valueArr = [[NSMutableArray alloc] init];

@@ -23,6 +23,7 @@ NSMutableArray * normalize(NSMutableArray * prefValues);
  @return NSMutableArray of institution names in descending order based on their value
  */
 NSMutableArray * orderDictKeysDescending(NSDictionary* inDict);
+NSMutableDictionary * createOrdinalDictionary(NSMutableDictionary* inDict,NSArray* inArray);
 
 /**
  Calculates distance between two zip codes. Returns the value as number of miles in double format
