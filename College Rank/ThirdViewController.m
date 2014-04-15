@@ -38,7 +38,6 @@
     [super viewDidLoad];
     //define the height of the barchart and the width of the screen
     _chartHeight = 200;
-#warning we should have this update when the screen is rotated
     _screenWidth = self.view.frame.size.width;
     
     //load in the colors
@@ -63,7 +62,6 @@
     
     //generate the index->ordinal dictionary
     _indexToOrdinal = createOrdinalDictionary(_calculationResults,_orderedKeys);
-    NSLog(@"%@",_indexToOrdinal);
     
     self.tableView.delegate = self;
      
@@ -72,15 +70,12 @@
 - (void) viewDidAppear:(BOOL)animated{
     //calculate the rankings
     _calculationResults = [[NSMutableDictionary alloc] initWithDictionary:generateRankings()];
-    NSLog(@"calcResults: %@",_calculationResults);
     
     //generate the ordered keys
     _orderedKeys = orderDictKeysDescending(_calculationResults);
-    NSLog(@"ordered keys: %@",_orderedKeys);
     
     //generate the index->ordinal dictionary
     _indexToOrdinal = createOrdinalDictionary(_calculationResults,_orderedKeys);
-    NSLog(@"%@",_indexToOrdinal);
     
     //redraw the table
     [self.tableView reloadData];
