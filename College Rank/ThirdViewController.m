@@ -38,7 +38,6 @@
     [super viewDidLoad];
     //define the height of the barchart and the width of the screen
     _chartHeight = 200;
-#warning we should have this update when the screen is rotated
     _screenWidth = self.view.frame.size.width;
     
     //load in the colors
