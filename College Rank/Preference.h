@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Preference : NSObject
+@interface Preference : NSObject <NSCoding>
 @property (nonatomic, retain) NSString* name;
 
 //this will take the form of a list of values that

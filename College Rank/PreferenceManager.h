@@ -12,9 +12,10 @@
 @class UserPreference;
 
 
-@interface PreferenceManager : NSObject
+@interface PreferenceManager : NSObject <NSCoding>
 @property NSMutableArray* userPrefs;
 @property NSMutableArray* allPrefs;
+@property NSMutableDictionary* missingInstitutionsForPreferenceShortNameDictionary;
 
 + (id)sharedInstance;
 -(NSArray*) getAllPrefs;
@@ -34,7 +35,6 @@
 -(NSMutableArray*) getAllPrefWeights;
 -(BOOL) canGoToRank;
 #warning needs a removePreference function
-
 
 
 @end

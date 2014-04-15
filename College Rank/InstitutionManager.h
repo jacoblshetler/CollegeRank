@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @class Institution;
 
-@interface InstitutionManager : NSObject
+@interface InstitutionManager : NSObject <NSCoding>
 
 @property (nonatomic) NSArray* allInstitutions;
 @property (nonatomic) NSMutableArray* userInstitutions;
@@ -23,6 +23,7 @@
 -(NSMutableArray*) getUserInstitutionNames;
 - (NSMutableArray*) getMissingDataInstitutionsForPreference: (NSString*) prefName;
 -(NSMutableArray*) getAllUserInstitutions;
+-(NSMutableArray*) getCustomValuesForPreference: (NSString*) pref;
 + (id)sharedInstance;
 
 @end

@@ -36,6 +36,9 @@
 @property int markerHeight;
 @property int markerWidth;
 @property NSMutableArray* colorArr;
+@property BOOL usingKeyboard;
+@property UIGestureRecognizer* tapper;
+
 @end
 
 @implementation AcceptableValueViewController
@@ -55,8 +58,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.dumbField.delegate = self;
     self.lineX = self.view.bounds.size.width * .9;
-    self.topLineY = self.view.bounds.size.height/5;
+    self.topLineY = self.view.bounds.size.height/4;
     self.lineHeight = self.view.bounds.size.height*.6;
     self.markerHeight = 30;
     self.markerWidth = 150;
@@ -70,6 +74,10 @@
         b = [[rgb objectAtIndex:2] floatValue]/255;
         [self.colorArr addObject:[UIColor colorWithRed:r green:g blue:b alpha:1.0]];
     }
+    _tapper = [[UITapGestureRecognizer alloc]
+               initWithTarget:self action:@selector(handleSingleTap:)];
+    _tapper.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:_tapper];
 
 
 	// Do any additional setup after loading the view.
@@ -163,17 +171,19 @@
         self.missingData.frame = CGRectMake(self.view.bounds.size.width-100, self.view.bounds.size.height - 40, 100, 40.0);
         [self.view addSubview:self.missingData];
     }
-    self.pref = [self.preferences getPreferenceForString:self.prefName];
+    self.dumbField.text = self.prefName;
     
+    self.pref = [self.preferences getPreferenceForString:self.prefName];
+    for(NSString* pref in [self.preferences getAllPrefNames])
+    {
+        NSLog(@"%@", pref);
+    }
+    NSLog(@"%@", [self.pref getName]);
     //for testing
     //self.pref = [self.preferences getPreferenceAtIndex:0];
     
     
-    if(self.pref == nil)
-    {
-        [self.preferences addPreferenceWithName:self.prefName andAcceptableValues:nil];
-        self.pref = [self.preferences getPreferenceForString:self.prefName];
-    }
+
     if(self.pref.acceptableValues == nil)
     {
         //load in the selector bar
@@ -184,12 +194,19 @@
         UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.lineX - self.markerHeight/2, self.topLineY - 20, 30, 20)];
         topLabel.text = @"Best";
         topLabel.adjustsFontSizeToFitWidth = YES;
+
+        UILabel *worstLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.lineX - self.markerHeight/2, self.topLineY + self.lineHeight, 30, 20)];
+        worstLabel.text = @"Worst";
+        worstLabel.adjustsFontSizeToFitWidth = YES;
+
+        
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(self.lineX, self.topLineY, 5, self.lineHeight)];
         lineView.backgroundColor = [UIColor blackColor];
         lineView.layer.cornerRadius = 5.0;
         lineView.layer.masksToBounds = YES;
         [self.view addSubview:lineView];
         [self.view addSubview:topLabel];
+        [self.view addSubview:worstLabel];
         //add the markers
         int height = self.view.bounds.size.height/5;
         int i = 1;
@@ -213,7 +230,7 @@
             [imgView addSubview:textLabel];
             if([inst customValueForKey:[self.pref getName]] != nil && ![[inst customValueForKey:[self.pref getName]] isEqualToString:@"<null>"])
             {
-                imgView.center = CGPointMake(self.lineX - self.markerWidth/2, self.topLineY + [[inst customValueForKey:[self.pref getName]] integerValue]);
+                imgView.center = CGPointMake(self.lineX - self.markerWidth/2, self.topLineY + [[inst customValueForKey:self.prefName] integerValue]);
             }
             
             imgView.tag = i;
@@ -225,7 +242,7 @@
     }
     else{
         //load in the picker
-        
+        self.dumbField.hidden = YES;
         UIPickerView* pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 200, 320, 200)];
         pickerView.delegate = self;
         pickerView.showsSelectionIndicator = YES;
@@ -233,19 +250,31 @@
         [self.view addSubview:pickerView];
         self.isNull = false;
     }
+
 }
 
 
 -(IBAction)save:(id)sender
 {
     //if the user preference already exists, update the data
+    self.prefName = self.dumbField.text;
     UserPreference* userPref = [self.preferences getUserPreferenceForString:self.prefName];
+    NSLog(@"%@", [userPref getName]);
+    if(self.pref == nil)
+    {
+        NSLog(@"Creating new preference");
+        [self.preferences addPreferenceWithName:self.prefName andAcceptableValues:nil];
+        self.pref = [self.preferences getPreferenceForString:self.prefName];
+        NSLog(@"%@", [self.pref getName]);
+    }
     if(userPref != nil)
     {
         [userPref setPrefVal:self.pickerSelection];
         [userPref setMissingInstData:self.institutionsMissingData];
     }
     else{
+        NSLog(@"Creating new user preference...");
+
         //make a new user preference with missing data (if there is missing data)
 
         if(self.institutionsMissingData != nil)
@@ -261,6 +290,7 @@
     }
     if(self.isNull)
     {
+
         //if it is a custom, update the data in the institutions.  The userPrefence object has already been created.
         int i = 1;
         for(Institution* inst in [self.institutions getAllUserInstitutions])
@@ -342,5 +372,55 @@
     [self presentViewController:back animated:YES completion:nil];
     [back setSelectedIndex:1];
 }
+
+#warning FIX THIS STUPID THING
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    bool error = false;
+    for(NSString* name in [self.preferences getAllPrefNames])
+    {
+        if([textField.text isEqualToString:name])
+        {
+            error = true;
+        }
+    }
+    if(error)
+    {
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Invalid Name" message:@"Preference name already exists" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        //alert.tag = 2;
+        [alert setAlertViewStyle:UIAlertViewStyleDefault];
+        [alert show];
+        [textField becomeFirstResponder];
+    }
+    else{
+
+        [textField resignFirstResponder];
+
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 2){ //Alert coming from invalid data entry
+        //Do nothing
+        [self.view resignFirstResponder];
+    }
+}
+
+
+
+//dismiss keyboard when clicking on the background
+- (void)handleSingleTap:(UITapGestureRecognizer *) sender
+{
+    [self.view endEditing:YES];
+}
+
+
+//Makes keyboard disappear whenever user hits the "Done" button in bottom-right.
+-(BOOL) textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return YES;
+}
+
 
 @end

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Institution : NSObject
+@interface Institution : NSObject <NSCoding>
 
 -(id)initWithName: (NSString *) InstitutionName;
 

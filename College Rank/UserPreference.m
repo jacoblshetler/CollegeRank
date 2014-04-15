@@ -116,4 +116,27 @@
     return self.missingInstData;
 }
 
+#pragma mark - Serialization Code
+//get ready for serialization
+- (void)encodeWithCoder:(NSCoder *)coder {
+    [coder encodeFloat:weight forKey:@"weight"];
+    [coder encodeInt:preferredPrefValue forKey:@"value"];
+    [coder encodeObject:self.pref forKey:@"pref"];
+    [coder encodeObject:self.missingInstData forKey:@"missing"];
+    [coder encodeBool:self.locked forKey:@"locked"];
+}
+
+//init with serialized data
+- (id)initWithCoder:(NSCoder *)coder {
+    self = [super init];
+    if (self) {
+        weight = [coder decodeFloatForKey:@"weight"];
+        preferredPrefValue = [coder decodeIntForKey:@"value"];
+        self.pref = [coder decodeObjectForKey:@"pref"];
+        self.missingInstData = [coder decodeObjectForKey:@"missing"];
+        self.locked = [coder decodeBoolForKey:@"locked"];
+    }
+    return self;
+}
+
 @end

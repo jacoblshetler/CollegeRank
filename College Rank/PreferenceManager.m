@@ -23,6 +23,7 @@
         NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
         _userPrefs = [NSMutableArray new];
         _allPrefs = [[NSMutableArray alloc] init];
+        _missingInstitutionsForPreferenceShortNameDictionary = [[NSMutableDictionary alloc] init];
         for(NSString *key in valuesDict)
         {
             NSMutableArray* valueArr = [[NSMutableArray alloc] init];
@@ -109,7 +110,7 @@
 {
     for(UserPreference* pref in self.userPrefs)
     {
-        if([pref getName] == name)
+        if([[pref getName] isEqualToString:name])
         {
             return pref;
         }
@@ -122,7 +123,7 @@
 {
     for(Preference* pref in self.allPrefs)
     {
-        if([pref getName] == name)
+        if([[pref getName] isEqualToString:name])
         {
             return pref;
         }
@@ -132,7 +133,7 @@
 
 -(BOOL) canGoToRank
 {
-    return [_userPrefs count] > 1;
+    return [self.userPrefs count] > 1;
 }
 
 -(NSMutableArray*) getAllPrefNames
@@ -154,6 +155,25 @@
         [tempArr addObject:[NSNumber numberWithFloat:[curPref getWeight]]];
     }
     return tempArr;
+}
+
+#pragma mark - Serialization Code
+//get ready for serialization
+- (void)encodeWithCoder:(NSCoder *)coder {
+    [coder encodeObject:self.userPrefs forKey:@"userPrefs"];
+    [coder encodeObject:self.allPrefs forKey:@"allPrefs"];
+    [coder encodeObject:self.missingInstitutionsForPreferenceShortNameDictionary forKey:@"missing"];
+}
+
+//init with serialized data
+- (id)initWithCoder:(NSCoder *)coder {
+    self = [PreferenceManager sharedInstance];
+    if (self) {
+        self.userPrefs = [coder decodeObjectForKey:@"userPrefs"];
+        self.allPrefs = [coder decodeObjectForKey:@"allPrefs"];
+        self.missingInstitutionsForPreferenceShortNameDictionary = [coder decodeObjectForKey:@"missing"];
+    }
+    return self;
 }
 
 

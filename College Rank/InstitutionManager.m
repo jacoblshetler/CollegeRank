@@ -128,5 +128,35 @@
     return self.userInstitutions;
 }
 
+//<<<<<<< HEAD
+#pragma mark - Serialization Code
+//get ready for serialization
+- (void)encodeWithCoder:(NSCoder *)coder {
+    [coder encodeObject:self.allInstitutions forKey:@"all"];
+    [coder encodeObject:self.userInstitutions forKey:@"user"];
+}
+
+//init with serialized data
+- (id)initWithCoder:(NSCoder *)coder {
+    self = [InstitutionManager sharedInstance];
+    if (self) {
+        self.allInstitutions = [coder decodeObjectForKey:@"all"];
+        self.userInstitutions = [coder decodeObjectForKey:@"user"];
+    }
+    return self;
+}
+//=======
+-(NSMutableArray*) getCustomValuesForPreference: (NSString*) pref
+{
+    NSMutableArray* tempArr = [NSMutableArray new];
+    for (Institution* curInst in userInstitutions)
+    {
+        [tempArr addObject:[curInst customValueForKey:pref]];
+    }
+    return tempArr;
+    
+}
+
+//>>>>>>> 4d1f9348c13d4900b9b561db7b108901c7ffa583
 
 @end

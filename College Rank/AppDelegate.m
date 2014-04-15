@@ -15,6 +15,16 @@
 
 @implementation AppDelegate
 
+- (void)saveManagers{
+    //save institution manager
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"IM" ofType:@"plist"];
+    [NSKeyedArchiver archiveRootObject:[InstitutionManager sharedInstance] toFile:path];
+    
+    //save preference manager
+    path = [[NSBundle mainBundle] pathForResource:@"PM" ofType:@"plist"];
+    [NSKeyedArchiver archiveRootObject:[PreferenceManager sharedInstance] toFile:path];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
@@ -55,6 +65,23 @@
     NSLog(@"numberItWentWrong=%i",bad);
         */
     
+    //unarchive the stored instman and prefman
+    /*
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"IM" ofType:@"plist"];
+    @try{
+        id instMan = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        InstitutionManager* im = [InstitutionManager sharedInstance];
+        im.allInstitutions = ((InstitutionManager*)instMan).allInstitutions;
+        NSLog(@"%@",im.allInstitutions);
+    }
+    @catch (NSException* e){
+        
+    }
+    
+    path = [[NSBundle mainBundle] pathForResource:@"PM" ofType:@"plist"];
+    id prefMan = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    */
+     
     return YES;
 }
 							
@@ -68,11 +95,13 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+ //   [self saveManagers];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
