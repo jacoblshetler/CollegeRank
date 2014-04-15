@@ -156,6 +156,11 @@ void updateWeights(int index, float newWeight)
     CGFloat totalChangeableSpace = [[unlockedPrefs valueForKeyPath:@"@sum.getWeight"] floatValue];
     CGFloat oldWeight = [[userPrefs objectAtIndex:index] getWeight];
     
+    //If the preference being edited is locked, it neeeds to be added to the total changeable space
+    if ([[userPrefs objectAtIndex:index] getLock]) {
+        totalChangeableSpace += oldWeight;
+    }
+    
     //Warning, if there is no room for editing
     if (totalChangeableSpace <= oldWeight) {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"All Preferences Locked" message:@"You need to unlock some of your preferences to have space to edit more." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -168,6 +173,7 @@ void updateWeights(int index, float newWeight)
             if (uP != [userPrefs objectAtIndex:index]) {
                 CGFloat curWeight = [uP getWeight];
                 CGFloat update = (totalChangeableSpace-newWeight)*(curWeight/(totalChangeableSpace-oldWeight));
+                update = MAX(update, 0.01);
                 [uP setWeight:update];
             }
         }
@@ -175,11 +181,10 @@ void updateWeights(int index, float newWeight)
     }
 }
 
-#warning need to check "add new weight"
-
 //function will calculate the range of how much weight a certain preference
 //has to work with in the pie chart. The range of weights is between 0 and 1,
 //so this will return two numbers, both between 0 and 1.
+/*
 NSArray * weightToWorkWith(int index){
     //figure out how much is locked.
     PreferenceManager *prefMan = [PreferenceManager sharedInstance];
@@ -203,6 +208,47 @@ NSArray * weightToWorkWith(int index){
     //If the number of locked items is total-1, then min=max. Else min = .01
     float minWeight = 0.01;
     if (countOfLocked == [userPrefs count]-1){
+        minWeight = maxWeight;
+    }
+    
+    //return minWeight, maxWeight wrapped in NSNumbers.
+    return [[NSArray alloc] initWithObjects:[NSNumber numberWithFloat:minWeight], [NSNumber numberWithFloat:maxWeight], nil];
+}*/
+
+NSArray * weightToWorkWith(int index)
+{
+    PreferenceManager *prefMan = [PreferenceManager sharedInstance];
+    UserPreference* selectedPref = [[prefMan getAllUserPrefs] objectAtIndex:index];
+    
+    NSMutableArray* userPreferences = [NSMutableArray new];
+    for (UserPreference* uP in [prefMan getAllUserPrefs])
+    {
+        if (uP != selectedPref) {
+            [userPreferences addObject:uP];
+        }
+    }
+    
+    //Search for unlocked preferences
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"getLock == No"];
+    NSArray* unlockedPrefs = [userPreferences filteredArrayUsingPredicate:resultPredicate];
+    
+    //Find the lowest unlocked weight and the sum of the locked weights
+    CGFloat minEditableWeight = [[unlockedPrefs valueForKeyPath:@"@min.getWeight"] floatValue];
+    CGFloat lockedWeight = 1 - [[unlockedPrefs valueForKeyPath:@"@sum.getWeight"] floatValue] - [selectedPref getWeight];
+
+    //Calculate how small each unlocked preference can get
+    CGFloat minUnlockedSpace = 0;
+    for (UserPreference* uP in unlockedPrefs)
+    {
+        minUnlockedSpace += [uP getWeight]/minEditableWeight/100;
+    }
+    //Determine min and max allowable weight for user pref at index
+    CGFloat maxWeight = 1 - minUnlockedSpace - lockedWeight;
+    CGFloat minWeight = 0.01;
+    
+    //Check if you can't move due to too many locked screens
+    if ([unlockedPrefs count] == 0)
+    {
         minWeight = maxWeight;
     }
     

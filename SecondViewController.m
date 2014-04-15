@@ -33,6 +33,7 @@
 - (IBAction)sliderDragAction:(id)sender;
 - (IBAction)lockPressAction:(id)sender;
 - (void)buttonImage:(BOOL)lockState;
+-(void) updateInputControllers:(int) row;
 
 @end
 
@@ -218,13 +219,7 @@
         //[self canGoToTabs]; Run from Save button
     } else if (indexPath.row >= 2) {
         //Update slider data and lock button to match data for select preference
-        NSArray* range = weightToWorkWith(indexPath.row - 2);
-        UserPreference* selectedPref = [[_preferences userPrefs] objectAtIndex:indexPath.row - 2];
-        _slider.value = [selectedPref getWeight];
-        _slider.minimumValue = [[range objectAtIndex:0] floatValue];
-        _slider.maximumValue = [[range objectAtIndex:1] floatValue];
-        
-        [self buttonImage:[selectedPref getLock]];
+        [self updateInputControllers:indexPath.row - 2];
     }
 }
 
@@ -260,6 +255,9 @@
          selectRowAtIndexPath:indexPath
          animated:NO
          scrollPosition:UITableViewScrollPositionNone];
+        
+        [self updateInputControllers:[[_preferences userPrefs] count] - 1];
+
     }
     //Update Weights
     updateWeights(indexPath.row - 2, _slider.value);
@@ -271,19 +269,32 @@
 
 - (IBAction)lockPressAction:(id)sender
 {
-    NSLog(@"Pressed");
     //Check if a Preference is selected, if one isn't, select one.
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     if (indexPath == nil || indexPath.row < 2) {
-        indexPath = [NSIndexPath indexPathForRow:[[_preferences userPrefs] count]+1 inSection:0];
+        indexPath = [NSIndexPath indexPathForRow:[[_preferences userPrefs] count] + 1 inSection:0];
         [self.tableView
          selectRowAtIndexPath:indexPath
          animated:NO
          scrollPosition:UITableViewScrollPositionNone];
+        
+        [self updateInputControllers:[[_preferences userPrefs] count] - 1];
     }
     //Update Preference Lock
     UserPreference* selectedPref = [[_preferences userPrefs] objectAtIndex:indexPath.row - 2];
     [selectedPref changeLock];
+    [self buttonImage:[selectedPref getLock]];
+}
+
+//Update slider data and lock button to match data for select preference
+-(void)updateInputControllers:(int) row
+{
+    NSArray* range = weightToWorkWith(row);
+    UserPreference* selectedPref = [[_preferences userPrefs] objectAtIndex:row];
+    _slider.value = [selectedPref getWeight];
+    _slider.minimumValue = [[range objectAtIndex:0] floatValue];
+    _slider.maximumValue = [[range objectAtIndex:1] floatValue];
+    
     [self buttonImage:[selectedPref getLock]];
 }
 
