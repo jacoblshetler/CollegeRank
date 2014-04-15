@@ -37,8 +37,8 @@
     [testInst addInstitution:[[testInst searchInstitutions:@"System"] objectAtIndex:0]];
     
     [testPref addUserPref:[testPref getPreferenceAtIndex:1] withWeight:.3 andPrefVal:1];
-    [testPref addUserPref:[testPref getPreferenceAtIndex:2] withWeight:.3 andPrefVal:1];
-    [testPref addUserPref:[testPref getPreferenceAtIndex:3] withWeight:.4 andPrefVal:1];
+    [testPref addUserPref:[testPref getPreferenceAtIndex:2] withWeight:.5 andPrefVal:1];
+    [testPref addUserPref:[testPref getPreferenceAtIndex:3] withWeight:.5 andPrefVal:1];
     //[[[testPref userPrefs] objectAtIndex:2] changeLock];
     //[[[testPref userPrefs] objectAtIndex:1] changeLock];
     

@@ -105,7 +105,7 @@
         if(![object isEqualToString:@"<null>"])
         {
             count += 1;
-            terriblePracticeArr += (int)object;
+            terriblePracticeArr += [object intValue];
         }
     }
     if (count==0) {
@@ -173,6 +173,7 @@
     if ([self.data valueForKey:key]) {
         //then it contains the obj, so update it
         [self.data setValue:val forKey:key];
+        NSLog(@"%@",self.data);
     }
 }
 
@@ -181,7 +182,7 @@
 }
 
 - (void) setValue: (NSString*) val ForKeyInCustomDictionary: (NSString*) key{
-    [self.customData setObject:val forKey:key];
+    [self.customData setObject:[NSString stringWithFormat:@"%@",val] forKey:key];
 }
 - (void) deleteKeyValuePairForKey: (NSString*) key{
     [self.customData removeObjectForKey:key];
