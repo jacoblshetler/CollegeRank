@@ -9,6 +9,7 @@
 #import "MissingDataViewController.h"
 #import "AcceptableValueViewController.h"
 #import "Preference.h"
+#import "PreferenceManager.h"
 #import "Institution.h"
 #import "InstitutionManager.h"
 
@@ -229,6 +230,26 @@
     NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
     NSString *prefDecoded = [[valuesDict valueForKeyPath:prefName] objectAtIndex:0];
     
+    //Make sure the user can edit old institutions, even if they didn't hit save on the accpetableValue VC
+    NSMutableArray * missingDataInst = [[InstitutionManager sharedInstance] getMissingDataInstitutionsForPreference:prefDecoded];
+    NSMutableArray * missingDataFromPrefMan = [[[PreferenceManager sharedInstance] missingInstitutionsForPreferenceShortNameDictionary] objectForKey:prefDecoded];
+    missingInstitutions = [[NSMutableArray alloc]init];
+    for (NSString* curInst in missingDataInst) {
+        if (![missingInstitutions containsObject:curInst])
+        {
+            [missingInstitutions addObject:curInst];
+        }
+    }
+    for (NSString* curInst in missingDataFromPrefMan) {
+        if (![missingInstitutions containsObject:curInst])
+        {
+            [missingInstitutions addObject:curInst];
+        }
+    }
+    //update the dictionary
+    [[[PreferenceManager sharedInstance] missingInstitutionsForPreferenceShortNameDictionary] setValue:self.missingInstitutions forKey:prefDecoded];
+    
+    
     //set each text field's delegate to self and show all of the ones we need to
     //also set the placeholder text for each of the inputs that we show
     int counter = 0;
@@ -266,8 +287,7 @@
     [self translatePrefTypeToKeys:[[valuesDict valueForKeyPath:prefName] objectAtIndex:0]];
     
     //set up the gesture recognizer. this dismisses keyboard when they click away from the text field
-    _tapper = [[UITapGestureRecognizer alloc]
-              initWithTarget:self action:@selector(handleSingleTap:)];
+    _tapper = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     _tapper.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:_tapper];
 }

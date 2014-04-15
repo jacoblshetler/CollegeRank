@@ -15,6 +15,7 @@
 @interface PreferenceManager : NSObject
 @property NSMutableArray* userPrefs;
 @property NSMutableArray* allPrefs;
+@property NSMutableDictionary* missingInstitutionsForPreferenceShortNameDictionary;
 
 + (id)sharedInstance;
 -(NSArray*) getAllPrefs;

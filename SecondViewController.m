@@ -240,7 +240,7 @@
     if ([missingDataInst count]!= 0) {
         MissingDataViewController* missingData = [self.storyboard instantiateViewControllerWithIdentifier:@"MissingDataView"];
         missingData.prefName = entry;
-        missingData.missingInstitutions = missingDataInst;
+       // missingData.missingInstitutions = missingDataInst;
         [self presentViewController:missingData animated:YES completion:nil];
     } else {
         AcceptableValueViewController* userPrefView = [self.storyboard instantiateViewControllerWithIdentifier:@"UserPrefsView"];
