@@ -25,6 +25,7 @@
 -(void) addUserPref: (Preference*) pref withWeight: (float) weight andPrefVal: (int) prefVal;
 -(void) addUserPref:(Preference*) pref withAcceptableValue: (int) prefVal;
 -(void) addUserPref:(Preference*) pref withAcceptableValue: (int) prefVal andMissingData: (NSMutableArray*) instData;
+-(void) removeUserPrefAtIndex:(int) index;
 
 -(void) addPreferenceWithName: (NSString*) name andAcceptableValues: (NSArray*) vals;
 -(UserPreference*) getUserPreferenceAtIndex: (int) index;

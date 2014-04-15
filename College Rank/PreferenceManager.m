@@ -10,6 +10,7 @@
 #import "Preference.h"
 #import "UserPreference.h"
 #import "DataRetreiver.h"
+#import "Calculations.h"
 
 @implementation PreferenceManager
 
@@ -88,6 +89,17 @@
     [self.allPrefs addObject:[[Preference alloc] initWithName:name andAcceptableValues:vals]];
 }
 
+-(void) removeUserPrefAtIndex:(int) index
+{
+    #warning might divide by 0
+    updateWeights(index, 0);
+    [[self userPrefs] removeObjectAtIndex:index];
+#warning Deal with removing Custom Preferences
+    //Remove From userPrefs
+    //allPrefs
+    //Custom Data Dictionary in each inst
+}
+
 
 -(UserPreference*) getUserPreferenceAtIndex: (int) index
 {
@@ -162,7 +174,6 @@
 
 -(NSMutableArray*) getAllPrefNames
 {
-#warning does not include the name of custom preferences!
     NSMutableArray* tempArr = [NSMutableArray new];
     for(Preference *curPref in self.allPrefs)
     {
