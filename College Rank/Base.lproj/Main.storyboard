@@ -253,6 +253,19 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Rankings" id="Lad-Yw-8aN">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="s1X-W7-9eL">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="485-ae-sFJ">
+                                <rect key="frame" x="16" y="5" width="71" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Reset">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="reset:" destination="HPz-S6-Y0Z" eventType="touchUpInside" id="b7k-Vf-aLY"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="h8C-pj-mFD">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" id="lmE-oD-B8X">
                                 <rect key="frame" x="282" y="11" width="22" height="22"/>
@@ -551,6 +564,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Oek-MR-n0S"/>
+        <segue reference="uID-Eo-KIp"/>
     </inferredMetricsTieBreakers>
 </document>
