@@ -63,7 +63,6 @@
     
     //generate the index->ordinal dictionary
     _indexToOrdinal = createOrdinalDictionary(_calculationResults,_orderedKeys);
-    NSLog(@"%@",_indexToOrdinal);
     
     self.tableView.delegate = self;
      
@@ -72,15 +71,12 @@
 - (void) viewDidAppear:(BOOL)animated{
     //calculate the rankings
     _calculationResults = [[NSMutableDictionary alloc] initWithDictionary:generateRankings()];
-    NSLog(@"calcResults: %@",_calculationResults);
     
     //generate the ordered keys
     _orderedKeys = orderDictKeysDescending(_calculationResults);
-    NSLog(@"ordered keys: %@",_orderedKeys);
     
     //generate the index->ordinal dictionary
     _indexToOrdinal = createOrdinalDictionary(_calculationResults,_orderedKeys);
-    NSLog(@"%@",_indexToOrdinal);
     
     //redraw the table
     [self.tableView reloadData];

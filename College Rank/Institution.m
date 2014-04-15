@@ -162,7 +162,7 @@
         females = [[self.data valueForKey:@"women_perc"] intValue];
     }
     @catch (NSException *e) {
-        NSLog(@"Female Error: %@",e.description);
+       // NSLog(@"Female Error: %@",e.description);
         crashed = true;
     }
     if (crashed) return [[NSString alloc] initWithFormat:@"<null>"];
@@ -173,7 +173,6 @@
     if ([self.data valueForKey:key]) {
         //then it contains the obj, so update it
         [self.data setValue:val forKey:key];
-        NSLog(@"%@",self.data);
     }
 }
 
