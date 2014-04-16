@@ -92,9 +92,10 @@
     _button.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     [self buttonImage:FALSE];
     
- 
     // Display an Edit button in the navigation bar for this view controller.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    self.tableView.allowsSelectionDuringEditing = YES;
+
 }
 
 -(void) viewWillAppear:(BOOL)animated{
@@ -221,6 +222,11 @@
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    
+    //For edits
+    if (self.tableView.editing) {
+        
     }
     
     if (tableView == self.searchDisplayController.searchResultsTableView) {
