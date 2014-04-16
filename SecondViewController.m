@@ -391,11 +391,16 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-#warning Need removeUserPrefs.
-#warning When deleting user preference with edited missing data, need to keep track of it being edited
+#warning Double check that custom settings aren't added to the missing data dictionary
+#warning Fully test deleting custom preferences
         // Delete the row from the data source
-        //[_preferences removeUserPreference:[[[_institutions userInstitutions] objectAtIndex:indexPath.row] name]];
-        //[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [_preferences removeUserPrefAtIndex:indexPath.row - 2];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+        //Update Pie Chart
+        NSIndexPath *chartPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.tableView reloadRowsAtIndexPaths:@[chartPath] withRowAnimation:UITableViewRowAnimationNone];
+        
         //[self canGoToTabs];
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
