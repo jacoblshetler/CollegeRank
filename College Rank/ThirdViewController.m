@@ -9,8 +9,10 @@
 #import "ThirdViewController.h"
 #import "InstitutionManager.h"
 #import "PreferenceManager.h"
+#import "Preference.h"
 #import "Calculations.h"
 #import "FirstViewController.h"
+#import "DataRetreiver.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface ThirdViewController ()
@@ -157,7 +159,7 @@
     
     /*
     UILabel *yAxisLabel = [[UILabel alloc] initWithFrame:CGRectMake(-30, _chartHeight*.5, 70, 20)];
-    yAxisLabel.text = @"Cardinal Utility"; //TODO: we should think of a more user-friendly name for this axis
+    yAxisLabel.text = @"Cardinal Utility"; //we should think of a more user-friendly name for this axis
     yAxisLabel.adjustsFontSizeToFitWidth = YES;
     [yAxisLabel setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
     [self.view addSubview:yAxisLabel];
@@ -270,10 +272,27 @@
 -(IBAction)reset:(id)sender
 {
     InstitutionManager* inst = [InstitutionManager sharedInstance];
-    inst = [[InstitutionManager alloc] init];
+    NSMutableArray *myArrI = GetInstitutions();
+    inst.allInstitutions = [[NSArray alloc] initWithArray:myArrI copyItems:TRUE];
+    inst.userInstitutions = [NSMutableArray new];
+//    inst = [[InstitutionManager alloc] init];
     
     PreferenceManager* pref = [PreferenceManager sharedInstance];
-    pref = [[PreferenceManager alloc] init];
+    NSString *values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
+    NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
+    pref.userPrefs = [NSMutableArray new];
+    pref.allPrefs = [[NSMutableArray alloc] init];
+    pref.missingInstitutionsForPreferenceShortNameDictionary = [[NSMutableDictionary alloc] init];
+    for(NSString *key in valuesDict)
+    {
+        NSMutableArray* valueArr = [[NSMutableArray alloc] init];
+        for(int i=1; i<[[valuesDict objectForKey:key] count]; i++)
+        {
+            [valueArr addObject:[[valuesDict objectForKey:key] objectAtIndex:i]];
+        }
+        [pref.allPrefs addObject: [[Preference alloc] initWithName:key andAcceptableValues:valueArr]];
+    }
+    //pref = [[PreferenceManager alloc] init];
     
     [self.tabBarController setSelectedIndex:0];
 }

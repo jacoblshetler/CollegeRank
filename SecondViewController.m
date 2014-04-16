@@ -97,6 +97,52 @@
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 }
 
+-(void) viewWillAppear:(BOOL)animated{
+    _institutions = [InstitutionManager sharedInstance];
+    _preferences = [PreferenceManager sharedInstance];
+    //[self canGoToTabs];
+    
+    //Define graphic dimensions
+    _chartHeight = 200;
+    _cellHeight = 45;
+    _screenWidth = self.view.frame.size.width;
+    
+    //Define Graphic Colors
+    NSString* colorFile = [[NSBundle mainBundle] pathForResource: @"Colors" ofType: @"plist"];
+    NSArray* colorRGB = [[NSArray alloc] initWithContentsOfFile:colorFile];
+    
+    NSMutableArray* tempArray = [NSMutableArray new];
+    CGFloat r, g, b;
+    for (NSArray* rgb in colorRGB) {
+        r = [[rgb objectAtIndex:0] floatValue]/255;
+        g = [[rgb objectAtIndex:1] floatValue]/255;
+        b = [[rgb objectAtIndex:2] floatValue]/255;
+        [tempArray addObject:[UIColor colorWithRed:r green:g blue:b alpha:1.0]];
+    }
+    _colors = [[NSArray alloc] initWithArray:tempArray];
+    
+    //Define UISlider
+    _slider = [UISlider new];
+    [_slider addTarget:self action:@selector(sliderDragAction:) forControlEvents:UIControlEventTouchDragInside];
+    _slider.bounds = CGRectMake(0, 0, _screenWidth*.7, _slider.bounds.size.height);
+    _slider.center = CGPointMake((_screenWidth/2)*.7 + 15, _cellHeight/2);
+    _slider.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    
+    //Define UIButton
+    _button = [UIButton new];
+    [_button addTarget:self action:@selector(lockPressAction:) forControlEvents:UIControlEventTouchUpInside];
+    _button.bounds = CGRectMake(0,0, _slider.bounds.size.height,_slider.bounds.size.height);
+    _button.center = CGPointMake(_screenWidth - (_slider.bounds.size.height/2 + 15), _cellHeight/2);
+    _button.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    [self buttonImage:FALSE];
+    
+    
+    // Display an Edit button in the navigation bar for this view controller.
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    
+    [self.tableView reloadData];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
