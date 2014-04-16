@@ -46,6 +46,14 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 }
+-(void) viewWillAppear:(BOOL)animated{
+    //do everything you would do in the viewDidLoad
+    _institutions = [InstitutionManager sharedInstance];
+    _preferences = [PreferenceManager sharedInstance];
+    [self.tableView reloadData];
+    [self canGoToTabs];
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+}
 
 - (void)didReceiveMemoryWarning
 {
