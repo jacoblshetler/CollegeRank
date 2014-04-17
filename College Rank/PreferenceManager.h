@@ -36,7 +36,5 @@
 -(NSMutableArray*) getAllPrefNames;
 -(NSMutableArray*) getAllPrefWeights;
 -(BOOL) canGoToRank;
-#warning needs a removePreference function
-
 
 @end

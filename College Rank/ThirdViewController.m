@@ -268,7 +268,7 @@
 }
 
  */
-#warning I'm getting lunch, fix this later.
+
 -(IBAction)reset:(id)sender
 {
     InstitutionManager* inst = [InstitutionManager sharedInstance];

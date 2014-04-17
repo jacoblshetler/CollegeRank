@@ -105,7 +105,7 @@
     {
         //load in the selector bar
         self.isNull = true;
-#warning Change me to change the properties of the vertical line!
+        //Change me to change the properties of the vertical line!
         //add the line to snap to
         
         UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.lineX - self.markerHeight/2, self.topLineY - 20, 30, 20)];
@@ -276,7 +276,6 @@
             
         }
     }
-#warning look here
     for (NSString* i in [_preferences getAllPrefNames])
     {
         NSLog(@"%@",i);
@@ -346,7 +345,7 @@
     [back setSelectedIndex:1];
 }
 
-#warning FIX THIS STUPID THING
+
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
     bool error = false;

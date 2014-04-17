@@ -13,10 +13,10 @@
 #import "UserPreference.h"
 #import "Preference.h"
 #import "DataRetreiver.h"
-#import "MissingDataViewController.h"//Do we need these two?
+#import "MissingDataViewController.h"
 #import "AcceptableValueViewController.h"
 
-@interface SecondViewController ()
+@interface SecondViewController()
 
 @property InstitutionManager* institutions;
 @property PreferenceManager* preferences;
@@ -28,7 +28,7 @@
 @property int cellHeight;
 @property int screenWidth;
 
-- (void) preferenceNavigate: (NSIndexPath *) indexPath;
+- (void)preferenceNavigate:(NSString*)entry;
 -(UIImage*) drawPieChart:(NSArray*) weights;
 - (IBAction)sliderDragAction:(id)sender;
 - (IBAction)lockPressAction:(id)sender;
@@ -54,7 +54,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"JUST LOADED");
     _institutions = [InstitutionManager sharedInstance];
     _preferences = [PreferenceManager sharedInstance];
     [self canGoToTabs];
@@ -199,6 +198,8 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    //Shows arrows when in editing mode
+    cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         cell.textLabel.text = [_searchResults objectAtIndex:indexPath.row];
@@ -226,12 +227,6 @@
 #pragma Selection
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //For edits
-    if (self.tableView.editing==YES) {
-        NSLog(@"True");
-        //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
-    
     //Add code for normal table view, when > 1 preferences set the selected prefernces equal to a variable that gets edited
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         if ([[_preferences userPrefs] count] == 10)
@@ -240,31 +235,37 @@
             [alert setAlertViewStyle:UIAlertViewStyleDefault];
             [alert show];
             [self.searchDisplayController setActive:NO animated:YES];
-
         }
-        [self preferenceNavigate:indexPath];
-        //[self.tableView reloadData]; Run from Save button
-        [self canGoToTabs]; //Run from Save button
+        NSString* entry = [_searchResults objectAtIndex:[indexPath row]];
+        [self preferenceNavigate:entry];
+        [self canGoToTabs];
+    } else if (self.tableView.editing==YES && indexPath.row >= 2) {
+        //Go back to edit views
+        NSString* entry = [[[_preferences userPrefs] objectAtIndex:indexPath.row - 2] getName];
+        [self preferenceNavigate:entry];
+        
     } else if (indexPath.row >= 2) {
         //Update slider data and lock button to match data for select preference
         [self updateInputControllers:indexPath.row - 2];
     }
 }
+    
 #pragma Navigate
-- (void) preferenceNavigate: (NSIndexPath *) indexPath
+- (void)preferenceNavigate:(NSString *) entry
 {
     NSString* values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
     NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
     
-    NSString* entry = [_searchResults objectAtIndex:[indexPath row]];
-    
     //If the entry is a custom preference, skip the rest of the function
     NSPredicate* memberPredicate = [NSPredicate predicateWithFormat:@"Self Like[cd] %@",entry];
-    if ([[[_preferences getAllPrefNames] filteredArrayUsingPredicate:memberPredicate] count] == 0) {
+    BOOL isUnaddedCustom = ([[[_preferences getAllPrefNames] filteredArrayUsingPredicate:memberPredicate] count] == 0);
+    
+    UserPreference* usrPref = [_preferences getUserPreferenceForString:entry];
+    BOOL isAddedCustom = (usrPref == nil) ? FALSE : ([[usrPref getPref] getValues] == nil);
+    if (isUnaddedCustom || isAddedCustom) {
         [self goToAcceptableValues:entry];
     }
     else {
-    
         NSString *entryDecoded = [[valuesDict valueForKeyPath:entry] objectAtIndex:0];
     
         NSMutableArray * missingDataInst = [_institutions getMissingDataInstitutionsForPreference:entryDecoded];
@@ -431,10 +432,23 @@
             NSIndexPath *sliderPath = [NSIndexPath indexPathForRow:1 inSection:0];
             [tableView deleteRowsAtIndexPaths:@[indexPath,chartPath,sliderPath] withRowAnimation:UITableViewRowAnimationFade];
         } else {
+            /*
+            //Update controllers
+            //Possibly use NSTimer or a CAAnimation. Currently the reloadeRowsAtIndexPaths is not working
+            CGFloat startWeight = [[[_preferences userPrefs] objectAtIndex:indexPath.row - 2] getWeight];
+            for (int i = 1; i < 10; i++) {
+                CGFloat curWeight = [[[_preferences userPrefs] objectAtIndex:indexPath.row - 2] getWeight];
+                updateWeights(indexPath.row - 2, startWeight - i*(startWeight/10));
+                [self.tableView reloadRowsAtIndexPaths:@[chartPath] withRowAnimation:UITableViewRowAnimationNone];
+                NSLog(@"%f",curWeight);
+                [NSThread sleepForTimeInterval:0.1f];
+            }*/
+            
+            
             //Delete Preference
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 
-            //Update Pie Chart
+            //Update Pie Chart and slider
             [self.tableView reloadRowsAtIndexPaths:@[chartPath] withRowAnimation:UITableViewRowAnimationNone];
         }
         
@@ -444,6 +458,7 @@
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
+
 
 /*
 // Override to support rearranging the table view.
