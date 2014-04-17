@@ -423,21 +423,19 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
 #warning Fully test deleting custom preferences
-        // Delete the row from the data source
         [_preferences removeUserPrefAtIndex:indexPath.row - 2];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        
-        //Try adding code to delete these rows
-        
-#warning Do this only if the pie chart is not disappearing
-        //Update Pie Chart
         NSIndexPath *chartPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        [self.tableView reloadRowsAtIndexPaths:@[chartPath] withRowAnimation:UITableViewRowAnimationNone];
         
-        //Deal with deleting Pie Chart
         if([[_preferences userPrefs] count] == 1) {
+            //Delete chart and preference
             NSIndexPath *sliderPath = [NSIndexPath indexPathForRow:1 inSection:0];
-            [tableView deleteRowsAtIndexPaths:@[chartPath,sliderPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteRowsAtIndexPaths:@[indexPath,chartPath,sliderPath] withRowAnimation:UITableViewRowAnimationFade];
+        } else {
+            //Delete Preference
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+
+            //Update Pie Chart
+            [self.tableView reloadRowsAtIndexPaths:@[chartPath] withRowAnimation:UITableViewRowAnimationNone];
         }
         
         [self canGoToTabs];
