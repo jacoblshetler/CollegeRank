@@ -414,7 +414,6 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-#warning Double check that custom settings aren't added to the missing data dictionary
 #warning Fully test deleting custom preferences
         // Delete the row from the data source
         [_preferences removeUserPrefAtIndex:indexPath.row - 2];
