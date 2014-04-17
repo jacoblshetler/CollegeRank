@@ -39,6 +39,7 @@
     _preferences = [PreferenceManager sharedInstance];
     //[self testCalculations];
     [self canGoToTabs];
+    [self updateTabBarIcon];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -52,6 +53,7 @@
     _preferences = [PreferenceManager sharedInstance];
     [self.tableView reloadData];
     [self canGoToTabs];
+    [self updateTabBarIcon];
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 }
 
@@ -132,6 +134,7 @@
                 [self.searchDisplayController setActive:NO animated:YES];
                 [self.tableView reloadData];
                 [self canGoToTabs];
+                [self updateTabBarIcon];
             }
         }
     }
@@ -150,6 +153,18 @@
         [[[[self.tabBarController tabBar]items]objectAtIndex:2]setEnabled:TRUE];
     }
 }
+
+-(void) updateTabBarIcon{
+    //TODO: Philip, this needs to change to edit the icon of the tab bar. Right now it just changes the text.
+    
+    //determines if tab bar icon for 2nd view controller should have "!" in it
+    [[self.tabBarController.tabBar.items objectAtIndex:1] setTitle:@"Not Missing"]; //should be [[self.tabBarController.tabBar.items objectAtIndex:1] setImage:@"NotMissing.png" forState:UIControlStateNormal];
+    if ([[institutionsMissingDataForUserPrefs() objectForKey:@"All"] boolValue]) {
+        //then something is missing data
+        [[self.tabBarController.tabBar.items objectAtIndex:1] setTitle:@"Missing Data"];
+    }
+}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -172,6 +187,8 @@
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }
+    
+    [self updateTabBarIcon];
 }
 
 

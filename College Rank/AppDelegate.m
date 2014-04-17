@@ -72,10 +72,9 @@
     [testPref addUserPref:[testPref getPreferenceAtIndex:3] withWeight:.2 andPrefVal:1];
     //[testPref removeUserPrefAtIndex:1];
     
-    
     //updateWeights(0, .4);
     //NSLog(@"%f",[[[testPref userPrefs] objectAtIndex:1] getWeight]);
-    
+    NSLog(@"%@",institutionsMissingDataForUserPrefs());
     
     
     

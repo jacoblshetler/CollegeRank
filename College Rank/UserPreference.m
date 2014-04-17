@@ -19,6 +19,7 @@
     {
         self.pref = preference;
         weight = wt;
+        zipCode = [[NSString alloc]init];
         self.locked = false;
         return self;
     }
@@ -32,6 +33,7 @@
     {
         self.pref = preference;
         weight = wt;
+        zipCode = [[NSString alloc]init];
         self.locked = false;
         preferredPrefValue = value;
         return self;
@@ -46,6 +48,7 @@
     {
         self.pref = preference;
         self.locked = false;
+        zipCode = [[NSString alloc]init];
         preferredPrefValue = value;
         return self;
     }
@@ -60,6 +63,7 @@
         self.missingInstData = instData;
         self.pref = preference;
         self.locked = false;
+        zipCode = [[NSString alloc]init];
         preferredPrefValue = value;
         return self;
     }

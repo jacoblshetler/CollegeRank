@@ -772,14 +772,58 @@ NSMutableArray * normalizeFromCity(NSMutableArray* preferenceValues, int chosenV
 //This function will convert a list of y-values of custom preference markers
 //to their normalized equivalents. Returns them in the same order it was sent
 NSMutableArray * normalizeFromContinuum(NSMutableArray * yValues){
+    NSMutableDictionary* dataDict = takeOutNulls(yValues);
+    yValues = [dataDict valueForKey:@"newList"];
+    NSMutableArray* replaceVals = [dataDict valueForKey:@"nullIndexs"];
+    
     //Subtract each value from the highest value
     NSNumber * max = [yValues valueForKeyPath:@"@max.floatValue"];
     for (int i = 0; i<[yValues count]; i++){
         yValues[i] = [[NSNumber alloc] initWithFloat:([max floatValue]  - [yValues[i] floatValue])];
     }
 
-    return normalize(yValues);
+    //Normalize. Then replace everything in the replaceVals with the mean
+    NSMutableArray* normalizedVals = normalize(yValues);
+    return putMeanBackIn(normalizedVals, replaceVals);
 }
+
+#pragma mark - Preference & Institution Manager Calculations
+
+//function to return dictionary of institutions that are missing data for all user prefs
+NSMutableDictionary * institutionsMissingDataForUserPrefs(){
+    PreferenceManager* prefMan = [PreferenceManager sharedInstance];
+    InstitutionManager* instMan = [InstitutionManager sharedInstance];
+    NSMutableDictionary* returnDict = [[NSMutableDictionary alloc]init];
+    bool anyHadMissing = false;
+    
+    //load up translation for pref names
+    NSString* values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
+    NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
+    
+    //get the user prefs and current institutions
+    NSMutableArray* userPrefs = prefMan.userPrefs;
+    
+    //for each preference, see if all institutions have data for it
+    for (UserPreference* curPref in userPrefs) {
+        //get short name of pref
+        NSString *prefShortName = [[valuesDict valueForKeyPath:[curPref getName]] objectAtIndex:0];
+        
+        //check all institutions
+        NSMutableArray* missingInsts = [instMan getMissingDataInstitutionsForPreference:prefShortName];
+        if ([missingInsts count]>0) {
+            anyHadMissing = true;
+            [returnDict setValue:[NSNumber numberWithBool:true] forKey:prefShortName];
+        }
+        else{
+            [returnDict setValue:[NSNumber numberWithBool:false] forKey:prefShortName];
+        }
+    }
+    //append whether or not any had missing data
+    [returnDict setValue:[NSNumber numberWithBool:anyHadMissing] forKey:@"All"];
+    
+    return returnDict;
+}
+
 
 #pragma mark - Generate Rankings
 

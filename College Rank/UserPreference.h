@@ -13,6 +13,7 @@
 {
     float weight;
     int preferredPrefValue;
+    NSString* zipCode; //the user's zip code
 }
 @property (nonatomic, retain) Preference* pref;
 @property (nonatomic, retain) NSMutableArray* missingInstData;
@@ -33,6 +34,9 @@
 -(void) setPrefVal: (int) prf;
 -(NSString*) getName;
 -(Preference*) getPref;
+-(NSString*) getZipCode;
+-(void) setZipCode;
+
 -(void) setMissingInstData:(NSMutableArray *)missingInstData;
 -(NSMutableArray*) getMissingInstData;
 
