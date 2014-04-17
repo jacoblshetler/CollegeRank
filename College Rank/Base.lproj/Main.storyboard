@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="8YX-ce-x5E">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="8YX-ce-x5E">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -454,6 +454,13 @@
                                     <action selector="missingData:" destination="Qh9-HA-FpA" eventType="touchUpInside" id="i4T-t0-Abd"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gAA-FB-gZ5">
+                                <rect key="frame" x="24" y="436" width="276" height="74"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -486,6 +493,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="cancel" destination="xNE-62-0q4" id="BjS-IQ-Dfg"/>
+                        <outlet property="descriptionLabel" destination="gAA-FB-gZ5" id="Mhb-QG-NU5"/>
                         <outlet property="dumbField" destination="Fbd-lt-4pL" id="bwP-rW-yxL"/>
                         <outlet property="missingData" destination="YZ4-Rq-ROw" id="KjS-uh-QJ4"/>
                         <outlet property="save" destination="Lz7-aU-wg1" id="YEM-ab-up8"/>
@@ -564,6 +572,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="uID-Eo-KIp"/>
+        <segue reference="Oek-MR-n0S"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Public or Private</key>
+	<array>
+		<string>Would you prefer public or private?</string>
+	</array>
+	<key>Location</key>
+	<array>
+		<string>How close would you like to be?</string>
+	</array>
+	<key>Average SAT Score</key>
+	<array>
+		<string>What SAT score would you prefer?</string>
+	</array>
+	<key>Football Team</key>
+	<array>
+		<string>Would you like a football team?</string>
+	</array>
+	<key>Baseball Team</key>
+	<array>
+		<string>Would you like a baseball team?</string>
+	</array>
+	<key>Basketball Team</key>
+	<array>
+		<string>Would you like a basketball team?</string>
+	</array>
+	<key>Cross Country And Track Team</key>
+	<array>
+		<string>Would you like a cross country and track team?</string>
+	</array>
+	<key>Available Daycare</key>
+	<array>
+		<string>Do you need daycare?</string>
+	</array>
+	<key>Study Abroad Opportunities</key>
+	<array>
+		<string>Should there be study abroad options?</string>
+	</array>
+	<key>Number of Students</key>
+	<array>
+		<string>How big should the college be?</string>
+	</array>
+	<key>College Selectivity</key>
+	<array>
+		<string>How selective should the college be?</string>
+	</array>
+	<key>Student Faculty Ratio</key>
+	<array>
+		<string>What should the student to faculty ratio be?</string>
+	</array>
+	<key>Gender Ratio</key>
+	<array>
+		<string>What should the gender ration be?</string>
+	</array>
+	<key>Highest Available Degree</key>
+	<array>
+		<string>Do you need a specific degree?</string>
+	</array>
+	<key>Tuition</key>
+	<array>
+		<string>How much should the college cost?</string>
+	</array>
+	<key>Religious Affiliation</key>
+	<array>
+		<string>Which religious affiliation would you prefer?</string>
+	</array>
+	<key>Size of City</key>
+	<array>
+		<string>How large of a city should the college be in?</string>
+	</array>
+</dict>
+</plist>
