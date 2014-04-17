@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14D9F7E01900219B008ADB02 /* Description.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14D9F7DF1900219B008ADB02 /* Description.plist */; };
 		3628C84E18F4B0E10077145B /* pointer1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3628C84C18F4B0E10077145B /* pointer1.png */; };
 		3659A79118D79DBB00E975E5 /* Preference.m in Sources */ = {isa = PBXBuildFile; fileRef = 3659A79018D79DBB00E975E5 /* Preference.m */; };
 		365A9CD518D7B18100978516 /* UserPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 365A9CD418D7B18100978516 /* UserPreference.m */; };
@@ -57,6 +58,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		14D9F7DF1900219B008ADB02 /* Description.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Description.plist; sourceTree = "<group>"; };
 		3628C84C18F4B0E10077145B /* pointer1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pointer1.png; sourceTree = "<group>"; };
 		3659A78F18D79DBB00E975E5 /* Preference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preference.h; sourceTree = "<group>"; };
 		3659A79018D79DBB00E975E5 /* Preference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preference.m; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				84F0D37818F6E4E50081B855 /* nameToDataKeys.plist */,
 				8409E7DC18F749FB00A07BDA /* missingDataOptions.plist */,
 				84EBAEA618DB2F2F006CC653 /* AcceptableValues.plist */,
+				14D9F7DF1900219B008ADB02 /* Description.plist */,
 				844E770118AD289100A6FC91 /* InfoPlist.strings */,
 				844E770418AD289100A6FC91 /* main.m */,
 				844E770618AD289100A6FC91 /* College Rank-Prefix.pch */,
@@ -339,6 +342,7 @@
 				841870B41900205E0024ECAF /* missingDataTips.plist in Resources */,
 				844E771418AD289100A6FC91 /* Images.xcassets in Resources */,
 				844E770318AD289100A6FC91 /* InfoPlist.strings in Resources */,
+				14D9F7E01900219B008ADB02 /* Description.plist in Resources */,
 				3628C84E18F4B0E10077145B /* pointer1.png in Resources */,
 				844E770C18AD289100A6FC91 /* Main.storyboard in Resources */,
 			);

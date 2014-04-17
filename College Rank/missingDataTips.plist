@@ -2,9 +2,73 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>shortPrefName</key>
+	<key>Public or Private</key>
 	<array>
-		<string>Here is a tip for how to enter data for a specific short preference name!</string>
+		<string>Choose from the drop-down list that appears when you select a college.</string>
+	</array>
+	<key>Location</key>
+	<array>
+		<string>Enter 5-digit zip codes for the following colleges.</string>
+	</array>
+	<key>Average SAT Score</key>
+	<array>
+		<string>Enter average SAT scores for the following colleges (out of 1600).</string>
+	</array>
+	<key>Football Team</key>
+	<array>
+		<string>Choose from the drop-down list that appears when you select a college.</string>
+	</array>
+	<key>Baseball Team</key>
+	<array>
+		<string>Choose from the drop-down list that appears when you select a college.</string>
+	</array>
+	<key>Basketball Team</key>
+	<array>
+		<string>Choose from the drop-down list that appears when you select a college.</string>
+	</array>
+	<key>Cross Country And Track Team</key>
+	<array>
+		<string>Choose from the drop-down list that appears when you select a college.</string>
+	</array>
+	<key>Available Daycare</key>
+	<array>
+		<string>Choose from the drop-down list that appears when you select a college.</string>
+	</array>
+	<key>Study Abroad Opportunities</key>
+	<array>
+		<string>Choose from the drop-down list that appears when you select a college.</string>
+	</array>
+	<key>Number of Students</key>
+	<array>
+		<string>Enter the number of students that attend the following colleges.</string>
+	</array>
+	<key>College Selectivity</key>
+	<array>
+		<string>Enter the number of students out of 100 applications admitted to the following colleges.</string>
+	</array>
+	<key>Student Faculty Ratio</key>
+	<array>
+		<string>Enter the number of students per faculty member at the following colleges.</string>
+	</array>
+	<key>Gender Ratio</key>
+	<array>
+		<string>Enter the number of female students out of 100 students at the following colleges.</string>
+	</array>
+	<key>Highest Available Degree</key>
+	<array>
+		<string>Choose from the drop-down list that appears when you select a college.</string>
+	</array>
+	<key>Tuition</key>
+	<array>
+		<string>Enter the approximate cost of attending the following colleges for one year.</string>
+	</array>
+	<key>Religious Affiliation</key>
+	<array>
+		<string>Choose from the drop-down list that appears when you select a college.</string>
+	</array>
+	<key>Size of City</key>
+	<array>
+		<string>Choose from the drop-down list that appears when you select a college.</string>
 	</array>
 </dict>
 </plist>

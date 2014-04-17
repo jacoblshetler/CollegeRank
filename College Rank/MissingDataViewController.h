@@ -13,7 +13,8 @@
 //Possibly add a poopup that explains this page's function.
 //When user hit the "Next" button, give a pop-up warning saying that leaving data empty will skew the data.
 
-@property (weak, nonatomic) IBOutlet UILabel *header;
+//@property (weak, nonatomic) IBOutlet UILabel *header;
+@property (weak, nonatomic) IBOutlet UITextView *header;
 - (IBAction)pressedNext:(id) sender;
 - (IBAction)canceled:(id) sender;
 

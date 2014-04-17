@@ -12,6 +12,7 @@
 #import "PreferenceManager.h"
 #import "UserPreference.h"
 #import "Preference.h"
+#import "Institution.h"
 
 #pragma mark - Pure Math Functions
 
@@ -148,6 +149,16 @@ double geoDistance(NSString * zip1, NSString * zip2){
     
     CLLocationDistance meters = [location1 distanceFromLocation:location2];
     return (double)(meters*0.000621371); //converting meters to miles
+}
+
+NSMutableArray * generateDistancesFromUserData(NSMutableArray* inZipArr, NSString* userZip){
+    NSMutableArray* returnArr = [[NSMutableArray alloc]init];
+    userZip = @"46526";
+    for (NSString* curZip in inZipArr) {
+        //calculate the current distance
+        [returnArr addObject:[NSNumber numberWithDouble:geoDistance(userZip, curZip)]];
+    }
+    return returnArr;
 }
 
 #pragma mark - Weight Calculations
@@ -326,13 +337,15 @@ NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int cho
     preferenceValues = [dataDict valueForKey:@"newList"];
     NSMutableArray* replaceVals = [dataDict valueForKey:@"nullIndexs"];
     
+    NSMutableArray* changedVals = [[NSMutableArray alloc]init];
     switch (chosenValue){
         case 1:
         {
             //Subtract each value from the highest value
             NSNumber * max = [preferenceValues valueForKeyPath:@"@max.intValue"];
             for (int i = 0; i<[preferenceValues count]; i++){
-                preferenceValues[i] = [[NSNumber alloc] initWithInt:([max intValue]  - [preferenceValues[i] intValue])];
+                [changedVals addObject:[[NSNumber alloc] initWithInt:([max intValue]  - [preferenceValues[i] intValue])]];
+//                preferenceValues[i] = [[NSNumber alloc] initWithInt:([max intValue]  - [preferenceValues[i] intValue])];
             }
             
             break;
@@ -808,14 +821,30 @@ NSMutableDictionary * institutionsMissingDataForUserPrefs(){
         //get short name of pref
         NSString *prefShortName = [[valuesDict valueForKeyPath:[curPref getName]] objectAtIndex:0];
         
-        //check all institutions
-        NSMutableArray* missingInsts = [instMan getMissingDataInstitutionsForPreference:prefShortName];
-        if ([missingInsts count]>0) {
-            anyHadMissing = true;
-            [returnDict setValue:[NSNumber numberWithBool:true] forKey:prefShortName];
+        if (!prefShortName) {
+            //then we have a custom preference, so check to see if each customData dictionary in each UserInst has data
+            bool anyMissingForCurrentCustomPref = false;
+            for (Institution* curInst in [instMan userInstitutions]) {
+                NSString* instVal = [NSString stringWithFormat:@"%@",[[curInst customData] objectForKey:[curPref getName]]];
+                if (!instVal || [instVal isEqualToString:@"<null>"]) {
+                    //then we have a missing institution
+                    anyHadMissing = true;
+                    anyMissingForCurrentCustomPref = true;
+                    break;
+                }
+            }
+            [returnDict setValue:[NSNumber numberWithBool:anyMissingForCurrentCustomPref] forKey:[curPref getName]];
         }
         else{
-            [returnDict setValue:[NSNumber numberWithBool:false] forKey:prefShortName];
+            //check all institutions for the normal preference
+            NSMutableArray* missingInsts = [instMan getMissingDataInstitutionsForPreference:prefShortName];
+            if ([missingInsts count]>0) {
+                anyHadMissing = true;
+                [returnDict setValue:[NSNumber numberWithBool:true] forKey:prefShortName];
+            }
+            else{
+                [returnDict setValue:[NSNumber numberWithBool:false] forKey:prefShortName];
+            }
         }
     }
     //append whether or not any had missing data
@@ -843,7 +872,9 @@ NSMutableDictionary * generateRankings(){
         }
         else if([[userPref getName] isEqualToString:@"Location"])
         {
-            value = normalizeFromDistance([instMan getValuesForPreference:@"location"], [userPref getPrefVal]);
+            //do some calcs to determine actual distances based on user's zip code
+            NSMutableArray* distanceVals = generateDistancesFromUserData([instMan getValuesForPreference:@"location"], [userPref getZipCode]);
+            value = normalizeFromDistance(distanceVals, [userPref getPrefVal]);
         }
         
         else if([[userPref getName] isEqualToString:@"Size of City"])
