@@ -25,6 +25,7 @@
 -(id) initWithPreference: (Preference*) preference andWeight: (float) wt andPrefVal: (int) value;
 -(id) initWithPreference:(Preference *)preference andPrefVal: (int) value;
 -(id) initWithPreference:(Preference *)preference andPrefVal: (int) value andMissingData: (NSMutableArray*) instData;
+-(id) initWithPreference:(Preference *)preference andPrefVal: (int) value andMissingData: (NSMutableArray*) instData andZipCode: (NSString*) zipcode;
 
 -(void) setWeight:(float)wt;
 -(void) changeLock;
@@ -35,7 +36,7 @@
 -(NSString*) getName;
 -(Preference*) getPref;
 -(NSString*) getZipCode;
--(void) setZipCode;
+-(void) setZipCode:(NSString*)newZip;
 
 -(void) setMissingInstData:(NSMutableArray *)missingInstData;
 -(NSMutableArray*) getMissingInstData;

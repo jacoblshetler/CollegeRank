@@ -55,7 +55,7 @@
     return nil;
 }
 
--(id) initWithPreference:(Preference *)preference andPrefVal: (int) value andMissingData: (NSMutableArray*) instData;
+-(id) initWithPreference:(Preference *)preference andPrefVal: (int) value andMissingData: (NSMutableArray*) instData
 {
     self = [super init];
     if (self)
@@ -64,6 +64,21 @@
         self.pref = preference;
         self.locked = false;
         zipCode = [[NSString alloc]init];
+        preferredPrefValue = value;
+        return self;
+    }
+    return nil;
+}
+
+-(id) initWithPreference:(Preference *)preference andPrefVal: (int) value andMissingData: (NSMutableArray*) instData andZipCode: (NSString*) zipcode
+{
+    self = [super init];
+    if (self)
+    {
+        self.missingInstData = instData;
+        self.pref = preference;
+        self.locked = false;
+        zipCode = [[NSString alloc]initWithString:zipcode];
         preferredPrefValue = value;
         return self;
     }
@@ -104,10 +119,16 @@
     return preferredPrefValue;
 }
 
-
 -(void) setPrefVal: (int) prf
 {
     preferredPrefValue = prf;
+}
+
+-(NSString*) getZipCode{
+    return zipCode;
+}
+-(void) setZipCode:(NSString*)newZip{
+    self->zipCode = newZip;
 }
 
 -(void) setMissingInstData:(NSMutableArray *)missingInstData

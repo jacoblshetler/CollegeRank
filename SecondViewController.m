@@ -107,6 +107,8 @@
     _preferences = [PreferenceManager sharedInstance];
     [self canGoToTabs];
     
+
+    
     [self.tableView reloadData];
 }
 
@@ -432,6 +434,12 @@
         //Update Pie Chart
         NSIndexPath *chartPath = [NSIndexPath indexPathForRow:0 inSection:0];
         [self.tableView reloadRowsAtIndexPaths:@[chartPath] withRowAnimation:UITableViewRowAnimationNone];
+        
+        //Deal with deleting Pie Chart
+        if([[_preferences userPrefs] count] == 1) {
+            NSIndexPath *sliderPath = [NSIndexPath indexPathForRow:1 inSection:0];
+            [tableView deleteRowsAtIndexPaths:@[chartPath,sliderPath] withRowAnimation:UITableViewRowAnimationFade];
+        }
         
         [self canGoToTabs];
     }   
