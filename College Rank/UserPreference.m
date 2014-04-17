@@ -149,6 +149,7 @@
     [coder encodeObject:self.pref forKey:@"pref"];
     [coder encodeObject:self.missingInstData forKey:@"missing"];
     [coder encodeBool:self.locked forKey:@"locked"];
+    [coder encodeObject:zipCode forKey:@"zip"];
 }
 
 //init with serialized data
@@ -160,6 +161,7 @@
         self.pref = [coder decodeObjectForKey:@"pref"];
         self.missingInstData = [coder decodeObjectForKey:@"missing"];
         self.locked = [coder decodeBoolForKey:@"locked"];
+        zipCode = [coder decodeObjectForKey:@"zip"];
     }
     return self;
 }
