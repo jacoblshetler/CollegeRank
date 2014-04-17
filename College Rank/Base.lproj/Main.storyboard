@@ -444,7 +444,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YZ4-Rq-ROw">
-                                <rect key="frame" x="24" y="78" width="90" height="30"/>
+                                <rect key="frame" x="117" y="480" width="90" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Missing Data">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -453,11 +453,19 @@
                                     <action selector="missingData:" destination="Qh9-HA-FpA" eventType="touchUpInside" id="i4T-t0-Abd"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gAA-FB-gZ5">
-                                <rect key="frame" x="24" y="436" width="276" height="74"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gAA-FB-gZ5">
+                                <rect key="frame" x="22" y="57" width="276" height="74"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="593" translatesAutoresizingMaskIntoConstraints="NO" id="nL2-7l-QuY">
+                                <rect key="frame" x="-136" y="473" width="593" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <string key="text">Drag the institutions onto the 
+line in order of their ranking.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -492,6 +500,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="cancel" destination="xNE-62-0q4" id="BjS-IQ-Dfg"/>
+                        <outlet property="customLabel" destination="nL2-7l-QuY" id="xNU-b7-cha"/>
                         <outlet property="descriptionLabel" destination="gAA-FB-gZ5" id="Mhb-QG-NU5"/>
                         <outlet property="dumbField" destination="Fbd-lt-4pL" id="bwP-rW-yxL"/>
                         <outlet property="missingData" destination="YZ4-Rq-ROw" id="KjS-uh-QJ4"/>

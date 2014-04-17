@@ -39,6 +39,8 @@
 @property BOOL usingKeyboard;
 @property UIGestureRecognizer* tapper;
 @property (nonatomic, retain) IBOutlet UILabel* descriptionLabel;
+@property (nonatomic, retain) IBOutlet UILabel* customLabel;
+
 
 @end
 
@@ -61,7 +63,7 @@
     self.dumbField.delegate = self;
     self.lineX = self.view.bounds.size.width * .9;
     self.topLineY = self.view.bounds.size.height/4;
-    self.lineHeight = self.view.bounds.size.height*.6;
+    self.lineHeight = self.view.bounds.size.height*.55;
     self.markerHeight = 30;
     self.markerWidth = 150;
     self.colorArr = [[NSMutableArray alloc] init];
@@ -161,10 +163,11 @@
     }
     else{
         //load in the picker
+        self.customLabel.hidden = YES;
         NSString *values = [[NSBundle mainBundle] pathForResource: @"Description" ofType: @"plist"];
         NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
+        self.descriptionLabel.adjustsFontSizeToFitWidth = YES;
         self.descriptionLabel.text = [[valuesDict valueForKeyPath:self.prefName] objectAtIndex:0];
-
         self.dumbField.hidden = YES;
         UIPickerView* pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 200, 320, 200)];
         pickerView.delegate = self;
