@@ -85,3 +85,8 @@ NSMutableArray * normalizeFromContinuum(NSMutableArray * yValues);
 //void setANewWeight(int justAddedIndex);
 void updateWeightsForNewPreference();
 
+/**
+ Determines which UserInstitutions are missing data for all user preferences. Key in the return dictionary is the short name of the preference
+ @return NSMutableDictionary of key=short name of user preference, value=true if 1 or more institutions had missing data. Also returns a key = "All", where value is true if any pref had any institution with missing data. Boolean values are wrapped in NSNumbers. Get the bool value with [[returnDict objectForKey:@"All"] boolValue]
+ */
+NSMutableDictionary * institutionsMissingDataForUserPrefs();

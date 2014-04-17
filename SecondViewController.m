@@ -54,9 +54,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSLog(@"JUST LOADED");
     _institutions = [InstitutionManager sharedInstance];
     _preferences = [PreferenceManager sharedInstance];
-    //[self canGoToTabs];
+    [self canGoToTabs];
     
     //Define graphic dimensions
     _chartHeight = 200;
@@ -78,19 +79,22 @@
     _colors = [[NSArray alloc] initWithArray:tempArray];
 
     //Define UISlider
-    _slider = [UISlider new];
-    [_slider addTarget:self action:@selector(sliderDragAction:) forControlEvents:UIControlEventTouchDragInside];
-    _slider.bounds = CGRectMake(0, 0, _screenWidth*.7, _slider.bounds.size.height);
-    _slider.center = CGPointMake((_screenWidth/2)*.7 + 15, _cellHeight/2);
-    _slider.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-    
+    if (_slider==nil) {
+        _slider = [UISlider new];
+        [_slider addTarget:self action:@selector(sliderDragAction:) forControlEvents:UIControlEventTouchDragInside];
+        _slider.bounds = CGRectMake(0, 0, _screenWidth*.7, _slider.bounds.size.height);
+        _slider.center = CGPointMake((_screenWidth/2)*.7 + 15, _cellHeight/2);
+        _slider.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    }
     //Define UIButton
-    _button = [UIButton new];
-    [_button addTarget:self action:@selector(lockPressAction:) forControlEvents:UIControlEventTouchUpInside];
-    _button.bounds = CGRectMake(0,0, _slider.bounds.size.height,_slider.bounds.size.height);
-    _button.center = CGPointMake(_screenWidth - (_slider.bounds.size.height/2 + 15), _cellHeight/2);
-    _button.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-    [self buttonImage:FALSE];
+    if (_button==nil) {
+        _button = [UIButton new];
+        [_button addTarget:self action:@selector(lockPressAction:) forControlEvents:UIControlEventTouchUpInside];
+        _button.bounds = CGRectMake(0,0, _slider.bounds.size.height,_slider.bounds.size.height);
+        _button.center = CGPointMake(_screenWidth - (_slider.bounds.size.height/2 + 15), _cellHeight/2);
+        _button.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+        [self buttonImage:FALSE];
+    }
     
     // Display an Edit button in the navigation bar for this view controller.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
@@ -101,45 +105,9 @@
 -(void) viewWillAppear:(BOOL)animated{
     _institutions = [InstitutionManager sharedInstance];
     _preferences = [PreferenceManager sharedInstance];
-    //[self canGoToTabs];
+    [self canGoToTabs];
     
-    //Define graphic dimensions
-    _chartHeight = 200;
-    _cellHeight = 45;
-    _screenWidth = self.view.frame.size.width;
-    
-    //Define Graphic Colors
-    NSString* colorFile = [[NSBundle mainBundle] pathForResource: @"Colors" ofType: @"plist"];
-    NSArray* colorRGB = [[NSArray alloc] initWithContentsOfFile:colorFile];
-    
-    NSMutableArray* tempArray = [NSMutableArray new];
-    CGFloat r, g, b;
-    for (NSArray* rgb in colorRGB) {
-        r = [[rgb objectAtIndex:0] floatValue]/255;
-        g = [[rgb objectAtIndex:1] floatValue]/255;
-        b = [[rgb objectAtIndex:2] floatValue]/255;
-        [tempArray addObject:[UIColor colorWithRed:r green:g blue:b alpha:1.0]];
-    }
-    _colors = [[NSArray alloc] initWithArray:tempArray];
-    
-    //Define UISlider
-    _slider = [UISlider new];
-    [_slider addTarget:self action:@selector(sliderDragAction:) forControlEvents:UIControlEventTouchDragInside];
-    _slider.bounds = CGRectMake(0, 0, _screenWidth*.7, _slider.bounds.size.height);
-    _slider.center = CGPointMake((_screenWidth/2)*.7 + 15, _cellHeight/2);
-    _slider.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-    
-    //Define UIButton
-    _button = [UIButton new];
-    [_button addTarget:self action:@selector(lockPressAction:) forControlEvents:UIControlEventTouchUpInside];
-    _button.bounds = CGRectMake(0,0, _slider.bounds.size.height,_slider.bounds.size.height);
-    _button.center = CGPointMake(_screenWidth - (_slider.bounds.size.height/2 + 15), _cellHeight/2);
-    _button.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-    [self buttonImage:FALSE];
-    
-    
-    // Display an Edit button in the navigation bar for this view controller.
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+
     
     [self.tableView reloadData];
 }
@@ -148,6 +116,14 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void) canGoToTabs{
+    if (![_preferences canGoToRank]) {
+        [[[[self.tabBarController tabBar]items]objectAtIndex:2]setEnabled:FALSE];
+    } else {
+        [[[[self.tabBarController tabBar]items]objectAtIndex:2]setEnabled:TRUE];
+    }
 }
 
 #pragma mark - Search Results
@@ -224,11 +200,6 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    //For edits
-    if (self.tableView.editing) {
-        
-    }
-    
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         cell.textLabel.text = [_searchResults objectAtIndex:indexPath.row];
     } else if ([[_preferences userPrefs] count] < 2){
@@ -255,6 +226,12 @@
 #pragma Selection
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //For edits
+    if (self.tableView.editing==YES) {
+        NSLog(@"True");
+        //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    
     //Add code for normal table view, when > 1 preferences set the selected prefernces equal to a variable that gets edited
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         if ([[_preferences userPrefs] count] == 10)
@@ -267,7 +244,7 @@
         }
         [self preferenceNavigate:indexPath];
         //[self.tableView reloadData]; Run from Save button
-        //[self canGoToTabs]; Run from Save button
+        [self canGoToTabs]; //Run from Save button
     } else if (indexPath.row >= 2) {
         //Update slider data and lock button to match data for select preference
         [self updateInputControllers:indexPath.row - 2];
@@ -431,7 +408,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row==0 && tableView != self.searchDisplayController.searchResultsTableView){
+    BOOL isSearchDisplay = (tableView == self.searchDisplayController.searchResultsTableView);
+    BOOL hasPieChart = ([[_preferences userPrefs] count]>1);
+    if (indexPath.row==0 && !isSearchDisplay && hasPieChart){
         return _chartHeight;
     }
     else{
@@ -443,17 +422,23 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-#warning Double check that custom settings aren't added to the missing data dictionary
 #warning Fully test deleting custom preferences
-        // Delete the row from the data source
         [_preferences removeUserPrefAtIndex:indexPath.row - 2];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        
-        //Update Pie Chart
         NSIndexPath *chartPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        [self.tableView reloadRowsAtIndexPaths:@[chartPath] withRowAnimation:UITableViewRowAnimationNone];
         
-        //[self canGoToTabs];
+        if([[_preferences userPrefs] count] == 1) {
+            //Delete chart and preference
+            NSIndexPath *sliderPath = [NSIndexPath indexPathForRow:1 inSection:0];
+            [tableView deleteRowsAtIndexPaths:@[indexPath,chartPath,sliderPath] withRowAnimation:UITableViewRowAnimationFade];
+        } else {
+            //Delete Preference
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+
+            //Update Pie Chart
+            [self.tableView reloadRowsAtIndexPaths:@[chartPath] withRowAnimation:UITableViewRowAnimationNone];
+        }
+        
+        [self canGoToTabs];
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
