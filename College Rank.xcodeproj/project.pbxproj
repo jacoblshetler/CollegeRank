@@ -14,6 +14,7 @@
 		36957AC118F32ED50021814B /* AcceptableValueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36957AC018F32ED50021814B /* AcceptableValueViewController.m */; };
 		3697488618B2DBCA001EE530 /* DataRetreiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 3697488518B2DBCA001EE530 /* DataRetreiver.m */; };
 		8409E7DD18F749FB00A07BDA /* missingDataOptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8409E7DC18F749FB00A07BDA /* missingDataOptions.plist */; };
+		841870B41900205E0024ECAF /* missingDataTips.plist in Resources */ = {isa = PBXBuildFile; fileRef = 841870B31900205E0024ECAF /* missingDataTips.plist */; };
 		8445148318D1F7D3000472DA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8445148218D1F7D3000472DA /* SystemConfiguration.framework */; };
 		8445148618D1FBB4000472DA /* InstitutionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445148518D1FBB4000472DA /* InstitutionManager.m */; };
 		844E76F918AD289100A6FC91 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844E76F818AD289100A6FC91 /* Foundation.framework */; };
@@ -68,6 +69,7 @@
 		3697488418B2DBCA001EE530 /* DataRetreiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataRetreiver.h; sourceTree = "<group>"; };
 		3697488518B2DBCA001EE530 /* DataRetreiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataRetreiver.m; sourceTree = "<group>"; };
 		8409E7DC18F749FB00A07BDA /* missingDataOptions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = missingDataOptions.plist; sourceTree = "<group>"; };
+		841870B31900205E0024ECAF /* missingDataTips.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = missingDataTips.plist; sourceTree = "<group>"; };
 		8445148218D1F7D3000472DA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8445148418D1FBB4000472DA /* InstitutionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstitutionManager.h; sourceTree = "<group>"; };
 		8445148518D1FBB4000472DA /* InstitutionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstitutionManager.m; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 		844E76FF18AD289100A6FC91 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				841870B31900205E0024ECAF /* missingDataTips.plist */,
 				8491593518FC55FD00CFBD1B /* help.html */,
 				844E770018AD289100A6FC91 /* College Rank-Info.plist */,
 				E3DB562A18F7929300128027 /* Colors.plist */,
@@ -333,6 +336,7 @@
 				84F0D37918F6E4E50081B855 /* nameToDataKeys.plist in Resources */,
 				8409E7DD18F749FB00A07BDA /* missingDataOptions.plist in Resources */,
 				8472BA0418E711720034C6D6 /* AcceptableValues.plist in Resources */,
+				841870B41900205E0024ECAF /* missingDataTips.plist in Resources */,
 				844E771418AD289100A6FC91 /* Images.xcassets in Resources */,
 				844E770318AD289100A6FC91 /* InfoPlist.strings in Resources */,
 				3628C84E18F4B0E10077145B /* pointer1.png in Resources */,
