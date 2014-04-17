@@ -57,7 +57,7 @@
     NSLog(@"JUST LOADED");
     _institutions = [InstitutionManager sharedInstance];
     _preferences = [PreferenceManager sharedInstance];
-    //[self canGoToTabs];
+    [self canGoToTabs];
     
     //Define graphic dimensions
     _chartHeight = 200;
@@ -105,7 +105,7 @@
 -(void) viewWillAppear:(BOOL)animated{
     _institutions = [InstitutionManager sharedInstance];
     _preferences = [PreferenceManager sharedInstance];
-    //[self canGoToTabs];
+    [self canGoToTabs];
     
 
     
@@ -116,6 +116,14 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void) canGoToTabs{
+    if (![_preferences canGoToRank]) {
+        [[[[self.tabBarController tabBar]items]objectAtIndex:2]setEnabled:FALSE];
+    } else {
+        [[[[self.tabBarController tabBar]items]objectAtIndex:2]setEnabled:TRUE];
+    }
 }
 
 #pragma mark - Search Results
@@ -236,7 +244,7 @@
         }
         [self preferenceNavigate:indexPath];
         //[self.tableView reloadData]; Run from Save button
-        //[self canGoToTabs]; Run from Save button
+        [self canGoToTabs]; //Run from Save button
     } else if (indexPath.row >= 2) {
         //Update slider data and lock button to match data for select preference
         [self updateInputControllers:indexPath.row - 2];
@@ -432,7 +440,7 @@
             [tableView deleteRowsAtIndexPaths:@[chartPath,sliderPath] withRowAnimation:UITableViewRowAnimationFade];
         }
         
-        //[self canGoToTabs];
+        [self canGoToTabs];
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view

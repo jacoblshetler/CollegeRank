@@ -13,6 +13,7 @@
 {
     float weight;
     int preferredPrefValue;
+    NSString* zipCode; //the user's zip code
 }
 @property (nonatomic, retain) Preference* pref;
 @property (nonatomic, retain) NSMutableArray* missingInstData;
@@ -24,6 +25,7 @@
 -(id) initWithPreference: (Preference*) preference andWeight: (float) wt andPrefVal: (int) value;
 -(id) initWithPreference:(Preference *)preference andPrefVal: (int) value;
 -(id) initWithPreference:(Preference *)preference andPrefVal: (int) value andMissingData: (NSMutableArray*) instData;
+-(id) initWithPreference:(Preference *)preference andPrefVal: (int) value andMissingData: (NSMutableArray*) instData andZipCode: (NSString*) zipcode;
 
 -(void) setWeight:(float)wt;
 -(void) changeLock;
@@ -33,6 +35,9 @@
 -(void) setPrefVal: (int) prf;
 -(NSString*) getName;
 -(Preference*) getPref;
+-(NSString*) getZipCode;
+-(void) setZipCode:(NSString*)newZip;
+
 -(void) setMissingInstData:(NSMutableArray *)missingInstData;
 -(NSMutableArray*) getMissingInstData;
 
