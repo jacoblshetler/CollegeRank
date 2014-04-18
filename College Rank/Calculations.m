@@ -874,7 +874,7 @@ NSMutableDictionary * generateRankings(){
         else if([[userPref getName] isEqualToString:@"Location"])
         {
             //do some calcs to determine actual distances based on user's zip code
-            NSMutableArray* distanceVals = generateDistancesFromUserData([instMan getValuesForPreference:@"location"], [userPref getZipCode]);
+            NSMutableArray* distanceVals = generateDistancesFromUserData([instMan getValuesForPreference:@"location"], prefMan.zipCode);
             value = normalizeFromDistance(distanceVals, [userPref getPrefVal]);
         }
         

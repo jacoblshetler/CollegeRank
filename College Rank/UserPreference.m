@@ -19,7 +19,6 @@
     {
         self.pref = preference;
         weight = wt;
-        zipCode = [[NSString alloc]init];
         self.locked = false;
         return self;
     }
@@ -33,7 +32,6 @@
     {
         self.pref = preference;
         weight = wt;
-        zipCode = [[NSString alloc]init];
         self.locked = false;
         preferredPrefValue = value;
         return self;
@@ -48,7 +46,6 @@
     {
         self.pref = preference;
         self.locked = false;
-        zipCode = [[NSString alloc]init];
         preferredPrefValue = value;
         return self;
     }
@@ -63,22 +60,6 @@
         self.missingInstData = instData;
         self.pref = preference;
         self.locked = false;
-        zipCode = [[NSString alloc]init];
-        preferredPrefValue = value;
-        return self;
-    }
-    return nil;
-}
-
--(id) initWithPreference:(Preference *)preference andPrefVal: (int) value andMissingData: (NSMutableArray*) instData andZipCode: (NSString*) zipcode
-{
-    self = [super init];
-    if (self)
-    {
-        self.missingInstData = instData;
-        self.pref = preference;
-        self.locked = false;
-        zipCode = [[NSString alloc]initWithString:zipcode];
         preferredPrefValue = value;
         return self;
     }
@@ -124,13 +105,6 @@
     preferredPrefValue = prf;
 }
 
--(NSString*) getZipCode{
-    return zipCode;
-}
--(void) setZipCode:(NSString*)newZip{
-    self->zipCode = newZip;
-}
-
 -(void) setMissingInstData:(NSMutableArray *)missingInstData
 {
     _missingInstData = missingInstData;
@@ -149,7 +123,6 @@
     [coder encodeObject:self.pref forKey:@"pref"];
     [coder encodeObject:self.missingInstData forKey:@"missing"];
     [coder encodeBool:self.locked forKey:@"locked"];
-    [coder encodeObject:zipCode forKey:@"zip"];
 }
 
 //init with serialized data
@@ -161,7 +134,6 @@
         self.pref = [coder decodeObjectForKey:@"pref"];
         self.missingInstData = [coder decodeObjectForKey:@"missing"];
         self.locked = [coder decodeBoolForKey:@"locked"];
-        zipCode = [coder decodeObjectForKey:@"zip"];
     }
     return self;
 }

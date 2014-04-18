@@ -16,6 +16,7 @@
 @property NSMutableArray* userPrefs;
 @property NSMutableArray* allPrefs;
 @property NSMutableDictionary* missingInstitutionsForPreferenceShortNameDictionary;
+@property NSString* zipCode;
 
 + (id)sharedInstance;
 -(NSArray*) getAllPrefs;
