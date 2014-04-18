@@ -468,6 +468,12 @@ line in order of their ranking.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your Zip Code..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YI1-Co-F4M">
+                                <rect key="frame" x="24" y="117" width="276" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -506,6 +512,7 @@ line in order of their ranking.</string>
                         <outlet property="missingData" destination="YZ4-Rq-ROw" id="KjS-uh-QJ4"/>
                         <outlet property="save" destination="Lz7-aU-wg1" id="YEM-ab-up8"/>
                         <outlet property="stupidBar" destination="z4e-mE-Ey8" id="UbB-Bu-8fZ"/>
+                        <outlet property="zipLabel" destination="YI1-Co-F4M" id="BcC-4o-1BG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0cg-dQ-BiD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -580,6 +587,6 @@ line in order of their ranking.</string>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="mgb-Pr-dQj"/>
+        <segue reference="Oek-MR-n0S"/>
     </inferredMetricsTieBreakers>
 </document>

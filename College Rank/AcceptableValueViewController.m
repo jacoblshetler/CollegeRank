@@ -37,10 +37,11 @@
 @property int markerWidth;
 @property NSMutableArray* colorArr;
 @property BOOL usingKeyboard;
+@property bool isDistancePref;
 @property UIGestureRecognizer* tapper;
 @property (nonatomic, retain) IBOutlet UILabel* descriptionLabel;
 @property (nonatomic, retain) IBOutlet UILabel* customLabel;
-
+@property (nonatomic, retain) IBOutlet UITextField* zipLabel;
 
 @end
 
@@ -98,7 +99,15 @@
     NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
     NSString *prefDecoded = [[valuesDict valueForKeyPath:self.prefName] objectAtIndex:0];
     
-    
+    if([[self.pref getName] isEqualToString:@"Location"])
+    {
+        self.isDistancePref = true;
+        self.zipLabel.text = [self.preferences zipCode];
+    }
+    else{
+        self.isDistancePref = false;
+        self.zipLabel.hidden = true;
+    }
     if([[self.preferences missingInstitutionsForPreferenceShortNameDictionary] objectForKey:prefDecoded] == nil)
     {
         self.missingData.hidden = YES;
@@ -231,7 +240,13 @@
     }
     
 }
+-(bool) isAcceptableZip: (NSString*) zipString
+{
 
+    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"^\\d{5}$" options:0 error:nil];
+    int numMatches = [regex numberOfMatchesInString:zipString options:0 range:NSMakeRange(0, [zipString length])];
+    return numMatches==1;
+}
 
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -242,12 +257,24 @@
 -(IBAction)save:(id)sender
 {
     //if the user preference already exists, update the data
+    if(self.isDistancePref && [self isAcceptableZip:self.zipLabel.text])
+    {
+        self.preferences.zipCode = self.zipLabel.text;
+        [self.preferences calculateLocation];
+    }
+    else
+    {
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Invalid Zip" message:@"Zip code is not valid." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [alert setAlertViewStyle:UIAlertViewStyleDefault];
+        [alert show];
+        return;
+        
+    }
+    
     self.prefName = self.dumbField.text;
     UserPreference* userPref = [self.preferences getUserPreferenceForString:self.prefName];
-    NSLog(@"%@", [userPref getName]);
     if(self.pref == nil)
     {
-        NSLog(@"Creating new preference");
         [self.preferences addPreferenceWithName:self.prefName andAcceptableValues:nil];
         self.pref = [self.preferences getPreferenceForString:self.prefName];
         NSLog(@"%@", [self.pref getName]);
@@ -257,8 +284,6 @@
         [userPref setPrefVal:self.pickerSelection+1];//TODO: where else do we use this index? Does this need to be changed in the Calculations class or everywhere else?
     }
     else{
-        NSLog(@"Creating new user preference...");
-
         //make a new user preference with missing data (if there is missing data)
 
         [self.preferences addUserPref:self.pref withAcceptableValue:self.pickerSelection+1];
@@ -271,7 +296,6 @@
         int i = 1;
         for(Institution* inst in [self.institutions getAllUserInstitutions])
         {
-            NSLog(@"Name: %@", [inst name]);
 
             if([self.view viewWithTag:i].frame.origin.x != 5)
             {
