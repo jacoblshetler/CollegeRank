@@ -139,7 +139,7 @@ CLLocation *didCalculateDistance(NSString* zipCode) {
     while(!placemark.coordinate.latitude){
         [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
     }
-    NSLog(@"%@",placemark);
+    //NSLog(@"%@",placemark);
     return placemark;
 }
 
@@ -153,7 +153,7 @@ double geoDistance(NSString * zip1, NSString * zip2){
 
 NSMutableArray * generateDistancesFromUserData(NSMutableArray* inZipArr, NSString* userZip){
     NSMutableArray* returnArr = [[NSMutableArray alloc]init];
-    userZip = @"46526";
+    userZip = @"46526"; //TODO: remove this
     for (NSString* curZip in inZipArr) {
         //calculate the current distance
         [returnArr addObject:[NSNumber numberWithDouble:geoDistance(userZip, curZip)]];
@@ -347,7 +347,6 @@ NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int cho
                 [changedVals addObject:[[NSNumber alloc] initWithInt:([max intValue]  - [preferenceValues[i] intValue])]];
 //                preferenceValues[i] = [[NSNumber alloc] initWithInt:([max intValue]  - [preferenceValues[i] intValue])];
             }
-            
             break;
         }
         case 2:
@@ -355,12 +354,14 @@ NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int cho
             //find the middle value and subtract all other values from it, using absolute values.
             NSNumber *medianNum = [[NSNumber alloc] initWithFloat:median(preferenceValues)];
             for (int i = 0; i<[preferenceValues count]; i++){
-                preferenceValues[i] = [[NSNumber alloc] initWithInt:(ABS([medianNum intValue]  - [preferenceValues[i] intValue]))];
+                [changedVals addObject:[[NSNumber alloc] initWithInt:(ABS([medianNum intValue]  - [preferenceValues[i] intValue]))]];
+               // preferenceValues[i] = [[NSNumber alloc] initWithInt:(ABS([medianNum intValue]  - [preferenceValues[i] intValue]))];
             }
             //Then invert the list using the highest value
             NSNumber * max = [preferenceValues valueForKeyPath:@"@max.intValue"];
             for (int i = 0; i<[preferenceValues count]; i++){
-                preferenceValues[i] = [[NSNumber alloc] initWithInt:([max intValue]  - [preferenceValues[i] intValue])];
+                [changedVals addObject:[[NSNumber alloc] initWithInt:([max intValue]  - [preferenceValues[i] intValue])]];
+               // preferenceValues[i] = [[NSNumber alloc] initWithInt:([max intValue]  - [preferenceValues[i] intValue])];
             }
             break;
         }
@@ -372,7 +373,7 @@ NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int cho
     }
     
     //Normalize. Then replace everything in the replaceVals with the mean
-    NSMutableArray* normalizedVals = normalize(preferenceValues);
+    NSMutableArray* normalizedVals = normalize(changedVals);
     return putMeanBackIn(normalizedVals, replaceVals);
 }
 

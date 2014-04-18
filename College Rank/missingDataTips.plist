@@ -8,11 +8,11 @@
 	</array>
 	<key>Location</key>
 	<array>
-		<string>Enter 5-digit zip codes for the following colleges.</string>
+		<string>Enter 5-digit zip codes for the following college(s).</string>
 	</array>
 	<key>Average SAT Score</key>
 	<array>
-		<string>Enter average SAT scores for the following colleges (out of 1600).</string>
+		<string>Enter average SAT scores for the following college(s) (out of 1600).</string>
 	</array>
 	<key>Football Team</key>
 	<array>
@@ -40,19 +40,19 @@
 	</array>
 	<key>Number of Students</key>
 	<array>
-		<string>Enter the number of students that attend the following colleges.</string>
+		<string>Enter the number of students that attend the following college(s).</string>
 	</array>
 	<key>College Selectivity</key>
 	<array>
-		<string>Enter the number of students out of 100 applications admitted to the following colleges.</string>
+		<string>Enter the number of students out of 100 applications admitted to the following college(s).</string>
 	</array>
 	<key>Student Faculty Ratio</key>
 	<array>
-		<string>Enter the number of students per faculty member at the following colleges.</string>
+		<string>Enter the number of students per faculty member at the following college(s).</string>
 	</array>
 	<key>Gender Ratio</key>
 	<array>
-		<string>Enter the number of female students out of 100 students at the following colleges.</string>
+		<string>Enter the number of female students out of 100 students at the following college(s).</string>
 	</array>
 	<key>Highest Available Degree</key>
 	<array>
@@ -60,7 +60,7 @@
 	</array>
 	<key>Tuition</key>
 	<array>
-		<string>Enter the approximate cost of attending the following colleges for one year.</string>
+		<string>Enter the approximate cost of attending the following college(s) for one year.</string>
 	</array>
 	<key>Religious Affiliation</key>
 	<array>

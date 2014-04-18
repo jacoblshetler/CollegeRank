@@ -254,14 +254,14 @@
     }
     if(userPref != nil)
     {
-        [userPref setPrefVal:self.pickerSelection];
+        [userPref setPrefVal:self.pickerSelection+1];
     }
     else{
         NSLog(@"Creating new user preference...");
 
         //make a new user preference with missing data (if there is missing data)
 
-        [self.preferences addUserPref:self.pref withAcceptableValue:self.pickerSelection];
+        [self.preferences addUserPref:self.pref withAcceptableValue:self.pickerSelection+1];
         updateWeightsForNewPreference();
     }
     if(self.isNull)
@@ -285,10 +285,12 @@
             
         }
     }
+    /*
     for (NSString* i in [_preferences getAllPrefNames])
     {
         NSLog(@"%@",i);
     }
+     */
     UITabBarController* back = [self.storyboard instantiateViewControllerWithIdentifier:@"TabBarView"];
     [self presentViewController:back animated:YES completion:nil];
     [back setSelectedIndex:1];
