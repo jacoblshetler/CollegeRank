@@ -37,10 +37,11 @@
 @property int markerWidth;
 @property NSMutableArray* colorArr;
 @property BOOL usingKeyboard;
+@property bool isDistancePref;
 @property UIGestureRecognizer* tapper;
 @property (nonatomic, retain) IBOutlet UILabel* descriptionLabel;
 @property (nonatomic, retain) IBOutlet UILabel* customLabel;
-
+@property (nonatomic, retain) IBOutlet UITextField* zipLabel;
 
 @end
 
@@ -98,7 +99,14 @@
     NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
     NSString *prefDecoded = [[valuesDict valueForKeyPath:self.prefName] objectAtIndex:0];
     
-    
+    if([[self.pref getName] isEqualToString:@"Distance"])
+    {
+        self.isDistancePref = true;
+    }
+    else{
+        self.isDistancePref = false;
+        self.zipLabel.hidden = true;
+    }
     if([[self.preferences missingInstitutionsForPreferenceShortNameDictionary] objectForKey:prefDecoded] == nil)
     {
         self.missingData.hidden = YES;
@@ -242,12 +250,15 @@
 -(IBAction)save:(id)sender
 {
     //if the user preference already exists, update the data
+    if(self.isDistancePref && [self isAcceptableZip self.zipLabel.text])
+    {
+        self.preferences
+    }
+    
     self.prefName = self.dumbField.text;
     UserPreference* userPref = [self.preferences getUserPreferenceForString:self.prefName];
-    NSLog(@"%@", [userPref getName]);
     if(self.pref == nil)
     {
-        NSLog(@"Creating new preference");
         [self.preferences addPreferenceWithName:self.prefName andAcceptableValues:nil];
         self.pref = [self.preferences getPreferenceForString:self.prefName];
         NSLog(@"%@", [self.pref getName]);
@@ -257,8 +268,6 @@
         [userPref setPrefVal:self.pickerSelection+1];
     }
     else{
-        NSLog(@"Creating new user preference...");
-
         //make a new user preference with missing data (if there is missing data)
 
         [self.preferences addUserPref:self.pref withAcceptableValue:self.pickerSelection+1];
@@ -271,7 +280,6 @@
         int i = 1;
         for(Institution* inst in [self.institutions getAllUserInstitutions])
         {
-            NSLog(@"Name: %@", [inst name]);
 
             if([self.view viewWithTag:i].frame.origin.x != 5)
             {
