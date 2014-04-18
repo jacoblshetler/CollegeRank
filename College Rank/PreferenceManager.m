@@ -22,6 +22,7 @@
         NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
         _userPrefs = [NSMutableArray new];
         _allPrefs = [[NSMutableArray alloc] init];
+        _zipCode = [[NSString alloc]init];
         _missingInstitutionsForPreferenceShortNameDictionary = [[NSMutableDictionary alloc] init];
         for(NSString *key in valuesDict)
         {
@@ -209,6 +210,7 @@
     [coder encodeObject:self.userPrefs forKey:@"userPrefs"];
     [coder encodeObject:self.allPrefs forKey:@"allPrefs"];
     [coder encodeObject:self.missingInstitutionsForPreferenceShortNameDictionary forKey:@"missing"];
+    [coder encodeObject:_zipCode forKey:@"zip"];
 }
 
 //init with serialized data
@@ -218,6 +220,7 @@
         self.userPrefs = [coder decodeObjectForKey:@"userPrefs"];
         self.allPrefs = [coder decodeObjectForKey:@"allPrefs"];
         self.missingInstitutionsForPreferenceShortNameDictionary = [coder decodeObjectForKey:@"missing"];
+        _zipCode = [coder decodeObjectForKey:@"zip"];
     }
     return self;
 }

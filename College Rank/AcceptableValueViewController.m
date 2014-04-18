@@ -254,7 +254,7 @@
     }
     if(userPref != nil)
     {
-        [userPref setPrefVal:self.pickerSelection+1];
+        [userPref setPrefVal:self.pickerSelection+1];//TODO: where else do we use this index? Does this need to be changed in the Calculations class or everywhere else?
     }
     else{
         NSLog(@"Creating new user preference...");
