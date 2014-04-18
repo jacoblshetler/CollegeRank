@@ -22,7 +22,7 @@
         NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
         _userPrefs = [NSMutableArray new];
         _allPrefs = [[NSMutableArray alloc] init];
-        _zipCode = [[NSString alloc]init];
+        _zipCode = @"";
         _missingInstitutionsForPreferenceShortNameDictionary = [[NSMutableDictionary alloc] init];
         for(NSString *key in valuesDict)
         {
@@ -224,6 +224,16 @@
     }
     return self;
 }
+
+-(void) calculateLocation
+{
+    [[CLGeocoder new] geocodeAddressString:self.zipCode completionHandler:
+     ^(NSArray *placemarks, NSError *error){
+         CLPlacemark *newPlacemark = [placemarks objectAtIndex:0];
+         self.geoCoords = newPlacemark.location;
+     }];
+}
+
 
 
 @end

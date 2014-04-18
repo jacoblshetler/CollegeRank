@@ -99,9 +99,10 @@
     NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
     NSString *prefDecoded = [[valuesDict valueForKeyPath:self.prefName] objectAtIndex:0];
     
-    if([[self.pref getName] isEqualToString:@"Distance"])
+    if([[self.pref getName] isEqualToString:@"Location"])
     {
         self.isDistancePref = true;
+        self.zipLabel.text = [self.preferences zipCode];
     }
     else{
         self.isDistancePref = false;
@@ -239,7 +240,13 @@
     }
     
 }
+-(bool) isAcceptableZip: (NSString*) zipString
+{
 
+    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"^\\d{5}$" options:0 error:nil];
+    int numMatches = [regex numberOfMatchesInString:zipString options:0 range:NSMakeRange(0, [zipString length])];
+    return numMatches==1;
+}
 
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -250,9 +257,18 @@
 -(IBAction)save:(id)sender
 {
     //if the user preference already exists, update the data
-    if(self.isDistancePref && [self isAcceptableZip self.zipLabel.text])
+    if(self.isDistancePref && [self isAcceptableZip:self.zipLabel.text])
     {
-        self.preferences
+        self.preferences.zipCode = self.zipLabel.text;
+        [self.preferences calculateLocation];
+    }
+    else
+    {
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Invalid Zip" message:@"Zip code is not valid." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [alert setAlertViewStyle:UIAlertViewStyleDefault];
+        [alert show];
+        return;
+        
     }
     
     self.prefName = self.dumbField.text;
