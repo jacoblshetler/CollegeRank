@@ -130,16 +130,23 @@ NSMutableDictionary * createOrdinalDictionary(NSMutableDictionary* inDict,NSArra
 
 CLLocation *didCalculateDistance(NSString* zipCode) {
     CLLocation __block *placemark = [CLLocation new];
-    [[CLGeocoder new] geocodeAddressString:zipCode completionHandler:
-     ^(NSArray *placemarks, NSError *error){
-         CLPlacemark *newPlacemark = [placemarks objectAtIndex:0];
-         placemark = newPlacemark.location;
-     }];
+    bool __block isDone = false;
+    
+    dispatch_queue_t backgroundQueue = dispatch_queue_create("com.blhblah", 0);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[CLGeocoder new] geocodeAddressString:zipCode completionHandler:
+         ^(NSArray *placemarks, NSError *error){
+             CLPlacemark *newPlacemark = [placemarks objectAtIndex:0];
+             placemark = newPlacemark.location;
+         }];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            isDone = true;
+        });
+    });
 
-    while(!placemark.coordinate.latitude){
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
-    }
-    //NSLog(@"%@",placemark);
+    NSLog(@"%@",placemark);
     return placemark;
 }
 

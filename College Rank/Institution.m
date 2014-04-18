@@ -13,6 +13,7 @@
 @implementation Institution
 
 @synthesize name;
+@synthesize geoCoordinates;
 @synthesize data;
 @synthesize customData;
 
@@ -35,6 +36,13 @@
         else{
             return nil;
         }
+        
+        //set the location
+        [[CLGeocoder new] geocodeAddressString:[self.data valueForKey:@"zip_code"] completionHandler:
+         ^(NSArray *placemarks, NSError *error){
+             CLPlacemark *newPlacemark = [placemarks objectAtIndex:0];
+             self.geoCoordinates = newPlacemark.location;
+         }];
     }
     return self;
 }

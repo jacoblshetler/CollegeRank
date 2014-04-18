@@ -7,12 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface Institution : NSObject <NSCoding>
 
 -(id)initWithName: (NSString *) InstitutionName;
 
 @property   NSString* name;  	//Will use synthesize
+@property   CLLocation* geoCoordinates; //location of the institution. Gets created when added to the list of userInstitutions.
 @property   NSMutableDictionary* data;	//dictionary of all preference data related to the institution
 @property   NSMutableDictionary* customData; //dictionary to hold custom data key/value pairs
 

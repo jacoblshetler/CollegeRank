@@ -62,8 +62,7 @@
         //must be a zip code
         regex = [[NSRegularExpression alloc] initWithPattern:@"(^$|^\\d{5}$)" options:0 error:nil];
         appendString = @" valid 5-digit zip code";
-        //TODO: this can't really be rigorously "checked," even if we do use the location finder. I think if they enter 5 digits, that's good enough
-        //if they're dumb enough to enter a zip code that doesn't exist, then good for them!
+        //Zip codes can't really be rigorously "checked," even if we do use the location finder. I think if they enter 5 digits, that's good enough
         //See also: http://stackoverflow.com/questions/578406/what-is-the-ultimate-postal-code-and-zip-regex/12453440#12453440
     }
     else if ([prefType isEqualToString:@"size"]) {
