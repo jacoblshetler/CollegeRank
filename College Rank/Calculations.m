@@ -7,7 +7,6 @@
 //
 
 #import "Calculations.h"
-#import <CoreLocation/CoreLocation.h>
 #import "InstitutionManager.h"
 #import "PreferenceManager.h"
 #import "UserPreference.h"
@@ -128,40 +127,23 @@ NSMutableDictionary * createOrdinalDictionary(NSMutableDictionary* inDict,NSArra
 
 #pragma mark - Distance Calculations
 
-CLLocation *didCalculateDistance(NSString* zipCode) {
-    CLLocation __block *placemark = [CLLocation new];
-    bool __block isDone = false;
+double geoDistance(CLLocation * loc1, CLLocation * loc2){
+    float radius = 3958.0;      // Earth's radius (miles)
+    float deg_per_rad = 57.29578;  // Number of degrees/radian (for conversion)
     
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("com.blhblah", 0);
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[CLGeocoder new] geocodeAddressString:zipCode completionHandler:
-         ^(NSArray *placemarks, NSError *error){
-             CLPlacemark *newPlacemark = [placemarks objectAtIndex:0];
-             placemark = newPlacemark.location;
-         }];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            isDone = true;
-        });
-    });
+    double calc1 = loc1.coordinate.latitude - loc2.coordinate.latitude;
+    double calc2 = cos(loc1.coordinate.latitude / deg_per_rad);
+    double calc3 = cos(loc2.coordinate.latitude / deg_per_rad);
+    double calc4 = loc1.coordinate.longitude - loc2.coordinate.longitude;
+    double distance = radius * M_PI * sqrt((calc1*calc1+calc2*calc3*calc4*calc4)/180);
 
-    NSLog(@"%@",placemark);
-    return placemark;
+    return distance; //converting meters to miles
 }
 
-double geoDistance(NSString * zip1, NSString * zip2){
-    CLLocation *location1 = didCalculateDistance(zip1);
-    CLLocation *location2 = didCalculateDistance(zip2);
-    
-    CLLocationDistance meters = [location1 distanceFromLocation:location2];
-    return (double)(meters*0.000621371); //converting meters to miles
-}
-
-NSMutableArray * generateDistancesFromUserData(NSMutableArray* inZipArr, NSString* userZip){
+NSMutableArray * generateDistancesFromUserData(NSMutableArray* inZipArr, CLLocation* userZip){
     NSMutableArray* returnArr = [[NSMutableArray alloc]init];
-    userZip = @"46526"; //TODO: remove this
-    for (NSString* curZip in inZipArr) {
+//    userZip = @"46526"; //TODO: remove this
+    for (CLLocation* curZip in inZipArr) {
         //calculate the current distance
         [returnArr addObject:[NSNumber numberWithDouble:geoDistance(userZip, curZip)]];
     }
@@ -881,7 +863,7 @@ NSMutableDictionary * generateRankings(){
         else if([[userPref getName] isEqualToString:@"Location"])
         {
             //do some calcs to determine actual distances based on user's zip code
-            NSMutableArray* distanceVals = generateDistancesFromUserData([instMan getValuesForPreference:@"location"], prefMan.zipCode);
+            NSMutableArray* distanceVals = generateDistancesFromUserData([instMan getValuesForPreference:@"geoCoordinates"], prefMan.geoCoords);
             value = normalizeFromDistance(distanceVals, [userPref getPrefVal]);
         }
         

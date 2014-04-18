@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 /**
  Normalizes an NSMutableArray of NSDecimalNumbers and returns it in the same order. The normalized vales will sum to 1 and will all be between 0 and 1.
@@ -27,13 +28,13 @@ NSMutableDictionary * createOrdinalDictionary(NSMutableDictionary* inDict,NSArra
 
 /**
  Calculates distance between two zip codes. Returns the value as number of miles in double format
- @param zip1
- Zip code of one location
+ @param loc1
+ CLLocation of one institution
  @param zip2
- Zip code of other location
+ CLLocation of other institution
  @return Double of number of miles between the zip codes.
  */
-double geoDistance(NSString * zip1, NSString * zip2);
+double geoDistance(CLLocation * loc1, CLLocation * loc2);
 
 
 /**

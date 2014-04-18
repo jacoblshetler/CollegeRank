@@ -280,9 +280,7 @@
     //set the header
     NSString *path = [[NSBundle mainBundle] pathForResource: @"missingDataTips" ofType: @"plist"];
     NSDictionary *dictTip = [[NSDictionary alloc] initWithContentsOfFile:path];
-    NSLog(@"%@",dictTip);
     NSString *tip = [[dictTip valueForKeyPath:prefName] objectAtIndex:0];
-    NSLog(@"%@",prefName);
     self.header.text = [NSString stringWithFormat:@"Enter missing data for '%@'. %@",prefName,tip];
     
     //set the input type based on the preference type
