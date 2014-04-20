@@ -61,12 +61,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.dumbField.delegate = self;
+    
+    //set the dimensions for the custom line
     self.lineX = self.view.bounds.size.width * .9;
     self.topLineY = self.view.bounds.size.height/4;
     self.lineHeight = self.view.bounds.size.height*.55;
     self.markerHeight = 30;
     self.markerWidth = 150;
+    
+    //get the colors for the college markers
     self.colorArr = [[NSMutableArray alloc] init];
     NSString* colorFile = [[NSBundle mainBundle] pathForResource: @"Colors" ofType: @"plist"];
     NSArray* colorRGB = [[NSArray alloc] initWithContentsOfFile:colorFile];
@@ -77,6 +82,8 @@
         b = [[rgb objectAtIndex:2] floatValue]/255;
         [self.colorArr addObject:[UIColor colorWithRed:r green:g blue:b alpha:1.0]];
     }
+    
+    //create the gesture recognizer for closing the keyboard
     _tapper = [[UITapGestureRecognizer alloc]
                initWithTarget:self action:@selector(handleSingleTap:)];
     _tapper.cancelsTouchesInView = NO;
@@ -84,21 +91,27 @@
 
     self.institutions = [InstitutionManager sharedInstance];
     self.preferences = [PreferenceManager sharedInstance];
+    
+    //set the title of the nav bar to the pref name
     self.stupidBar.title = self.prefName;
+    
+    
     /*Add the buttons at the bottom*/
     //missing data (if data is missing)
     
+    //set the custom pref name to the preference name passed in
     self.dumbField.text = self.prefName;
     
+    //get the preference from the name passed in
     self.pref = [self.preferences getPreferenceForString:self.prefName];
     
-    //for testing
-    //self.pref = [self.preferences getPreferenceAtIndex:0];
-    
+    //get the "short names" from the plist
     NSString *values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
     NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
     NSString *prefDecoded = [[valuesDict valueForKeyPath:self.prefName] objectAtIndex:0];
     
+    //if the preference is location, then set the string as the zip code
+    //otherwise, hide the zip code text bar field
     if([[self.pref getName] isEqualToString:@"Location"])
     {
         self.isDistancePref = true;
@@ -108,18 +121,21 @@
         self.isDistancePref = false;
         self.zipLabel.hidden = true;
     }
+    
+    //hide the missing data button if there's no missing data
     if([[self.preferences missingInstitutionsForPreferenceShortNameDictionary] objectForKey:prefDecoded] == nil)
     {
         self.missingData.hidden = YES;
     }
     
+    //create the graphics if it's a custom preference
     if(self.pref.acceptableValues == nil)
     {
         //load in the selector bar
         self.isNull = true;
-        //Change me to change the properties of the vertical line!
-        //add the line to snap to
         
+        //add the line to snap to
+        //with labels
         UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.lineX - self.markerHeight/2, self.topLineY - 20, 30, 20)];
         topLabel.text = @"Best";
         topLabel.adjustsFontSizeToFitWidth = YES;
@@ -140,6 +156,7 @@
         int height = self.view.bounds.size.height/5;
         int i = 1;
         
+        //create the markers for the institutions
         for(Institution *inst in [self.institutions getAllUserInstitutions])
         {
             CGRect boundingBox = CGRectMake(5, height, self.markerWidth, self.markerHeight);
@@ -157,6 +174,8 @@
             [imgView addGestureRecognizer:pan];
             [imgView setImage:pointer];
             [imgView addSubview:textLabel];
+            
+            //if the preference already exists, add the markers at the appropriate locations
             if([inst customValueForKey:[self.pref getName]] != nil && ![[inst customValueForKey:[self.pref getName]] isEqualToString:@"<null>"])
             {
                 imgView.center = CGPointMake(self.lineX - self.markerWidth/2, self.topLineY + [[inst customValueForKey:self.prefName] integerValue]);
@@ -191,6 +210,8 @@
 	// Do any additional setup after loading the view.
 }
 
+/*
+ Color an image */
 -(UIImage *)colorizeImage:(UIImage *)baseImage color:(UIColor *)theColor {
     UIGraphicsBeginImageContext(baseImage.size);
     
@@ -240,6 +261,8 @@
     }
     
 }
+
+//Check if the zip code they've put in is actually a zip
 -(bool) isAcceptableZip: (NSString*) zipString
 {
 
@@ -256,7 +279,8 @@
 
 -(IBAction)save:(id)sender
 {
-    //if the user preference already exists, update the data
+    //if it's a distance pref, check if the zip code is valid
+    //otherwise, don't save and alert the user
     if(self.isDistancePref)
     {
         
@@ -274,21 +298,33 @@
             
         }
     }
+    
+    //set the preference name to what is in the field (that only appears for a custom pref)
     self.prefName = self.dumbField.text;
+    
+    //if it's a custom and the preference name is not equal to the name in the field, then
+    //updat the preference name
     if(self.isNull && ![self.prefName isEqualToString:[self.pref getName]])
     {
         [self.pref setName:self.prefName];
     }
+    
+    //attempt to get the userPref associated with the preference name
     UserPreference* userPref = [self.preferences getUserPreferenceForString:self.prefName];
+    
+    //if there is no pref associated with the prefName, then create one
     if(self.pref == nil)
     {
         [self.preferences addPreferenceWithName:self.prefName andAcceptableValues:nil];
         self.pref = [self.preferences getPreferenceForString:self.prefName];
         NSLog(@"%@", [self.pref getName]);
     }
+    
+    //if there is a userPref, update the value
+    //if there is not, create one and update the weights
     if(userPref != nil)
     {
-        [userPref setPrefVal:self.pickerSelection+1];//TODO: where else do we use this index? Does this need to be changed in the Calculations class or everywhere else?
+        [userPref setPrefVal:self.pickerSelection+1];
     }
     else{
         //make a new user preference with missing data (if there is missing data)
@@ -299,7 +335,7 @@
     if(self.isNull)
     {
 
-        //if it is a custom, update the data in the institutions.  The userPrefence object has already been created.
+        //if it is a custom, update the data in the institutions
         int i = 1;
         for(Institution* inst in [self.institutions getAllUserInstitutions])
         {
@@ -316,12 +352,8 @@
             
         }
     }
-    /*
-    for (NSString* i in [_preferences getAllPrefNames])
-    {
-        NSLog(@"%@",i);
-    }
-     */
+
+    //switch back to the second view controller
     UITabBarController* back = [self.storyboard instantiateViewControllerWithIdentifier:@"TabBarView"];
     [self presentViewController:back animated:YES completion:nil];
     [back setSelectedIndex:1];
