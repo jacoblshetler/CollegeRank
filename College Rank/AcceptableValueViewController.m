@@ -257,21 +257,28 @@
 -(IBAction)save:(id)sender
 {
     //if the user preference already exists, update the data
-    if(self.isDistancePref && [self isAcceptableZip:self.zipLabel.text])
+    if(self.isDistancePref)
     {
-        self.preferences.zipCode = self.zipLabel.text;
-        [self.preferences calculateLocation];
-    }
-    else
-    {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Invalid Zip" message:@"Zip code is not valid." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        [alert setAlertViewStyle:UIAlertViewStyleDefault];
-        [alert show];
-        return;
         
+        if([self isAcceptableZip:self.zipLabel.text])
+        {
+            self.preferences.zipCode = self.zipLabel.text;
+            [self.preferences calculateLocation];
+        }
+        else
+        {
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Invalid Zip" message:@"Zip code is not valid." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+            [alert setAlertViewStyle:UIAlertViewStyleDefault];
+            [alert show];
+            return;
+            
+        }
     }
-    
     self.prefName = self.dumbField.text;
+    if(self.isNull && ![self.prefName isEqualToString:[self.pref getName]])
+    {
+        [self.pref setName:self.prefName];
+    }
     UserPreference* userPref = [self.preferences getUserPreferenceForString:self.prefName];
     if(self.pref == nil)
     {
