@@ -130,7 +130,7 @@
         <scene sceneID="gJO-Aj-VLn">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Kpa-85-mMW" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Colleges" image="first" id="Mib-Kp-HLj"/>
+                    <tabBarItem key="tabBarItem" title="Colleges" image="Colleges" id="Mib-Kp-HLj"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="dhw-s7-ohO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="HNg-Vq-e4i">
@@ -520,7 +520,7 @@ line in order of their ranking.</string>
         <scene sceneID="8OB-S4-VsV">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fiP-dZ-jTD" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Rank" id="WSF-AO-itj"/>
+                    <tabBarItem key="tabBarItem" title="Rank" image="Rank" id="WSF-AO-itj"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="LfI-S3-l4B">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -574,7 +574,8 @@ line in order of their ranking.</string>
         </scene>
     </scenes>
     <resources>
-        <image name="first" width="30" height="30"/>
+        <image name="Colleges" width="22" height="22"/>
+        <image name="Rank" width="22" height="22"/>
         <image name="second" width="30" height="30"/>
     </resources>
     <color key="tintColor" red="1" green="0.236770073" blue="0.19477075730000001" alpha="1" colorSpace="calibratedRGB"/>
