@@ -99,7 +99,8 @@
     UserPreference* prefToRemove = [[self userPrefs] objectAtIndex:index];
     
     //Remove from user preferences and update all the weights
-    updateWeights(index, 0);
+    //updateWeights(index, 0);
+    deleteWeightForPreference(index);
     [[self userPrefs] removeObjectAtIndex:index];
     
     //If it was a custom preference, remove it from its other locations

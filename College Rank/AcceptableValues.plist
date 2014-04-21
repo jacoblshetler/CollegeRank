@@ -9,6 +9,7 @@
 		<string>Private</string>
 		<string>Private (Non-Profit)</string>
 	</array>
+    <!--
 	<key>Location</key>
 	<array>
 		<string>location</string>
@@ -16,6 +17,7 @@
 		<string>Midranged</string>
 		<string>Far</string>
 	</array>
+     -->
 	<key>Average SAT Score</key>
 	<array>
 		<string>sat</string>

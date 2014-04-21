@@ -18,6 +18,8 @@
 		841870B41900205E0024ECAF /* missingDataTips.plist in Resources */ = {isa = PBXBuildFile; fileRef = 841870B31900205E0024ECAF /* missingDataTips.plist */; };
 		8445148318D1F7D3000472DA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8445148218D1F7D3000472DA /* SystemConfiguration.framework */; };
 		8445148618D1FBB4000472DA /* InstitutionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445148518D1FBB4000472DA /* InstitutionManager.m */; };
+		8446EAFA1905C1D600C51B94 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 8446EAF91905C1D600C51B94 /* splash.png */; };
+		8446EAFC1905C5D800C51B94 /* homeIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8446EAFB1905C5D800C51B94 /* homeIcon.png */; };
 		844E76F918AD289100A6FC91 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844E76F818AD289100A6FC91 /* Foundation.framework */; };
 		844E76FB18AD289100A6FC91 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844E76FA18AD289100A6FC91 /* CoreGraphics.framework */; };
 		844E76FD18AD289100A6FC91 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844E76FC18AD289100A6FC91 /* UIKit.framework */; };
@@ -75,6 +77,8 @@
 		8445148218D1F7D3000472DA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8445148418D1FBB4000472DA /* InstitutionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstitutionManager.h; sourceTree = "<group>"; };
 		8445148518D1FBB4000472DA /* InstitutionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstitutionManager.m; sourceTree = "<group>"; };
+		8446EAF91905C1D600C51B94 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
+		8446EAFB1905C5D800C51B94 /* homeIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeIcon.png; sourceTree = "<group>"; };
 		844E76F518AD289100A6FC91 /* College Rank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "College Rank.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		844E76F818AD289100A6FC91 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		844E76FA18AD289100A6FC91 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -197,6 +201,8 @@
 				365A9CD618D7B4F000978516 /* PreferenceManager.h */,
 				365A9CD718D7B4F000978516 /* PreferenceManager.m */,
 				844E771318AD289100A6FC91 /* Images.xcassets */,
+				8446EAFB1905C5D800C51B94 /* homeIcon.png */,
+				8446EAF91905C1D600C51B94 /* splash.png */,
 				844E76FF18AD289100A6FC91 /* Supporting Files */,
 			);
 			path = "College Rank";
@@ -334,10 +340,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8446EAFC1905C5D800C51B94 /* homeIcon.png in Resources */,
 				E3DB562B18F7929300128027 /* Colors.plist in Resources */,
 				8491593618FC55FD00CFBD1B /* help.html in Resources */,
 				84F0D37918F6E4E50081B855 /* nameToDataKeys.plist in Resources */,
 				8409E7DD18F749FB00A07BDA /* missingDataOptions.plist in Resources */,
+				8446EAFA1905C1D600C51B94 /* splash.png in Resources */,
 				8472BA0418E711720034C6D6 /* AcceptableValues.plist in Resources */,
 				841870B41900205E0024ECAF /* missingDataTips.plist in Resources */,
 				844E771418AD289100A6FC91 /* Images.xcassets in Resources */,

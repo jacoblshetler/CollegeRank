@@ -142,7 +142,6 @@ double geoDistance(CLLocation * loc1, CLLocation * loc2){
 
 NSMutableArray * generateDistancesFromUserData(NSMutableArray* inZipArr, CLLocation* userZip){
     NSMutableArray* returnArr = [[NSMutableArray alloc]init];
-//    userZip = @"46526"; //TODO: remove this
     for (CLLocation* curZip in inZipArr) {
         //calculate the current distance
         [returnArr addObject:[NSNumber numberWithDouble:geoDistance(userZip, curZip)]];
@@ -253,6 +252,24 @@ void updateWeightsForNewPreference()
         }
     }
     [newPref setWeight:newWeight];
+}
+
+void deleteWeightForPreference(int index){
+    //give every preference a proportionate amount based on deleting a preference
+    PreferenceManager* prefMan = [PreferenceManager sharedInstance];
+    NSMutableArray* userPrefs = [prefMan getAllUserPrefs];
+    
+    UserPreference* oldPref = [userPrefs objectAtIndex:index];
+    float oldPrefWeight = [oldPref getWeight];
+    
+    //set selected weight to 0
+    [oldPref setWeight:0.0f];
+    
+    //multiply all other weights by the percent the selected decreased
+    //(eg. if deleted one had 20%, then multiply each by (100)/(100-20).
+    for (UserPreference* curPref in userPrefs) {
+        [curPref setWeight:([curPref getWeight]*((1)/(1-oldPrefWeight)))];
+    }
 }
 #pragma mark - Null Manipulations
 

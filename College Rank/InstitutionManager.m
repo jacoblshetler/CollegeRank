@@ -115,7 +115,7 @@
     NSMutableArray* missingDataArr = [[NSMutableArray alloc] init];
     for (int i =0; i<[dataArr count]; i++) {
         id obj = [dataArr objectAtIndex:i];
-        if ([obj isEqual:[NSNull null]] || [[NSString stringWithFormat:@"%@",obj] isEqual:@"<null>"]){
+        if ([obj isEqual:[NSNull null]] || [[NSString stringWithFormat:@"%@",obj] isEqual:@"<null>"] || [[NSString stringWithFormat:@"%@",obj] isEqual:@""]){
             [missingDataArr addObject:[ instNames objectAtIndex:i]];
         }
     }

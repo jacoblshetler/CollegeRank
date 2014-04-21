@@ -232,13 +232,15 @@
         return UITableViewCellAccessoryNone;
     }
     
+    NSString* entry = [[[_preferences userPrefs] objectAtIndex:MAX(indexPath.row - 2, 0)] getName];
     NSString* values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
     NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
-    
-    NSString* entry = [[[_preferences userPrefs] objectAtIndex:MAX(indexPath.row - 2, 0)] getName];
     NSString *entryDecoded = [[valuesDict valueForKeyPath:entry] objectAtIndex:0];
     
-    BOOL isMissingData = (BOOL)[institutionsMissingDataForUserPrefs() valueForKey:entryDecoded];
+    
+    NSMutableDictionary* missDict = institutionsMissingDataForUserPrefs();
+    
+    BOOL isMissingData = [[institutionsMissingDataForUserPrefs() valueForKey:entryDecoded] boolValue];
     //NSLog(isMissingData ? @"Yes": @"No");
     
     if (isMissingData && !editing) {
