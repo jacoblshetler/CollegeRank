@@ -63,6 +63,14 @@ void updateWeights(int index, float newWeight);
  */
 NSArray * weightToWorkWith(int index);
 
+/**
+ Updates user preferences to their new weights as a result of deleting a user preference at a specified index.
+ @param index
+ Integer representing the index of the UserPreference (in the PreferenceManager's list of UserPrefs) that you want to delete.
+ @return None.
+ */
+void deleteWeightForPreference(int index);
+
 
 /**
  Calculates and returns an NSMutableArray of normalized cardinal utilities based a list of y-values (used only for custom preferences).
