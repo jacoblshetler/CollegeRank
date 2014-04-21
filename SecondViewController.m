@@ -36,6 +36,7 @@
 -(void) updateInputControllers:(int) row;
 -(void)goToAcceptableValues:(NSString*)entry;
 -(void)goToMissingData:(NSString*)entry;
+-(UITableViewCellAccessoryType)accessoryViewForIndexPath:(NSIndexPath *)indexPath isEditing:(BOOL) editing;
 
 @end
 
@@ -166,7 +167,7 @@
 }
 
 
-#pragma mark - Table view data source
+#pragma mark - Table view cells
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -197,7 +198,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     //Shows arrows when in editing mode
-    cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.accessoryType = [self accessoryViewForIndexPath:indexPath isEditing:NO];
+    cell.editingAccessoryType = [self accessoryViewForIndexPath:indexPath isEditing:YES];
     
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         cell.textLabel.text = [_searchResults objectAtIndex:indexPath.row];
@@ -221,6 +223,36 @@
     return cell;
 }
 
+-(UITableViewCellAccessoryType)accessoryViewForIndexPath:(NSIndexPath *)indexPath isEditing:(BOOL) editing
+{
+    //Check to make sure the cells are preference cells
+    if (self.searchDisplayController.isActive) {
+        return UITableViewCellAccessoryNone;
+    } else if ([[_preferences userPrefs] count] >= 2 && indexPath.row < 2) {
+        return UITableViewCellAccessoryNone;
+    }
+    
+    NSString* values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
+    NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
+    
+    NSString* entry = [[[_preferences userPrefs] objectAtIndex:MAX(indexPath.row - 2, 0)] getName];
+    NSString *entryDecoded = [[valuesDict valueForKeyPath:entry] objectAtIndex:0];
+    
+    BOOL isMissingData = (BOOL)[institutionsMissingDataForUserPrefs() valueForKey:entryDecoded];
+    //NSLog(isMissingData ? @"Yes": @"No");
+    
+    if (isMissingData && !editing) {
+        return UITableViewCellAccessoryDetailButton;
+    } else if (isMissingData) {
+        return UITableViewCellAccessoryDetailDisclosureButton;
+    } else if (editing) {
+        return UITableViewCellAccessoryDisclosureIndicator;
+    } else {
+        return UITableViewCellAccessoryNone;
+    }
+        
+}
+
 
 #pragma Selection
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -237,15 +269,22 @@
         NSString* entry = [_searchResults objectAtIndex:[indexPath row]];
         [self preferenceNavigate:entry];
         [self canGoToTabs];
-    } else if (self.tableView.editing==YES && indexPath.row >= 2) {
+    } else if (self.tableView.editing==YES && (indexPath.row >= 2 || [[_preferences userPrefs] count]==1)) {
         //Go back to edit views
-        NSString* entry = [[[_preferences userPrefs] objectAtIndex:indexPath.row - 2] getName];
+        NSString* entry = [[[_preferences userPrefs] objectAtIndex:MAX(indexPath.row - 2, 0)] getName];
         [self preferenceNavigate:entry];
         
     } else if (indexPath.row >= 2) {
         //Update slider data and lock button to match data for select preference
         [self updateInputControllers:indexPath.row - 2];
     }
+}
+
+//If the preference has missing data, they can jump right back to the missing data screen
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    NSString* entry = [[[_preferences userPrefs] objectAtIndex:MAX(indexPath.row - 2, 0)] getName];
+    [self preferenceNavigate:entry];
 }
     
 #pragma Navigate
@@ -260,6 +299,7 @@
     
     UserPreference* usrPref = [_preferences getUserPreferenceForString:entry];
     BOOL isAddedCustom = (usrPref == nil) ? FALSE : ([[usrPref getPref] getValues] == nil);
+    
     if (isUnaddedCustom || isAddedCustom) {
         [self goToAcceptableValues:entry];
     }
