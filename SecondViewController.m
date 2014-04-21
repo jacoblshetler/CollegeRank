@@ -106,8 +106,6 @@
     _preferences = [PreferenceManager sharedInstance];
     [self canGoToTabs];
     
-
-    
     [self.tableView reloadData];
 }
 

@@ -7,7 +7,6 @@
 //
 
 #import "Calculations.h"
-#import <CoreLocation/CoreLocation.h>
 #import "InstitutionManager.h"
 #import "PreferenceManager.h"
 #import "UserPreference.h"
@@ -128,33 +127,23 @@ NSMutableDictionary * createOrdinalDictionary(NSMutableDictionary* inDict,NSArra
 
 #pragma mark - Distance Calculations
 
-CLLocation *didCalculateDistance(NSString* zipCode) {
-    CLLocation __block *placemark = [CLLocation new];
-    [[CLGeocoder new] geocodeAddressString:zipCode completionHandler:
-     ^(NSArray *placemarks, NSError *error){
-         CLPlacemark *newPlacemark = [placemarks objectAtIndex:0];
-         placemark = newPlacemark.location;
-     }];
-
-    while(!placemark.coordinate.latitude){
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
-    }
-    NSLog(@"%@",placemark);
-    return placemark;
-}
-
-double geoDistance(NSString * zip1, NSString * zip2){
-    CLLocation *location1 = didCalculateDistance(zip1);
-    CLLocation *location2 = didCalculateDistance(zip2);
+double geoDistance(CLLocation * loc1, CLLocation * loc2){
+    float radius = 3958.0;      // Earth's radius (miles)
+    float deg_per_rad = 57.29578;  // Number of degrees/radian (for conversion)
     
-    CLLocationDistance meters = [location1 distanceFromLocation:location2];
-    return (double)(meters*0.000621371); //converting meters to miles
+    double calc1 = loc1.coordinate.latitude - loc2.coordinate.latitude;
+    double calc2 = cos(loc1.coordinate.latitude / deg_per_rad);
+    double calc3 = cos(loc2.coordinate.latitude / deg_per_rad);
+    double calc4 = loc1.coordinate.longitude - loc2.coordinate.longitude;
+    double distance = radius * M_PI * sqrt((calc1*calc1+calc2*calc3*calc4*calc4)/180);
+
+    return distance; //converting meters to miles
 }
 
-NSMutableArray * generateDistancesFromUserData(NSMutableArray* inZipArr, NSString* userZip){
+NSMutableArray * generateDistancesFromUserData(NSMutableArray* inZipArr, CLLocation* userZip){
     NSMutableArray* returnArr = [[NSMutableArray alloc]init];
-    userZip = @"46526";
-    for (NSString* curZip in inZipArr) {
+//    userZip = @"46526"; //TODO: remove this
+    for (CLLocation* curZip in inZipArr) {
         //calculate the current distance
         [returnArr addObject:[NSNumber numberWithDouble:geoDistance(userZip, curZip)]];
     }
@@ -347,7 +336,6 @@ NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int cho
                 [changedVals addObject:[[NSNumber alloc] initWithInt:([max intValue]  - [preferenceValues[i] intValue])]];
 //                preferenceValues[i] = [[NSNumber alloc] initWithInt:([max intValue]  - [preferenceValues[i] intValue])];
             }
-            
             break;
         }
         case 2:
@@ -355,12 +343,14 @@ NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int cho
             //find the middle value and subtract all other values from it, using absolute values.
             NSNumber *medianNum = [[NSNumber alloc] initWithFloat:median(preferenceValues)];
             for (int i = 0; i<[preferenceValues count]; i++){
-                preferenceValues[i] = [[NSNumber alloc] initWithInt:(ABS([medianNum intValue]  - [preferenceValues[i] intValue]))];
+                [changedVals addObject:[[NSNumber alloc] initWithInt:(ABS([medianNum intValue]  - [preferenceValues[i] intValue]))]];
+               // preferenceValues[i] = [[NSNumber alloc] initWithInt:(ABS([medianNum intValue]  - [preferenceValues[i] intValue]))];
             }
             //Then invert the list using the highest value
             NSNumber * max = [preferenceValues valueForKeyPath:@"@max.intValue"];
             for (int i = 0; i<[preferenceValues count]; i++){
-                preferenceValues[i] = [[NSNumber alloc] initWithInt:([max intValue]  - [preferenceValues[i] intValue])];
+                [changedVals addObject:[[NSNumber alloc] initWithInt:([max intValue]  - [preferenceValues[i] intValue])]];
+               // preferenceValues[i] = [[NSNumber alloc] initWithInt:([max intValue]  - [preferenceValues[i] intValue])];
             }
             break;
         }
@@ -372,7 +362,7 @@ NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int cho
     }
     
     //Normalize. Then replace everything in the replaceVals with the mean
-    NSMutableArray* normalizedVals = normalize(preferenceValues);
+    NSMutableArray* normalizedVals = normalize(changedVals);
     return putMeanBackIn(normalizedVals, replaceVals);
 }
 
@@ -873,7 +863,7 @@ NSMutableDictionary * generateRankings(){
         else if([[userPref getName] isEqualToString:@"Location"])
         {
             //do some calcs to determine actual distances based on user's zip code
-            NSMutableArray* distanceVals = generateDistancesFromUserData([instMan getValuesForPreference:@"location"], [userPref getZipCode]);
+            NSMutableArray* distanceVals = generateDistancesFromUserData([instMan getValuesForPreference:@"geoCoordinates"], prefMan.geoCoords);
             value = normalizeFromDistance(distanceVals, [userPref getPrefVal]);
         }
         

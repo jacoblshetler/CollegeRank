@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 @class Preference;
 @class UserPreference;
@@ -16,6 +17,8 @@
 @property NSMutableArray* userPrefs;
 @property NSMutableArray* allPrefs;
 @property NSMutableDictionary* missingInstitutionsForPreferenceShortNameDictionary;
+@property NSString* zipCode;
+@property CLLocation* geoCoords;
 
 + (id)sharedInstance;
 -(NSArray*) getAllPrefs;
@@ -35,6 +38,7 @@
 -(NSMutableArray*) newPreferenceChoices;
 -(NSMutableArray*) getAllPrefNames;
 -(NSMutableArray*) getAllPrefWeights;
+-(void) calculateLocation;
 -(BOOL) canGoToRank;
 
 @end
