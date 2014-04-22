@@ -127,7 +127,8 @@
 }
 
 -(void) updateTabBarIcon{
-    //Do stuff
+    UITabBarItem* item = [self.tabBarController.tabBar.items objectAtIndex:1];
+    [item setBadgeValue:getPreferenceBadgeCountString()];
 }
 
 
@@ -251,8 +252,13 @@
     NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
     NSString *entryDecoded = [[valuesDict valueForKeyPath:entry] objectAtIndex:0];
     
-    BOOL isMissingData = [[institutionsMissingDataForUserPrefs() valueForKey:entryDecoded] boolValue];
-    //NSLog(isMissingData ? @"Yes": @"No");
+    BOOL isMissingData = true;
+    if (entryDecoded){
+        isMissingData = [[institutionsMissingDataForUserPrefs() valueForKey:entryDecoded] boolValue];
+    }
+    else{
+        isMissingData = [[institutionsMissingDataForUserPrefs() valueForKey:entry] boolValue];
+    }
     
     if (isMissingData && !editing) {
         return UITableViewCellAccessoryDetailButton;

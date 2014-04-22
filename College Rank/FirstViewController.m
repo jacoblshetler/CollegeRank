@@ -155,19 +155,6 @@
 }
 
 -(void) updateTabBarIcon{
-    //TODO: Philip, this needs to change to edit the icon of the tab bar. Right now it just changes the text.
-    
-    //determines if tab bar icon for 2nd view controller should have "!" in it
-    /*
-    UITabBarItem* item = [self.tabBarController.tabBar.items objectAtIndex:1];
-    [item setImage:[UIImage imageNamed:@"Pie"]];
-    [item setBadgeValue:@"!"];
-    if ([[institutionsMissingDataForUserPrefs() objectForKey:@"All"] boolValue]) {
-        //then something is missing data
-        UITabBarItem* item = [self.tabBarController.tabBar.items objectAtIndex:1];
-        [item setImage:[UIImage imageNamed:@"PieAlert"]];
-    }
-     */
     UITabBarItem* item = [self.tabBarController.tabBar.items objectAtIndex:1];
     [item setBadgeValue:getPreferenceBadgeCountString()];
 }
