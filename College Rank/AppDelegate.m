@@ -59,28 +59,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    self.window.tintColor= [UIColor colorWithRed:255.0f/255.0f green:60.0f/255.0f blue:50.0f/255.0f alpha:1.0];
-    
-    InstitutionManager* testInst = [InstitutionManager sharedInstance];
-    PreferenceManager* testPref = [PreferenceManager sharedInstance];
-    
-    [testInst addInstitution:[[testInst searchInstitutions:@"Goshen"] objectAtIndex:0]];
-    [testInst addInstitution:[[testInst searchInstitutions:@"System"] objectAtIndex:0]];
-    
-    [testPref addUserPref:[testPref getPreferenceAtIndex:1] withWeight:1 andPrefVal:1];
-    //[testPref addUserPref:[testPref getPreferenceAtIndex:2] withWeight:.5 andPrefVal:1];
-    //[testPref addUserPref:[testPref getPreferenceAtIndex:3] withWeight:.2 andPrefVal:1];
-    //[testPref removeUserPrefAtIndex:1];
-    
-    //updateWeights(0, .4);
-    //NSLog(@"%f",[[[testPref userPrefs] objectAtIndex:1] getWeight]);
-    NSLog(@"%@",institutionsMissingDataForUserPrefs());
-    
-    
+    self.window.tintColor= [UIColor colorWithRed:255.0f/255.0f green:60.0f/255.0f blue:50.0f/255.0f alpha:1.0];    
     
     //unarchive the stored instman and prefman
-    //TODO: UNCOMMENT THIS TO READ DATA BACK IN
-    //[self loadManagers];
+    [self loadManagers];
      
     return YES;
 }
@@ -98,8 +80,7 @@
     
 
     //archive instman and prefman
-    //TODO: UNCOMMENT THIS TO SAVE DATA TO FILE
-    //[self saveManagers];
+    [self saveManagers];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -116,7 +97,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-//    [self saveManagers];
+    [self saveManagers];
 }
 
 
