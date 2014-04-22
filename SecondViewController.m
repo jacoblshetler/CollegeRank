@@ -127,7 +127,8 @@
 }
 
 -(void) updateTabBarIcon{
-    //Do stuff
+    UITabBarItem* item = [self.tabBarController.tabBar.items objectAtIndex:1];
+    [item setBadgeValue:getPreferenceBadgeCountString()];
 }
 
 
