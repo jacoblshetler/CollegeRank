@@ -72,7 +72,7 @@
      
 }
 
-- (void) viewDidAppear:(BOOL)animated{
+- (void) viewWillAppear:(BOOL)animated{
     //calculate the rankings
     _calculationResults = [[NSMutableDictionary alloc] initWithDictionary:generateRankings()];
     
