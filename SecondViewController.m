@@ -37,6 +37,7 @@
 -(void)goToAcceptableValues:(NSString*)entry;
 -(void)goToMissingData:(NSString*)entry;
 -(UITableViewCellAccessoryType)accessoryViewForIndexPath:(NSIndexPath *)indexPath isEditing:(BOOL) editing;
+-(void) updateTabBarIcon;
 
 @end
 
@@ -107,6 +108,7 @@
     _preferences = [PreferenceManager sharedInstance];
     [self canGoToTabs];
     
+    [self updateTabBarIcon];
     [self.tableView reloadData];
 }
 
@@ -123,6 +125,11 @@
         [[[[self.tabBarController tabBar]items]objectAtIndex:2]setEnabled:TRUE];
     }
 }
+
+-(void) updateTabBarIcon{
+    //Do stuff
+}
+
 
 #pragma mark - Search Results
 
