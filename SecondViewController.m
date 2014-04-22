@@ -234,11 +234,18 @@
 -(UITableViewCellAccessoryType)accessoryViewForIndexPath:(NSIndexPath *)indexPath isEditing:(BOOL) editing
 {
     //Check to make sure the cells are preference cells
+    int numPreferences = [[_preferences userPrefs] count];
     if (self.searchDisplayController.isActive) {
         return UITableViewCellAccessoryNone;
-    } else if ([[_preferences userPrefs] count] >= 2 && indexPath.row < 2) {
+    } else if (numPreferences >= 2 && indexPath.row < 2) {
         return UITableViewCellAccessoryNone;
-    }
+    } else if (numPreferences >= 2 && indexPath.row >= numPreferences + 2) {
+        return UITableViewCellAccessoryNone;
+    } else if (numPreferences < 2 && indexPath.row >= numPreferences)
+        return UITableViewCellAccessoryNone;
+
+    
+    
     
     NSString* entry = [[[_preferences userPrefs] objectAtIndex:MAX(indexPath.row - 2, 0)] getName];
     NSString* values = [[NSBundle mainBundle] pathForResource: @"AcceptableValues" ofType: @"plist"];
