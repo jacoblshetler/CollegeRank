@@ -123,7 +123,7 @@
         [cell.contentView addSubview:[self createBarChart]];
     }
     else {
-        cell.textLabel.text = [NSString stringWithFormat:@"%@%@",[_indexToOrdinal objectForKey:[NSString stringWithFormat:@"%ld",indexPath.row-1]],[_orderedKeys objectAtIndex:indexPath.row-1]];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@%@",[_indexToOrdinal objectForKey:[NSString stringWithFormat:@"%d",indexPath.row-1]],[_orderedKeys objectAtIndex:indexPath.row-1]];
         cell.textLabel.textColor = [_colors objectAtIndex:indexPath.row - 1];
     }
     

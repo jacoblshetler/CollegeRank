@@ -330,13 +330,6 @@ None of these functions are declared in the header. This is to ensure that they 
 not called from anywhere else in the program.
 */
 
-#warning Need to test all of these functions
-/*
- Functions that have been tested:
-    -None
- 
-*/
-
 NSMutableArray * normalizeFromDistance(NSMutableArray* preferenceValues, int chosenValue){
     //3 options to choose from. General ideas are: Close, Middle, Far.
     NSMutableDictionary* dataDict = takeOutNulls(preferenceValues);

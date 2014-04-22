@@ -258,7 +258,6 @@
             
             
             if (counter<[missingInstitutions count]) {
-#warning can't test the prepping of text fields until we get the edit functionality working.
                 [_arrayOfTextFields addObject:text];
                 text.hidden = false;
                 //set placeholder and text

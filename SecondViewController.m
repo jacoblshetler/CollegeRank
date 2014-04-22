@@ -237,9 +237,6 @@
     NSDictionary *valuesDict = [[NSDictionary alloc] initWithContentsOfFile:values];
     NSString *entryDecoded = [[valuesDict valueForKeyPath:entry] objectAtIndex:0];
     
-    
-    NSMutableDictionary* missDict = institutionsMissingDataForUserPrefs();
-    
     BOOL isMissingData = [[institutionsMissingDataForUserPrefs() valueForKey:entryDecoded] boolValue];
     //NSLog(isMissingData ? @"Yes": @"No");
     
