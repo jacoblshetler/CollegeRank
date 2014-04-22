@@ -853,6 +853,21 @@ NSMutableDictionary * institutionsMissingDataForUserPrefs(){
     return returnDict;
 }
 
+NSString * getPreferenceBadgeCountString(){
+    //loop through inDict and find the number of "True's"
+    NSMutableDictionary *inDict = institutionsMissingDataForUserPrefs();
+    [inDict removeObjectForKey:@"All"];
+    int count = 0;
+    for (NSString* key in inDict) {
+        if ([[inDict objectForKey:key] boolValue]) count++;
+    }
+    
+    if (count==0) {
+        return nil;
+    }
+    return [[NSString alloc] initWithFormat:@"%i",count];
+}
+
 
 #pragma mark - Generate Rankings
 

@@ -99,3 +99,9 @@ void updateWeightsForNewPreference();
  @return NSMutableDictionary of key=short name of user preference, value=true if 1 or more institutions had missing data. Also returns a key = "All", where value is true if any pref had any institution with missing data. Boolean values are wrapped in NSNumbers. Get the bool value with [[returnDict objectForKey:@"All"] boolValue]
  */
 NSMutableDictionary * institutionsMissingDataForUserPrefs();
+
+/**
+ Determines the value that should appear in the badge on the preferences screen. It can return nil, which means that no badge will appear
+ @return NSString representing the new value for the badge
+ */
+NSString * getPreferenceBadgeCountString();
